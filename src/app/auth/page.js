@@ -4,7 +4,7 @@ import Link from 'next/link';
 const Login = () => {
 
   return (
-    <div className='container bg-white'>
+    <div className='container-fluid bg-white flex justify-center'>
         <div className='grid grid-cols-12 h-screen'>
             <div className='col-span-6 flex justify-center h-full relative'>
                 <Image src='/bg-right.png' width={800} height={1000} className='object-cover filter brightness-50'/>
@@ -16,7 +16,7 @@ const Login = () => {
             <div className='col-span-6 flex justify-center items-center'>
                 <div className='w-[550px]'>
                     <div className='flex justify-center'>
-                        <div className='font-bold text-[32px] text-black mb-[80px]'>Selamat Datang</div>
+                        <div className='font-bold text-[32px] text-gray-800 mb-[45px]'>Selamat Datang</div>
                     </div>
                     <form className='mt-4'>
                         <div className="mb-[24px]">
@@ -37,8 +37,8 @@ const Login = () => {
                             Login
                         </button>
                     </div>
-                    <div className='flex items-center justify-center mt-[95px]'>
-                        <div className='mr-[10px] font-bold text-black text-[24px]'>Powered by: </div>
+                    <div className='flex items-center justify-center mt-[55px]'>
+                        <div className='mr-[10px] font-bold text-gray-800 text-[24px]'>Powered by: </div>
                         <Image src='/brand.png' width={30} height={30} />
                     </div>
                 </div>
