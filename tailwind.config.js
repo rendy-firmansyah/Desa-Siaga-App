@@ -14,15 +14,15 @@ module.exports = {
       },
       colors: {
         primary: {
-          light: '#FFA435',
-          default: '#EF8300',
-          dark: '#B96601',
+          light: "#FFA435",
+          default: "#EF8300",
+          dark: "#B96601",
         },
         secondary: {
-          light: '#3F44BD',
-          default: '#1D217C',
-          dark: '#00045B',
-        }
+          light: "#3F44BD",
+          default: "#1D217C",
+          dark: "#00045B",
+        },
       },
     },
   },
