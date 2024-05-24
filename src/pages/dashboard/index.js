@@ -5,6 +5,33 @@ import menu1 from "../../../public/menu1.png";
 import menu2 from "../../../public/menu2.png";
 import menu3 from "../../../public/menu3.png";
 import menu4 from "../../../public/menu4.png";
+import nookies from 'nookies';
+import Router from "next/router";
+
+//checkuser
+export async function getServerSideProps(ctx){
+  const cookies = nookies.get(ctx)
+
+  if(!cookies.role){
+    return{
+      redirect:{
+        destination : '/'
+    }
+    }
+  }
+    else if(cookies.role == 'super admin'){
+      return{
+        redirect:{
+          destination : '/admin'
+        }
+      }
+    }
+  
+  return{
+    props: {}
+  }
+}
+
 
 const Dashboard = () => {
   return (

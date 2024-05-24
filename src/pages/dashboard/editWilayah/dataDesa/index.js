@@ -1,6 +1,32 @@
 import Link from "next/link";
 import Image from "next/image";
 import bgDasboard from "../../../../../public/bg-2.jpg";
+import nookies from 'nookies';
+
+//checkUser
+export async function getServerSideProps(ctx){
+    const cookies = nookies.get(ctx)
+    
+    if(!cookies.role){
+      return{
+        redirect:{
+          destination : '/'
+        }
+      }
+    }
+    else if(cookies.role === 'super admin'){
+        return{
+          redirect:{
+            destination : '/admin'
+          }
+        }
+    }
+    
+    return{
+      props: {}
+    }
+  }
+
 
 const dataWilayah = () => {
   return (
