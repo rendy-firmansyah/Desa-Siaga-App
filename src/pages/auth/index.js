@@ -1,15 +1,88 @@
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { ToastContainer,toast } from "react-toastify";
+import nookies from 'nookies';
+import 'react-toastify/dist/ReactToastify.css';
+
+//islogin
+export async function getServerSideProps(ctx){
+    const cookies = nookies.get(ctx)
+    if(cookies.role === 'super admin'){
+        return{
+          redirect:{
+            destination : '/admin'
+          }
+        }
+    }
+    else if(cookies.role === 'user'){
+        return{
+          redirect:{
+            destination : '/dashboard'
+          }
+        }
+    }
+    return{
+      props: {}
+    }
+  }
+
+
+
 
 const Login = () => {
+  //define router 
+  const router = useRouter();
+  //define variable to send 
+  const [email,setEmail] = useState();
+  const [password,setPassword] = useState();
+
+  // function api login 
+  async function login(){
+    const send = await axios.post("/api/userManagement",{email,password});
+    if(send.data.status === 'success'){
+      //notification
+      toast(`✅ ${send.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress:1,
+        theme: "light",
+      });
+      //save token login in browser
+      nookies.set(null,'role',send.data.user)
+      //redirect to dashboard
+      router.push('/dashboard')
+    }
+    else{
+      //notification
+      toast(`❌ ${send.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress:1,
+        theme: "light",
+        });
+    }
+  }
+
+
   return (
     <div className="container-fluid bg-white flex justify-center">
+      <ToastContainer />
       <div className="grid grid-cols-12 h-screen">
         <div className="col-span-6 flex justify-center h-full relative">
           <Image
             src="/bg-right.png"
             width={800}
             height={1000}
+            alt="image"
             className="object-cover filter brightness-50"
           />
           <div className="absolute inset-0 flex flex-col items-center justify-center">
@@ -37,6 +110,7 @@ const Login = () => {
                 <input
                   type="username"
                   placeholder="Masukan Username"
+                  onChange={(e)=> setEmail(e.target.value)}
                   className="w-full h-[60px] mt-3 rounded-[50px] px-[20px] text-gray-700 border-[2px] border-[#757575]"
                 />
               </div>
@@ -50,19 +124,19 @@ const Login = () => {
                 <input
                   type="password"
                   placeholder="Masukan Password"
+                  onChange={(e)=>setPassword(e.target.value)}
                   className="w-full h-[60px] mt-3 rounded-[50px] px-[20px] text-gray-700 border-[2px] border-[#757575]"
                 />
               </div>
             </form>
             <div className="flex justify-center mt-[40px]">
-              <Link href="/dashboard">
                 <button
                   type="submit"
+                  onClick={login}
                   className="w-[370px] h-[55px] bg-secondary-default rounded-[10px] text-[24px] font-bold"
                 >
                   Login
                 </button>
-              </Link>
             </div>
             <div className="flex items-center justify-center mt-[55px]">
               <div className="mr-[10px] font-bold text-gray-800 text-[24px]">
