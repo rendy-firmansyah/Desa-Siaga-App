@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgDasboard from "../../../../public/bg-2.jpg";
+import bgDasboard from "../../../../../public/bg-2.jpg";
 
 const dataWilayah = () => {
   return (
@@ -15,14 +15,14 @@ const dataWilayah = () => {
       <div className="flex flex-col justify-center mx-8 md:mx-14 lg:mx-32 xl:mx-32 pt-10">
         <div className="flex w-full justify-between mb-4">
           <h1 className="text-black text-xl font-bold">
-            Data Wilayah Kecamatan
+            Data Desa Wilayah Kecamatan
           </h1>
           <div>
             <button
               type=""
               className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
             >
-              Tambah Kecamatan
+              Tambah Desa
             </button>
           </div>
         </div>
@@ -31,7 +31,7 @@ const dataWilayah = () => {
             <thead className="">
               <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Nama Kecamatan
+                  Nama Desa
                 </th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Alamat
@@ -44,7 +44,7 @@ const dataWilayah = () => {
             <tbody class="bg-white divide-y divide-gray-200">
               <tr>
                 <td class="text-black px-6 py-4 whitespace-nowrap">
-                  Sumbersari
+                  Maguwoharjo
                 </td>
                 <td class="text-black px-6 py-4 whitespace-nowrap">
                   Jl.Raya Tegal Besar Sumbersari
@@ -128,11 +128,6 @@ const dataWilayah = () => {
                       </g>
                     </svg>
                   </button>
-                  <Link href="/dashboard/editWilayah/dataDesa">
-                    <button class="ml-2 px-5 py-3  text-white font-medium text-sm bg-secondary-default rounded-md hover:bg-secondary-light focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out">
-                      Lihat Desa
-                    </button>
-                  </Link>
                 </td>
               </tr>
             </tbody>
