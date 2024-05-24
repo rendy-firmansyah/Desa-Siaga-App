@@ -74,7 +74,7 @@ const Dashboard = () => {
             </div>
           </Link>
 
-          <Link href="/">
+          <Link href="/dashboard/editWilayah">
             <div class="p-4 max-w-sm">
               <div class="flex rounded-lg bg-secondary-default p-8 flex-col">
                 <div class="flex items-center">
