@@ -12,15 +12,16 @@ export default async function UserHandler(req,res){
             return res.status(400).json({message: "Data tidak boleh Kosong!"})
         }
         try {
-            const users = await prisma.user.findFirst({where : {email}})
+            const users = await prisma.user.findUnique({where : {email}})
             const passwordCheck = await compare(password,users.password);
             if(!passwordCheck){
                 return res.status(200).json({message : "Password yang anda masukkan salah!"})
             }
             const user = users.role;
+            const id = Number(users.id);
             const message = 'Berhasil Login';
             const status = 'success'
-            const token = sign({ userId: users.id }, JWT_SECRET, { expiresIn: '1d' });
+            const token = sign({ userId: id }, JWT_SECRET, { expiresIn: '1d' });
             return res.status(200).json({token,user,message,status});
             
         } catch (error) {
