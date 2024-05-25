@@ -5,35 +5,38 @@ import menu1 from "../../../public/menu1.png";
 import menu2 from "../../../public/menu2.png";
 import menu3 from "../../../public/menu3.png";
 import menu4 from "../../../public/menu4.png";
-import nookies from 'nookies';
+import nookies from "nookies";
 import Router from "next/router";
 
 //checkuser
-export async function getServerSideProps(ctx){
-  const cookies = nookies.get(ctx)
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx);
 
-  if(!cookies.role){
-    return{
-      redirect:{
-        destination : '/'
-    }
-    }
+  if (!cookies.role) {
+    return {
+      redirect: {
+        destination: "/",
+      },
+    };
+  } else if (cookies.role == "super admin") {
+    return {
+      redirect: {
+        destination: "/admin",
+      },
+    };
   }
-    else if(cookies.role == 'super admin'){
-      return{
-        redirect:{
-          destination : '/admin'
-        }
-      }
-    }
-  
-  return{
-    props: {}
-  }
+
+  return {
+    props: {},
+  };
 }
 
-
 const Dashboard = () => {
+  const logout = () => {
+    nookies.destroy(null, "role");
+    Router.push("/");
+  };
+
   return (
     <section className="container-fluid lg:h-screen h-full relative">
       <div className="absolute -z-10 inset-0">
@@ -123,6 +126,14 @@ const Dashboard = () => {
             </div>
           </Link>
         </div>
+      </div>
+      <div className="flex justify-center mt-5">
+        <button
+          onClick={logout}
+          className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+        >
+          Keluar Dashboard
+        </button>
       </div>
     </section>
   );

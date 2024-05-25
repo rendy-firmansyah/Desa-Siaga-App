@@ -1,33 +1,44 @@
 import Link from "next/link";
 import Image from "next/image";
 import bgDasboard from "../../../../public/bg-2.jpg";
-import nookies from 'nookies';
+import nookies from "nookies";
+import addKec from "../../../components/addKec";
+import { useState } from "react";
+import AddKec from "../../../components/addKec";
 
 //islogin
-export async function getServerSideProps(ctx){
-    const cookies = nookies.get(ctx)
-    
-    if(!cookies.role){
-      return{
-        redirect:{
-          destination : '/'
-        }
-      }
-    }
-    else if(cookies.role === 'super admin'){
-        return{
-          redirect:{
-            destination : '/admin'
-          }
-        }
-    }
-    
-    return{
-      props: {}
-    }
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx);
+
+  if (!cookies.role) {
+    return {
+      redirect: {
+        destination: "/",
+      },
+    };
+  } else if (cookies.role === "super admin") {
+    return {
+      redirect: {
+        destination: "/admin",
+      },
+    };
   }
 
+  return {
+    props: {},
+  };
+}
+
 const dataWilayah = () => {
+  const [visibleModal, setVisibleModal] = useState(false);
+
+  const visible = () => {
+    setVisibleModal(true);
+  };
+
+  // const notVisible = () => {
+  //   setVisibleModal(false);
+  // };
   return (
     <section className="container-fluid h-screen relative">
       <div className="absolute -z-10 inset-0">
@@ -44,13 +55,20 @@ const dataWilayah = () => {
           </h1>
           <div>
             <button
-              type=""
+              type="button"
+              onClick={visible}
               className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
             >
               Tambah Kecamatan
             </button>
           </div>
         </div>
+        {/* Modal Start */}
+        <AddKec
+          isvisible={visibleModal}
+          onClose={() => setVisibleModal(false)}
+        />
+        {/* Modal End */}
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 border-2 shadow-lg shad">
             <thead className="">
