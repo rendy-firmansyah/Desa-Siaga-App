@@ -1,45 +1,44 @@
-'use client'
+"use client";
 
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { ToastContainer,toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddKec = ({ isvisible, onClose }) => {
   if (!isvisible) return null;
-  
-  //get inputan 
-  const [nama,setName] = useState("");
-  const [alamat,setAlamat] = useState("");
+
+  //get inputan
+  const [nama, setName] = useState("");
+  const [alamat, setAlamat] = useState("");
 
   //function up data to api
-  async function addKecamatan(){
-      const send = await axios.post("/api/Kecamatan",{nama,alamat})
-      
-      if(send.data.status === 'success'){
-          toast(`✅ ${send.data.message}`, {
-            position: "top-right",
-            autoClose: 1,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress:1,
-            theme: "light",
-          });
-          onClose();
-      }
-      else{
-          toast(`❌ ${send.data.message}`, {
-            position: "top-right",
-            autoClose: 0.1,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress:1,
-            theme: "light",
-          });
-      }
+  async function addKecamatan() {
+    const send = await axios.post("/api/Kecamatan", { nama, alamat });
+
+    if (send.data.status === "success") {
+      toast(`✅ ${send.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+      onClose(true);
+    } else {
+      toast(`❌ ${send.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+    }
   }
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -60,14 +59,14 @@ const AddKec = ({ isvisible, onClose }) => {
               className="border rounded p-2 mt-1 text-black"
               type="text"
               placeholder="ex: Sumbersari"
-              onChange={(e)=>setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
             <label className="text-gray-600 mt-2">Alamat</label>
             <input
               className="border rounded p-2 mt-1 text-black"
               type="text"
               placeholder="ex: jl. sudirman xxxx"
-              onChange={(e)=>setAlamat(e.target.value)}
+              onChange={(e) => setAlamat(e.target.value)}
             />
           </div>
 
@@ -79,9 +78,10 @@ const AddKec = ({ isvisible, onClose }) => {
               Cancel
             </button>
 
-            <button 
-            onClick={(e) => addKecamatan()}
-            className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md">
+            <button
+              onClick={(e) => addKecamatan()}
+              className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md"
+            >
               Save
             </button>
           </div>
