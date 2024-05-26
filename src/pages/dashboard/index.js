@@ -46,8 +46,8 @@ const Dashboard = () => {
           className="lg:max-h-screen h-full"
         />
       </div>
-      <div className="pt-14 mb-16">
-        <h1 className="text-6xl font-extrabold text-center">
+      <div className="pt-14 mb-8 md:mb-16 lg:mb-16 xl:mb-16">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-6xl font-extrabold text-center">
           <span className="text-stroke text-white">DESA SIAGA </span>
           <span className="text-primary-default">DESA TANGGUH</span>
         </h1>
@@ -61,7 +61,7 @@ const Dashboard = () => {
         `}</style>
       </div>
       {/* --- */}
-      <div className="bg-gray-100 mx-10 md:mx-48 py-10 rounded-2xl shadow-xl">
+      <div className="bg-gray-100 mx-10 md:mx-20 lg:mx-48 xl:mx-48 py-10 rounded-2xl shadow-xl">
         <h1 className="text-black text-3xl font-bold tracking-normal text-center">
           Selamat Datang, Relawan Desa
         </h1>
@@ -127,7 +127,7 @@ const Dashboard = () => {
           </Link>
         </div>
       </div>
-      <div className="flex justify-center mt-5">
+      <div className="flex justify-center mt-5 pb-10">
         <button
           onClick={logout}
           className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"

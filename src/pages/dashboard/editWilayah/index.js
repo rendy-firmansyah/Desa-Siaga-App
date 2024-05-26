@@ -2,9 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import bgDasboard from "../../../../public/bg-2.jpg";
 import nookies from "nookies";
-import addKec from "../../../components/addKec";
+import addKec from "./addKec";
 import { useState } from "react";
-import AddKec from "../../../components/addKec";
+import AddKec from "./addKec";
 
 //islogin
 export async function getServerSideProps(ctx) {

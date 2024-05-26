@@ -32,6 +32,9 @@ module.exports = {
         yellow: {
           default: "#E5B12A",
         },
+        input: {
+          default: "#FCE7CF",
+        },
       },
     },
   },
