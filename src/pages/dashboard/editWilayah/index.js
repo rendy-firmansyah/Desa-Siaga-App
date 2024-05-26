@@ -3,8 +3,11 @@ import Image from "next/image";
 import bgDasboard from "../../../../public/bg-2.jpg";
 import nookies from "nookies";
 import addKec from "./addKec";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddKec from "./addKec";
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -39,8 +42,21 @@ const dataWilayah = () => {
   // const notVisible = () => {
   //   setVisibleModal(false);
   // };
+
+
+  //get data kecamatan
+  const [data,setData] = useState([])
+  const getData = async () => {
+    const res = await axios.get('/api/Kecamatan')
+    const data = res.data
+    setData(data)
+  }
+  useEffect(() => {
+    getData()
+  },[])
   return (
     <section className="container-fluid h-screen relative">
+      <ToastContainer />
       <div className="absolute -z-10 inset-0">
         <Image
           src={bgDasboard}
@@ -85,12 +101,13 @@ const dataWilayah = () => {
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr>
+              {data.map((items,index)=>(
+              <tr key={items.id}>
                 <td class="text-black px-6 py-4 whitespace-nowrap">
-                  Sumbersari
+                  {items.nama}
                 </td>
                 <td class="text-black px-6 py-4 whitespace-nowrap">
-                  Jl.Raya Tegal Besar Sumbersari
+                  {items.alamat}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap flex items-center">
                   <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
@@ -178,6 +195,7 @@ const dataWilayah = () => {
                   </Link>
                 </td>
               </tr>
+              ))}
             </tbody>
           </table>
         </div>
