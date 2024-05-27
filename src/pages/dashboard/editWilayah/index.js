@@ -9,6 +9,7 @@ import EditKec from "./editKec";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -64,6 +65,11 @@ const dataWilayah = () => {
       getData();
     }
   };
+
+  const router = useRouter();
+  const passDataDesa = (data) => {
+    router.push(`/dashboard/editWilayah/dataDesa?id=${encodeURIComponent(data.id)}`);
+  }
 
   return (
     <section className="container-fluid h-screen relative">
@@ -204,11 +210,13 @@ const dataWilayah = () => {
                         </g>
                       </svg>
                     </button>
-                    <Link href="/dashboard/editWilayah/dataDesa">
-                      <button class="ml-2 px-5 py-3  text-white font-medium text-sm bg-secondary-default rounded-md hover:bg-secondary-light focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out">
+                    {/* <Link href="/dashboard/editWilayah/dataDesa"> */}
+                      <button 
+                        onClick={() => passDataDesa(items)}
+                        class="ml-2 px-5 py-3  text-white font-medium text-sm bg-secondary-default rounded-md hover:bg-secondary-light focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out">
                         Lihat Desa
                       </button>
-                    </Link>
+                    {/* </Link> */}
                   </td>
                 </tr>
               ))}

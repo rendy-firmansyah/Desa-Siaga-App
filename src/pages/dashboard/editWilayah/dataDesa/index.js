@@ -2,6 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import bgDasboard from "../../../../../public/bg-2.jpg";
 import nookies from "nookies";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 //checkUser
 export async function getServerSideProps(ctx) {
@@ -27,6 +30,24 @@ export async function getServerSideProps(ctx) {
 }
 
 const dataWilayah = () => {
+  const router = useRouter();
+  const {id} = router.query;
+  const [data,setData] = useState([]);
+
+  //passing id to page tambah desa
+  const passDataDesa = () => {
+    router.push(`/dashboard/editWilayah/dataDesa/tambahDesa?id=${encodeURIComponent(id)}`);
+  }
+
+  //get data desa
+  useEffect(() => {
+    const getDataDesa = async () => {
+      const data = await axios.get(`/api/desa/?id=${id}`)
+      setData(data.data)
+    }
+    getDataDesa()
+  },[])
+
   return (
     <section className="container-fluid h-screen relative">
       <div className="absolute -z-10 inset-0">
@@ -42,14 +63,15 @@ const dataWilayah = () => {
             Data Desa Wilayah Kecamatan
           </h1>
           <div>
-            <Link href="/dashboard/editWilayah/dataDesa/tambahDesa">
+            {/* <Link href="/dashboard/editWilayah/dataDesa/tambahDesa"> */}
               <button
+                onClick={passDataDesa}
                 type=""
                 className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
               >
                 Tambah Desa
               </button>
-            </Link>
+            {/* </Link> */}
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -68,12 +90,13 @@ const dataWilayah = () => {
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr>
+              {data.map((item)=>(
+              <tr key={item.id}>
                 <td class="text-black px-6 py-4 whitespace-nowrap">
-                  Maguwoharjo
+                  {item.nama}
                 </td>
                 <td class="text-black px-6 py-4 whitespace-nowrap">
-                  Jl.Raya Tegal Besar Sumbersari
+                  {item.alamat}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap flex items-center">
                   <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
@@ -156,6 +179,7 @@ const dataWilayah = () => {
                   </button>
                 </td>
               </tr>
+              ))}
             </tbody>
           </table>
         </div>

@@ -24,4 +24,25 @@ model kecamatan{
   id        BigInt  @id @default(autoincrement())
   nama      String
   alamat    String
+  desa      desa[]
+}
+model desa {
+  id                  BigInt  @id @default(autoincrement())
+  nama                String
+  alamat              String
+  telepon             String
+  website             String
+  email               String
+  luas                Float
+  letak_dan_batas     String
+  banyak_dusun        Int
+  jumlah_penduduk     Int
+  akses_komunikasi    String
+  akses_transportasi  String
+  nama_responden      String
+  nip_responden       String
+  jabatan_responden   String
+  nomor_hp_responden  String
+  kecamatan_id        BigInt
+  kecamatan           kecamatan @relation(fields: [kecamatan_id], references: [id])
 }
