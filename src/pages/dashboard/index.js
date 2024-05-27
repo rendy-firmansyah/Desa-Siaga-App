@@ -66,7 +66,7 @@ const Dashboard = () => {
           Selamat Datang, Relawan Desa
         </h1>
         <div class="flex flex-wrap justify-center mt-5">
-          <Link href="/kajianResiko">
+          <Link href="/dashboard/kajianResiko">
             <div class="p-4 max-w-sm">
               <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
                 <div class="flex items-center">
