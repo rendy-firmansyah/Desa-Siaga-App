@@ -7,15 +7,15 @@ const DetailDataStatistik = () => {
   return (
     <main>
       <Navbar />
-      <div className="container-fluid px-[80px]">
+      <div className="container-fluid xl:px-[80px] lg:px-[40px] md:px-[40px] px-[10px]">
         <div className="mt-[150px] mb-[250px]">
             <div className="flex justify-between">
                 <div className="text-black font-semibold text-[20px]">Kecamatan Arjasa, Desa Arjasa</div>
                 <div className="w-[100px] h-[40px] bg-red-default flex items-center justify-center font-semibold text-[20px] text-black">Status</div>
             </div>
-            <div className="w-full bg-white px-[50px] py-[50px] shadow-lg mt-[35px]">
+            <div className="w-full bg-white xl:px-[50px] lg:px-[35px] md:px-[25px] px-[15px] xl:py-[50px] lg:py-[35px] py-[15px] md:py-[25px] shadow-lg mt-[35px]">
                 <div className="grid grid-cols-12">
-                    <div className="col-span-6 flex justify-center">
+                    <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 flex justify-center">
                         <div className="w-[490px]">
                             <div className="text-black font-semibold text-[28px]">Karakteristik Wilayah</div>
                             <div className="mt-[10px] mb-[20px]">
@@ -37,7 +37,7 @@ const DetailDataStatistik = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-span-6 flex justify-center">
+                    <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 flex justify-center">
                         <div className="w-[490px]">
                             <div>
                                 <div className="text-black font-semibold text-[28px] mb-[10px]">Jenis Bencana</div>

@@ -77,7 +77,7 @@ const Login = () => {
     <div className="container-fluid bg-white flex justify-center">
       <ToastContainer />
       <div className="grid grid-cols-12 h-screen">
-        <div className="col-span-6 flex justify-center h-full relative">
+        <div className="xl:col-span-6 lg:col-span-6 md:col-span-12 col-span-12 flex justify-center xl:h-full lg:h-full md:h-[150px] h-[150px] relative">
           <Image
             src="/bg-right.png"
             width={800}
@@ -85,58 +85,59 @@ const Login = () => {
             alt="image"
             className="object-cover filter brightness-50"
           />
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div className="font-extrabold text-[64px]">DESA SIAGA</div>
-            <div className="font-extrabold text-[64px] text-primary-default">
+          <div className="absolute inset-0 flex xl:flex-col lg:flex-col md:flex-row flex-row items-center justify-center">
+            <div className="font-extrabold xl:text-[64px] lg:text-[52px] md:text-[32px] text-[20px]">DESA SIAGA</div>
+            <div className="font-extrabold xl:text-[64px] lg:text-[52px] md:text-[32px] text-[20px] xl:ms-0 lg:ms-0 md:ms-[10px] ms-[5px] text-primary-default">
               DESA TANGGUH
             </div>
           </div>
         </div>
-        <div className="col-span-6 flex justify-center items-center">
+        <div className="xl:col-span-6 lg:col-span-6 md:col-span-12 col-span-12 flex justify-center items-center">
           <div className="w-[550px]">
             <div className="flex justify-center">
-              <div className="font-bold text-[32px] text-gray-800 mb-[45px]">
+              <div className="font-bold xl:text-[32px] lg:text-[28px] md:text-[28px] text-[24px] text-gray-800 mb-[45px]">
                 Selamat Datang
               </div>
             </div>
-            <form className="mt-4">
-              <div className="mb-[24px]">
-                <label
-                  htmlFor="username"
-                  className="block text-xl font-semibold text-gray-800"
-                >
-                  Username
-                </label>
-                <input
-                  type="username"
-                  placeholder="Masukan Username"
-                  onChange={(e)=> setEmail(e.target.value)}
-                  className="w-full h-[60px] mt-3 rounded-[50px] px-[20px] text-gray-700 border-[2px] border-[#757575]"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="password"
-                  className="block text-xl font-semibold text-gray-800"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  placeholder="Masukan Password"
-                  onChange={(e)=>setPassword(e.target.value)}
-                  className="w-full h-[60px] mt-3 rounded-[50px] px-[20px] text-gray-700 border-[2px] border-[#757575]"
-                />
-              </div>
-            </form>
-            <div className="flex justify-center mt-[40px]">
-                <button
-                  type="submit"
-                  onClick={login}
-                  className="w-[370px] h-[55px] bg-secondary-default rounded-[10px] text-[24px] font-bold"
-                >
-                  Login
-                </button>
+            <div className="flex justify-center">
+              <form className="mt-4" onSubmit={(e)=>{e.preventDefault(); login()}}>
+                <div className="mb-[24px]">
+                  <label
+                    htmlFor="username"
+                    className="block xl:text-xl lg:text-lg md:text-md text-sm font-semibold text-gray-800"
+                  >
+                    Username
+                  </label>
+                  <input
+                    type="username"
+                    placeholder="Masukan Username"
+                    onChange={(e)=> setEmail(e.target.value)}
+                    className="xl:w-[550px] lg:w-[480px] md:w-[480px] w-[350px] h-[60px] mt-3 rounded-[50px] px-[20px] text-gray-700 border-[2px] border-[#757575]"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="password"
+                    className="block xl:text-xl lg:text-lg md:text-md text-sm font-semibold text-gray-800"
+                  >
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="Masukan Password"
+                    onChange={(e)=>setPassword(e.target.value)}
+                    className="xl:w-[550px] lg:w-[480px] md:w-[480px] w-[350px] h-[60px] mt-3 rounded-[50px] px-[20px] text-gray-700 border-[2px] border-[#757575]"
+                  />
+                </div>
+                <div className="flex justify-center mt-[40px]">
+                    <button
+                      type="submit"
+                      className="xl:w-[370px] lg:w-[330px] md:w-[330px] w-[230px] h-[55px] bg-secondary-default rounded-[10px] text-[24px] font-bold"
+                    >
+                      Login
+                    </button>
+                </div>
+              </form>
             </div>
             <div className="flex items-center justify-center mt-[55px]">
               <div className="mr-[10px] font-bold text-gray-800 text-[24px]">
