@@ -66,7 +66,7 @@ const Dashboard = () => {
           Selamat Datang, Relawan Desa
         </h1>
         <div class="flex flex-wrap justify-center mt-5">
-          <Link href="/">
+          <Link href="/kajianResiko">
             <div class="p-4 max-w-sm">
               <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
                 <div class="flex items-center">
@@ -81,7 +81,7 @@ const Dashboard = () => {
             </div>
           </Link>
 
-          <Link href="/">
+          <Link href="/dashboard/pelaporanBencana">
             <div class="p-4 max-w-sm">
               <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
                 <div class="flex items-center">
@@ -89,7 +89,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <h4 class="text-black text-md font-medium text-center">
-                Form Pengkajian
+                Form Pelaporan
                 <br />
                 Awal Bencana
               </h4>
