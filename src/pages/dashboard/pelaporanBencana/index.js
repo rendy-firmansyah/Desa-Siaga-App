@@ -2,8 +2,18 @@ import Link from "next/link";
 import Image from "next/image";
 import bgDashboard from "../../../../public/bg-2.jpg";
 import Router from "next/router";
+import { useState } from "react";
 
 const PelaporanBencana = () => {
+  const [selectedKec, setSelectedKec] = useState("Pilih.......");
+  const [selectedDesa, setSelectedDesa] = useState("Pilih.......");
+
+  const handleKecSelect = (kec) => {
+    setSelectedKec(kec);
+  };
+  const handleDesaSelect = (desa) => {
+    setSelectedDesa(desa);
+  };
   const handleBack = () => {
     Router.back();
   };
@@ -16,80 +26,109 @@ const PelaporanBencana = () => {
           className="lg:max-h-screen h-full"
         />
       </div>
-      <div className="flex flex-col justify-center items-center h-screen mx-[50px] md:mx-[200px] lg:mx-[400px] xl:mx-[400px]">
-        <h1 className="text-black font-extrabold text-2xl">
-          Pilih Wilayah Kecamatan dan Desa
+      <div className="flex flex-col justify-center pb-10">
+        <h1 className="text-black text-3xl font-bold text-center my-8">
+          Kuisioner Pelaporan Kejadian Awal Bencana
         </h1>
-        <div className="flex flex-col w-full bg-white p-10 mt-5 rounded-2xl shadow-lg">
-          <div class="relative group">
-            <h2 class="text-sm text-black font-medium text-center mb-2">
-              Pilih Kecamatan
-            </h2>
-            <button class="py-2.5 px-3 w-full md:text-sm text-black bg-input-default border-2 border-primary-default focus:border-brand focus:ring-0 peer flex items-center rounded font-semibold">
-              Pilih .......
-            </button>
-            <div class="absolute z-[99] top-[100%] left-[50%] translate-x-[-50%] rounded-md overflow-y-scroll max-h-40 shadow-lg min-w-[450px] w-max peer-focus:visible peer-focus:opacity-100 opacity-0 invisible duration-200 p-1 bg-primary-default border border-dimmed text-xs md:text-sm">
-              <div class=" w-full block cursor-pointer bg-primary-default hover:bg-primary-dark hover:text-link px-3 py-2 rounded-md">
-                Kecamatan 1
-              </div>
-              <div class=" w-full block cursor-pointer bg-primary-default hover:bg-primary-dark hover:text-link px-3 py-2 rounded-md">
-                Kecamatan 2
-              </div>
-              <div class=" w-full block cursor-pointer bg-primary-default hover:bg-primary-dark hover:text-link px-3 py-2 rounded-md">
-                Kecamatan 3
-              </div>
-              <div class=" w-full block cursor-pointer bg-primary-default hover:bg-primary-dark hover:text-link px-3 py-2 rounded-md">
-                Kecamatan 4
-              </div>
-              <div class=" w-full block cursor-pointer bg-primary-default hover:bg-primary-dark hover:text-link px-3 py-2 rounded-md">
-                Kecamatan 5
+        <div className="bg-white p-8 h-auto w-auto border rounded-2xl shadow-lg mx-8 md:mx-14 lg:mx-32 xl:mx-32 mt-3">
+          <form>
+            <div className="grid grid-cols-1 md:grid-cols-1 ">
+              <div className="input-dataumum mx-3">
+                <h1 className="text-black font-bold text-2xl">
+                  Isi Kuisioner :
+                </h1>
+                <div className="grid grid-cols-2 gap-x-3">
+                  <div className="flex flex-col">
+                    <label className="font-semibold text-md text-black">
+                      Jenis Bencana
+                    </label>
+                    <input
+                      className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+                      type="text"
+                      placeholder="ex: banjir"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="font-semibold text-md text-black">
+                      Waktu Kejadian Bencana
+                    </label>
+                    <input
+                      className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+                      type="date"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex flex-col mt-2">
+                    <label className="font-semibold text-md text-black">
+                      Deskripsi Bencana
+                    </label>
+                    <textarea
+                      className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+                      type="text"
+                      placeholder="ex: bencana xxxxxx"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col mt-2">
+                  <label className="font-semibold text-md text-black">
+                    Lokasi Kejadian
+                  </label>
+                  <input
+                    className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+                    type="text"
+                    placeholder="ex: dusun xxxxx"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-x-3">
+                  <div className="flex flex-col mt-2">
+                    <label className="font-semibold text-md text-black">
+                      Kecamatan
+                    </label>
+                    <select
+                      className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+                      onChange={(e) => handleKecSelect(e.target.value)}
+                    >
+                      <option value="Pilih......">Pilih......</option>
+                      <option value="Kecamatan 1">Kecamatan 1</option>
+                      <option value="Kecamatan 2">Kecamatan 2</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col mt-2">
+                    <label className="font-semibold text-md text-black">
+                      Desa
+                    </label>
+                    <select
+                      className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+                      onChange={(e) => handleKecSelect(e.target.value)}
+                    >
+                      <option value="Pilih......">Pilih......</option>
+                      <option value="Kecamatan 1">Kecamatan 1</option>
+                      <option value="Kecamatan 2">Kecamatan 2</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="flex flex-col mt-2">
+                  <label className="font-semibold text-md text-black">
+                    Jumlah Penduduk Terancam
+                  </label>
+                  <input
+                    className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+                    type="text"
+                    placeholder="ex: 1445 korban"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="relative group mt-5">
-            <h2 class="text-sm text-black font-medium text-center mb-2">
-              Pilih Desa
-            </h2>
-            <button class="py-2.5 px-3 w-full md:text-sm text-black bg-input-default border-2 border-primary-default border-dimmed  focus:border-brand focus:ring-0 peer flex items-center justify-between rounded font-semibold">
-              Pilih .......
-            </button>
-            <div class="absolute z-[99] top-[100%] left-[50%] translate-x-[-50%] rounded-md overflow-y-scroll max-h-40 shadow-lg min-w-[450px] w-max peer-focus:visible peer-focus:opacity-100 opacity-0 invisible duration-200 p-1 bg-primary-default border border-dimmed text-xs md:text-sm">
-              <div class=" w-full block cursor-pointer bg-primary-default hover:bg-primary-dark hover:text-link px-3 py-2 rounded-md">
-                Desa 1
-              </div>
-              <div class=" w-full block cursor-pointer bg-primary-default hover:bg-primary-dark hover:text-link px-3 py-2 rounded-md">
-                Desa 2
-              </div>
-              <div class=" w-full block cursor-pointer bg-primary-default hover:bg-primary-dark hover:text-link px-3 py-2 rounded-md">
-                Desa 3
-              </div>
-              <div class=" w-full block cursor-pointer bg-primary-default hover:bg-primary-dark hover:text-link px-3 py-2 rounded-md">
-                Desa 4
-              </div>
-              <div class=" w-full block cursor-pointer bg-primary-default hover:bg-primary-dark hover:text-link px-3 py-2 rounded-md">
-                Desa 5
-              </div>
-            </div>
-          </div>
+          </form>
         </div>
-        <div className="flex sm:flex-col w-full justify-between mt-5">
-          <div>
-            <button
-              type="button"
-              onClick={handleBack}
-              className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
-            >
-              Kembali
-            </button>
-          </div>
-          <div>
-            <button
-              type="button"
-              className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
-            >
-              Lanjut
-            </button>
-          </div>
+        <div className="flex justify-center mt-5">
+          <button
+            type=""
+            className="bg-secondary-default w-full mx-8 md:mx-14 lg:mx-32 xl:mx-32 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+          >
+            Lanjut Kuisioner Berikutnya
+          </button>
         </div>
       </div>
     </section>

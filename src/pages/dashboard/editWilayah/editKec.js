@@ -1,5 +1,6 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
 export default function EditKec({ isvisible, onClose, data }) {
@@ -14,8 +15,12 @@ export default function EditKec({ isvisible, onClose, data }) {
   }, [data]);
 
   const editKecamatan = async () => {
-    const send = await axios.put("/api/Kecamatan", { nama, alamat, id :data.id});
-    if (send.data.status === "success") { 
+    const send = await axios.put("/api/Kecamatan", {
+      nama,
+      alamat,
+      id: data.id,
+    });
+    if (send.data.status === "success") {
       toast(`✅ ${send.data.message}`, {
         position: "top-right",
         autoClose: 1,
@@ -59,6 +64,7 @@ export default function EditKec({ isvisible, onClose, data }) {
               className="border rounded p-2 mt-1 text-black"
               type="text"
               value={nama}
+              onChange={(e) => setNama(e.target.value)}
               placeholder="ex: Sumbersari"
             />
             <label className="text-gray-600 mt-2">Alamat</label>
@@ -66,6 +72,7 @@ export default function EditKec({ isvisible, onClose, data }) {
               className="border rounded p-2 mt-1 text-black"
               type="text"
               value={alamat}
+              onChange={(e) => setAlamat(e.target.value)}
               placeholder="ex: jl. sudirman xxxx"
             />
           </div>
@@ -78,9 +85,10 @@ export default function EditKec({ isvisible, onClose, data }) {
               Cancel
             </button>
 
-            <button 
-            onClick={() => editKecamatan()}
-            className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md">
+            <button
+              onClick={() => editKecamatan()}
+              className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md"
+            >
               Save
             </button>
           </div>

@@ -31,22 +31,31 @@ export async function getServerSideProps(ctx) {
 
 const dataWilayah = () => {
   const router = useRouter();
-  const {id} = router.query;
-  const [data,setData] = useState([]);
+  const { id } = router.query;
+  const [data, setData] = useState([]);
 
   //passing id to page tambah desa
   const passDataDesa = () => {
-    router.push(`/dashboard/editWilayah/dataDesa/tambahDesa?id=${encodeURIComponent(id)}`);
-  }
+    router.push(
+      `/dashboard/editWilayah/dataDesa/tambahDesa?id=${encodeURIComponent(id)}`
+    );
+  };
+
+  // handle id to page edit desa
+  const handleDataEditDesa = () => {
+    router.push(
+      `/dashboard/editWilayah/dataDesa/editDesa?id=${encodeURIComponent(id)}`
+    );
+  };
 
   //get data desa
   useEffect(() => {
     const getDataDesa = async () => {
-      const data = await axios.get(`/api/desa/?id=${id}`)
-      setData(data.data)
-    }
-    getDataDesa()
-  },[])
+      const data = await axios.get(`/api/desa/?id=${id}`);
+      setData(data.data);
+    };
+    getDataDesa();
+  }, []);
 
   return (
     <section className="container-fluid h-screen relative">
@@ -64,13 +73,13 @@ const dataWilayah = () => {
           </h1>
           <div>
             {/* <Link href="/dashboard/editWilayah/dataDesa/tambahDesa"> */}
-              <button
-                onClick={passDataDesa}
-                type=""
-                className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
-              >
-                Tambah Desa
-              </button>
+            <button
+              onClick={passDataDesa}
+              type=""
+              className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+            >
+              Tambah Desa
+            </button>
             {/* </Link> */}
           </div>
         </div>
@@ -90,95 +99,98 @@ const dataWilayah = () => {
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              {data.map((item)=>(
-              <tr key={item.id}>
-                <td class="text-black px-6 py-4 whitespace-nowrap">
-                  {item.nama}
-                </td>
-                <td class="text-black px-6 py-4 whitespace-nowrap">
-                  {item.alamat}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap flex items-center">
-                  <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
-                    <svg
-                      width="20px"
-                      height="20px"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                      <g
-                        id="SVGRepo_tracerCarrier"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></g>
-                      <g id="SVGRepo_iconCarrier">
-                        {" "}
-                        <path
-                          d="M10 10C10 10.5523 10.4477 11 11 11V17C10.4477 17 10 17.4477 10 18C10 18.5523 10.4477 19 11 19H13C13.5523 19 14 18.5523 14 18C14 17.4477 13.5523 17 13 17V9H11C10.4477 9 10 9.44772 10 10Z"
-                          fill="#0F0F0F"
-                        ></path>{" "}
-                        <path
-                          d="M12 8C12.8284 8 13.5 7.32843 13.5 6.5C13.5 5.67157 12.8284 5 12 5C11.1716 5 10.5 5.67157 10.5 6.5C10.5 7.32843 11.1716 8 12 8Z"
-                          fill="#0F0F0F"
-                        ></path>{" "}
-                        <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
-                          d="M23 4C23 2.34315 21.6569 1 20 1H4C2.34315 1 1 2.34315 1 4V20C1 21.6569 2.34315 23 4 23H20C21.6569 23 23 21.6569 23 20V4ZM21 4C21 3.44772 20.5523 3 20 3H4C3.44772 3 3 3.44772 3 4V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V4Z"
-                          fill="#0F0F0F"
-                        ></path>{" "}
-                      </g>
-                    </svg>
-                  </button>
-                  <button class="ml-2 px-3 py-3 bg-amber-400 rounded-md hover:bg-amber-200 focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out">
-                    <svg
-                      width="20px"
-                      height="20px"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="#000000"
-                    >
-                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                      <g
-                        id="SVGRepo_tracerCarrier"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></g>
-                      <g id="SVGRepo_iconCarrier">
-                        {" "}
-                        <title></title>{" "}
-                        <g id="Complete">
+              {data.map((item) => (
+                <tr key={item.id}>
+                  <td class="text-black px-6 py-4 whitespace-nowrap">
+                    {item.nama}
+                  </td>
+                  <td class="text-black px-6 py-4 whitespace-nowrap">
+                    {item.alamat}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap flex items-center">
+                    <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
+                      <svg
+                        width="20px"
+                        height="20px"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g
+                          id="SVGRepo_tracerCarrier"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></g>
+                        <g id="SVGRepo_iconCarrier">
                           {" "}
-                          <g id="edit">
+                          <path
+                            d="M10 10C10 10.5523 10.4477 11 11 11V17C10.4477 17 10 17.4477 10 18C10 18.5523 10.4477 19 11 19H13C13.5523 19 14 18.5523 14 18C14 17.4477 13.5523 17 13 17V9H11C10.4477 9 10 9.44772 10 10Z"
+                            fill="#0F0F0F"
+                          ></path>{" "}
+                          <path
+                            d="M12 8C12.8284 8 13.5 7.32843 13.5 6.5C13.5 5.67157 12.8284 5 12 5C11.1716 5 10.5 5.67157 10.5 6.5C10.5 7.32843 11.1716 8 12 8Z"
+                            fill="#0F0F0F"
+                          ></path>{" "}
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M23 4C23 2.34315 21.6569 1 20 1H4C2.34315 1 1 2.34315 1 4V20C1 21.6569 2.34315 23 4 23H20C21.6569 23 23 21.6569 23 20V4ZM21 4C21 3.44772 20.5523 3 20 3H4C3.44772 3 3 3.44772 3 4V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V4Z"
+                            fill="#0F0F0F"
+                          ></path>{" "}
+                        </g>
+                      </svg>
+                    </button>
+                    <button
+                      onClick={handleDataEditDesa}
+                      class="ml-2 px-3 py-3 bg-amber-400 rounded-md hover:bg-amber-200 focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out"
+                    >
+                      <svg
+                        width="20px"
+                        height="20px"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="#000000"
+                      >
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g
+                          id="SVGRepo_tracerCarrier"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></g>
+                        <g id="SVGRepo_iconCarrier">
+                          {" "}
+                          <title></title>{" "}
+                          <g id="Complete">
                             {" "}
-                            <g>
+                            <g id="edit">
                               {" "}
-                              <path
-                                d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8"
-                                fill="none"
-                                stroke="#0F0F0F"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                              ></path>{" "}
-                              <polygon
-                                fill="none"
-                                points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8"
-                                stroke="#0F0F0F"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                              ></polygon>{" "}
+                              <g>
+                                {" "}
+                                <path
+                                  d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8"
+                                  fill="none"
+                                  stroke="#0F0F0F"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                ></path>{" "}
+                                <polygon
+                                  fill="none"
+                                  points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8"
+                                  stroke="#0F0F0F"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                ></polygon>{" "}
+                              </g>{" "}
                             </g>{" "}
                           </g>{" "}
-                        </g>{" "}
-                      </g>
-                    </svg>
-                  </button>
-                </td>
-              </tr>
+                        </g>
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>
