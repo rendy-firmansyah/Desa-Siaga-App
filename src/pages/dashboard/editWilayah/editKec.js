@@ -1,4 +1,6 @@
+'use client'
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function EditKec({ isvisible, onClose, data }) {
   const [nama, setNama] = useState("");
@@ -10,6 +12,32 @@ export default function EditKec({ isvisible, onClose, data }) {
       setAlamat(data.alamat);
     }
   }, [data]);
+
+  const editKecamatan = async () => {
+    const send = await axios.put("/api/Kecamatan", { nama, alamat, id :data.id});
+    if (send.data.status === "success") { 
+      toast(`✅ ${send.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+      onClose(true);
+    } else {
+      toast(`❌ ${send.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+    }
+  };
 
   if (!isvisible) return null;
   return (
@@ -50,7 +78,9 @@ export default function EditKec({ isvisible, onClose, data }) {
               Cancel
             </button>
 
-            <button className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md">
+            <button 
+            onClick={() => editKecamatan()}
+            className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md">
               Save
             </button>
           </div>

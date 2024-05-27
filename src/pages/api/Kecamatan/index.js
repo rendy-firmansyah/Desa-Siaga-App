@@ -30,9 +30,35 @@ export default async function UserHandler(req,res){
             const kecamatan = await prisma.kecamatan.findMany();
             const convertedKecamatan = kecamatan.map(item => ({
                 ...item,
-                id: Number(item.id)
+                id: item.id.toString(),
             }));
             return res.status(200).json(convertedKecamatan);
+        } catch (error) {
+            return res.status(500).json({message: "Server error!", status : 'failed'})
+        }
+    }
+    if (req.method === 'PUT') {
+        const {id,nama,alamat} = req.body;
+        try {
+            const kecamatan = await prisma.kecamatan.update({
+                where : {id: BigInt(id)},
+                data : {
+                    nama : nama.toLowerCase(),
+                    alamat
+                }
+            })
+            return res.status(200).json({message : "Update Kecamatan Berhasil",status : 'success'})
+        } catch (error) {
+            return res.status(500).json({message: "Server error!", status : 'failed'})
+        }
+    }
+    if (req.method === 'DELETE') {
+        const {id} = req.body;
+        try {
+            const kecamatan = await prisma.kecamatan.delete({
+                where : {id: BigInt(id)}
+            })
+            return res.status(200).json({message : "Delete Kecamatan Berhasil",status : 'success'})
         } catch (error) {
             return res.status(500).json({message: "Server error!", status : 'failed'})
         }
