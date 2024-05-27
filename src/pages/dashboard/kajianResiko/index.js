@@ -12,7 +12,7 @@ const KajianResiko = () => {
         <div className="absolute -z-10 inset-0">
             <Image
                 src={bgDashboard}
-                alt="background-image"
+                alt="bg-image"
                 className="h-full"
             />
         </div>
