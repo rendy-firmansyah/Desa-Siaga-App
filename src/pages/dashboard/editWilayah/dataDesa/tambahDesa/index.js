@@ -3,6 +3,11 @@ import Image from "next/image";
 import bgDasboard from "../../../../../../public/bg-2.jpg";
 import nookies from "nookies";
 import Router from "next/router";
+import { useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 //checkUser
 export async function getServerSideProps(ctx) {
@@ -28,11 +33,75 @@ export async function getServerSideProps(ctx) {
 }
 
 const AddDesa = () => {
+  const router = useRouter();
+  const {id} = router.query
   const backTo = () => {
     Router.back();
   };
+
+  //setter get data input
+  const [nama,setNama] = useState("")
+  const [alamat,setAlamat] = useState("")
+  const [telepon,setTelepon] = useState("")
+  const [website,setWebsite] = useState("")
+  const [email,setEmail] = useState("")
+  const [luas,setLuas] = useState(0)
+  const [letak_dan_batas,setLetak] = useState("")
+  const [banyak_dusun,setDusun] = useState(0)
+  const [jumlah_penduduk,setPenduduk] = useState(0)
+  const [akses_komunikasi,setAksesKomunikasi] = useState("")
+  const [akses_transportasi,setAksesTransportasi] = useState("")
+  const [nama_responden,setResponded] = useState("")
+  const [nip_responden,setNip] = useState("")
+  const [jabatan_responden,setJabatan] = useState("")
+  const [nomor_hp_responden,setNomor] = useState("")
+
+  async function AddDesa(){
+    const send = await axios.post("/api/desa",{
+      nama,
+      alamat,
+      telepon,
+      website,
+      email,
+      luas,
+      letak_dan_batas,
+      banyak_dusun,
+      jumlah_penduduk,
+      akses_komunikasi,
+      akses_transportasi,
+      nama_responden,
+      nip_responden,
+      jabatan_responden,
+      nomor_hp_responden,
+      id:id
+    })
+    if(send.data.status === "success"){
+      toast(`✅ ${send.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+      Router.back();
+    }else{
+      toast(`❌ ${send.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+    }
+  }
+
   return (
     <section className="container-fluid h-screen">
+      <ToastContainer />
       <div className="flex flex-col justify-center pb-10">
         <div className="flex justify-between mx-8 md:mx-14 lg:mx-32 xl:mx-32 mt-10">
           <h1 className="text-black text-xl font-bold">Data Wilayah Desa</h1>
@@ -78,6 +147,7 @@ const AddDesa = () => {
                       Nama Desa
                     </label>
                     <input
+                      onChange={(e) => setNama(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: Sukoharjo"
@@ -88,6 +158,7 @@ const AddDesa = () => {
                       Alamat Kantor Desa
                     </label>
                     <input
+                      onChange={(e) => setAlamat(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: jl. paguyuban xxxxxx"
@@ -98,6 +169,7 @@ const AddDesa = () => {
                       Telepon
                     </label>
                     <input
+                      onChange={(e) => setTelepon(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="number"
                       placeholder="ex: +628xxxxx"
@@ -108,6 +180,7 @@ const AddDesa = () => {
                       Website
                     </label>
                     <input
+                      onChange={(e) => setWebsite(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: sukoharjo.net"
@@ -118,6 +191,7 @@ const AddDesa = () => {
                       Email
                     </label>
                     <input
+                      onChange={(e) => setEmail(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="email"
                       placeholder="ex: sukoharjo@xxxx"
@@ -135,6 +209,7 @@ const AddDesa = () => {
                       Luas Wilayah
                     </label>
                     <input
+                      onChange={(e) => setLuas(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: 36,35"
@@ -145,6 +220,7 @@ const AddDesa = () => {
                       Letak dan Batas Wilayah
                     </label>
                     <input
+                      onChange={(e) => setLetak(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: letak Sukoharjo, batas wilayah Maguwoharjo"
@@ -155,6 +231,7 @@ const AddDesa = () => {
                       Dusun dalam Wilayahnya
                     </label>
                     <input
+                      onChange={(e) => setDusun(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: 14"
@@ -165,6 +242,7 @@ const AddDesa = () => {
                       Jumlah Penduduk
                     </label>
                     <input
+                      onChange={(e) => setPenduduk(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: 4509"
@@ -175,6 +253,7 @@ const AddDesa = () => {
                       Akses Komunikasi
                     </label>
                     <input
+                      onChange={(e) => setAksesKomunikasi(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: jaringan telpon dan wifi"
@@ -185,6 +264,7 @@ const AddDesa = () => {
                       Akses Transportasi
                     </label>
                     <input
+                      onChange={(e) => setAksesTransportasi(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: taxi"
@@ -200,6 +280,7 @@ const AddDesa = () => {
                       Nama
                     </label>
                     <input
+                      onChange={(e) => setResponded(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: fulan"
@@ -210,6 +291,7 @@ const AddDesa = () => {
                       NIP
                     </label>
                     <input
+                      onChange={(e) => setNip(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: 199xxxxxxx"
@@ -220,6 +302,7 @@ const AddDesa = () => {
                       Jabatan
                     </label>
                     <input
+                      onChange={(e) => setJabatan(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
                       placeholder="ex: kepala desa"
@@ -230,6 +313,7 @@ const AddDesa = () => {
                       Nomor HP
                     </label>
                     <input
+                      onChange={(e) => setNomor(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="number"
                       placeholder="ex: +628xxxxx"
@@ -242,6 +326,7 @@ const AddDesa = () => {
         </div>
         <div className="flex justify-center mt-5">
           <button
+            onClick={() => AddDesa()}
             type=""
             className="bg-secondary-default w-full mx-8 md:mx-14 lg:mx-32 xl:mx-32 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
           >
