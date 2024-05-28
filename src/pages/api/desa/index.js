@@ -68,7 +68,6 @@ export default async function UserHandler(req,res){
                     luas,
                     letak_dan_batas,
                     banyak_dusun,
-                    jumlah_dusun,
                     jumlah_penduduk,
                     akses_komunikasi,
                     akses_transportasi,
