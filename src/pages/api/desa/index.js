@@ -30,7 +30,7 @@ export default async function UserHandler(req,res){
                     nip_responden,
                     jabatan_responden,
                     nomor_hp_responden,
-                    kecamatan_id: BigInt(id)
+                    kecamatan_id: Number(id)
                 }
             })
             return res.status(200).json({message : "Registrasi Desa Berhasil",status : 'success'})
@@ -42,7 +42,7 @@ export default async function UserHandler(req,res){
     if(req.method === 'GET'){
         const {id} = req.query
         try {
-            const desa = await prisma.desa.findMany({where : {kecamatan_id : BigInt(id)}});
+            const desa = await prisma.desa.findMany({where : {kecamatan_id : Number(id)}});
             const convertedDesa = desa.map(item => ({
                 ...item,
                 id: item.id.toString(),
@@ -58,7 +58,7 @@ export default async function UserHandler(req,res){
 
         try {
             const desa = await prisma.desa.update({
-                where : {id: BigInt(id)},
+                where : {id: Number(id)},
                 data : {
                     nama : nama.toLowerCase(),
                     alamat,
@@ -88,7 +88,7 @@ export default async function UserHandler(req,res){
         const {id} = req.query
         try {
             const desa = await prisma.desa.delete({
-                where : {id: BigInt(id)}
+                where : {id: Number(id)}
             })
             return res.status(200).json({message : "Delete Desa Berhasil",status : 'success'})
         } catch (error) {
