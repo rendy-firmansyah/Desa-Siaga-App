@@ -60,7 +60,7 @@ const EditDesa = () => {
   useEffect(() => {
     if (id) {
       const fetchData = async () => {
-        const response = await axios.get(`/api/desa/?id=${id}`);
+        const response = await axios.get(`/api/desa/id?id=${id}`);
         const data = response.data;
 
         setNama(data.nama);

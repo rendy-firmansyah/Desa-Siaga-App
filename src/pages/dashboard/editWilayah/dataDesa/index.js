@@ -42,9 +42,9 @@ const dataWilayah = () => {
   };
 
   // handle id to page edit desa
-  const handleDataEditDesa = () => {
+  const handleDataEditDesa = (item) => {
     router.push(
-      `/dashboard/editWilayah/dataDesa/editDesa?id=${encodeURIComponent(id)}`
+      `/dashboard/editWilayah/dataDesa/editDesa?id=${encodeURIComponent(item)}`
     );
   };
 
@@ -142,7 +142,7 @@ const dataWilayah = () => {
                       </svg>
                     </button>
                     <button
-                      onClick={handleDataEditDesa}
+                      onClick={()=>handleDataEditDesa(item.id)}
                       class="ml-2 px-3 py-3 bg-amber-400 rounded-md hover:bg-amber-200 focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out"
                     >
                       <svg
