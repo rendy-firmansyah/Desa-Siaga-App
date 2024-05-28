@@ -34,7 +34,7 @@ export async function getServerSideProps(ctx) {
 
 const EditDesa = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const {id} = router.query
   const backTo = () => {
     Router.back();
   };
@@ -60,7 +60,7 @@ const EditDesa = () => {
   useEffect(() => {
     if (id) {
       const fetchData = async () => {
-        const response = await axios.get("/api/desa/${id}");
+        const response = await axios.get(`/api/desa/?id=${id}`);
         const data = response.data;
 
         setNama(data.nama);
@@ -84,7 +84,8 @@ const EditDesa = () => {
   }, [id]);
 
   async function updateDesa() {
-    const send = await axios.put("/api/desa/${id}", {
+    const send = await axios.put("/api/desa", {
+      id: id,
       nama,
       alamat,
       telepon,
@@ -100,7 +101,6 @@ const EditDesa = () => {
       nip_responden,
       jabatan_responden,
       nomor_hp_responden,
-      id: id,
     });
     if (send.data.status === "success") {
       toast(`✅ ${send.data.message}`, {
