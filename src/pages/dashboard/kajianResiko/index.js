@@ -131,7 +131,7 @@ const KajianResiko = () => {
                         </button>
                     </div>
                     <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 xl:ms-[14px] lg:ms-[14px] md:ms-[14px] ms-0 xl:mt-0 lg:mt-0 md:mt-0 mt-4">
-                        <Link href='/dashboard/kajianResiko/kapasitas'>
+                        <Link href='/dashboard/kajianResiko/kebijakanPeraturan'>
                             <button
                                 type=""
                                 className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
