@@ -41,7 +41,7 @@ export default async function UserHandler(req,res){
         const {id,nama,alamat} = req.body;
         try {
             const kecamatan = await prisma.kecamatan.update({
-                where : {id: BigInt(id)},
+                where : {id: Number(id)},
                 data : {
                     nama : nama.toLowerCase(),
                     alamat
@@ -56,7 +56,7 @@ export default async function UserHandler(req,res){
         const {id} = req.body;
         try {
             const kecamatan = await prisma.kecamatan.delete({
-                where : {id: BigInt(id)}
+                where : {id: Number(id)}
             })
             return res.status(200).json({message : "Delete Kecamatan Berhasil",status : 'success'})
         } catch (error) {
