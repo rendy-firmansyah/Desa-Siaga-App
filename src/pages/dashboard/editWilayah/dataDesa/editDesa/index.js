@@ -34,7 +34,7 @@ export async function getServerSideProps(ctx) {
 
 const EditDesa = () => {
   const router = useRouter();
-  const {id} = router.query
+  const { id } = router.query;
   const backTo = () => {
     Router.back();
   };
@@ -84,7 +84,7 @@ const EditDesa = () => {
   }, [id]);
 
   async function updateDesa() {
-    const send = await axios.put("/api/desa",{
+    const send = await axios.put("/api/desa", {
       nama,
       alamat,
       telepon,
@@ -100,8 +100,8 @@ const EditDesa = () => {
       nip_responden,
       jabatan_responden,
       nomor_hp_responden,
-      id:id
-    })
+      id: id,
+    });
     if (send.data.status === "success") {
       toast(`✅ ${send.data.message}`, {
         position: "top-right",
@@ -244,7 +244,7 @@ const EditDesa = () => {
                       value={luas}
                       onChange={(e) => setLuas(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                      type="text"
+                      type="number"
                       placeholder="ex: 36,35"
                     />
                   </div>
@@ -268,7 +268,7 @@ const EditDesa = () => {
                       value={banyak_dusun}
                       onChange={(e) => setDusun(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                      type="text"
+                      type="number"
                       placeholder="ex: 14"
                     />
                   </div>
@@ -280,7 +280,7 @@ const EditDesa = () => {
                       value={jumlah_penduduk}
                       onChange={(e) => setPenduduk(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                      type="text"
+                      type="number"
                       placeholder="ex: 4509"
                     />
                   </div>

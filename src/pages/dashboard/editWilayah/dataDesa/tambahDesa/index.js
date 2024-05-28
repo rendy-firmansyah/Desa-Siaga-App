@@ -34,30 +34,30 @@ export async function getServerSideProps(ctx) {
 
 const AddDesa = () => {
   const router = useRouter();
-  const {id} = router.query
+  const { id } = router.query;
   const backTo = () => {
     Router.back();
   };
 
   //setter get data input
-  const [nama,setNama] = useState("")
-  const [alamat,setAlamat] = useState("")
-  const [telepon,setTelepon] = useState("")
-  const [website,setWebsite] = useState("")
-  const [email,setEmail] = useState("")
-  const [luas,setLuas] = useState(0)
-  const [letak_dan_batas,setLetak] = useState("")
-  const [banyak_dusun,setDusun] = useState(0)
-  const [jumlah_penduduk,setPenduduk] = useState(0)
-  const [akses_komunikasi,setAksesKomunikasi] = useState("")
-  const [akses_transportasi,setAksesTransportasi] = useState("")
-  const [nama_responden,setResponded] = useState("")
-  const [nip_responden,setNip] = useState("")
-  const [jabatan_responden,setJabatan] = useState("")
-  const [nomor_hp_responden,setNomor] = useState("")
+  const [nama, setNama] = useState("");
+  const [alamat, setAlamat] = useState("");
+  const [telepon, setTelepon] = useState("");
+  const [website, setWebsite] = useState("");
+  const [email, setEmail] = useState("");
+  const [luas, setLuas] = useState(0);
+  const [letak_dan_batas, setLetak] = useState("");
+  const [banyak_dusun, setDusun] = useState(0);
+  const [jumlah_penduduk, setPenduduk] = useState(0);
+  const [akses_komunikasi, setAksesKomunikasi] = useState("");
+  const [akses_transportasi, setAksesTransportasi] = useState("");
+  const [nama_responden, setResponded] = useState("");
+  const [nip_responden, setNip] = useState("");
+  const [jabatan_responden, setJabatan] = useState("");
+  const [nomor_hp_responden, setNomor] = useState("");
 
-  async function AddDesa(){
-    const send = await axios.post("/api/desa",{
+  async function AddDesa() {
+    const send = await axios.post("/api/desa", {
       nama,
       alamat,
       telepon,
@@ -73,9 +73,9 @@ const AddDesa = () => {
       nip_responden,
       jabatan_responden,
       nomor_hp_responden,
-      id:id
-    })
-    if(send.data.status === "success"){
+      id: id,
+    });
+    if (send.data.status === "success") {
       toast(`✅ ${send.data.message}`, {
         position: "top-right",
         autoClose: 1,
@@ -86,7 +86,7 @@ const AddDesa = () => {
         theme: "light",
       });
       Router.back();
-    }else{
+    } else {
       toast(`❌ ${send.data.message}`, {
         position: "top-right",
         autoClose: 0.1,
@@ -211,7 +211,7 @@ const AddDesa = () => {
                     <input
                       onChange={(e) => setLuas(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                      type="text"
+                      type="number"
                       placeholder="ex: 36,35"
                     />
                   </div>
@@ -233,7 +233,7 @@ const AddDesa = () => {
                     <input
                       onChange={(e) => setDusun(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                      type="text"
+                      type="number"
                       placeholder="ex: 14"
                     />
                   </div>
@@ -244,7 +244,7 @@ const AddDesa = () => {
                     <input
                       onChange={(e) => setPenduduk(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                      type="text"
+                      type="number"
                       placeholder="ex: 4509"
                     />
                   </div>
@@ -267,7 +267,7 @@ const AddDesa = () => {
                       onChange={(e) => setAksesTransportasi(e.target.value)}
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                       type="text"
-                      placeholder="ex: taxi"
+                      placeholder="ex: mobil dan sepeda motor"
                     />
                   </div>
                 </div>

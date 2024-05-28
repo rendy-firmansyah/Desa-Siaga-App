@@ -3,10 +3,37 @@ import Image from "next/image";
 import bgDashboard from "../../../../public/bg-2.jpg";
 import Router from "next/router";
 import { useState } from "react";
+import nookies from "nookies";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+
+//islogin
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx);
+
+  if (!cookies.role) {
+    return {
+      redirect: {
+        destination: "/",
+      },
+    };
+  } else if (cookies.role === "super admin") {
+    return {
+      redirect: {
+        destination: "/admin",
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}
 
 const PelaporanBencana = () => {
-  const [selectedKec, setSelectedKec] = useState("Pilih.......");
-  const [selectedDesa, setSelectedDesa] = useState("Pilih.......");
+  const [selectedKec, setSelectedKec] = useState("");
+  const [selectedDesa, setSelectedDesa] = useState("");
 
   const handleKecSelect = (kec) => {
     setSelectedKec(kec);
@@ -14,8 +41,8 @@ const PelaporanBencana = () => {
   const handleDesaSelect = (desa) => {
     setSelectedDesa(desa);
   };
-  const handleBack = () => {
-    Router.back();
+  const nextPage = () => {
+    Router.push("/dashboard/pelaporanBencana/pelaporanBencana2");
   };
   return (
     <section className="container-fluid w-full h-screen relative">
@@ -100,7 +127,7 @@ const PelaporanBencana = () => {
                     </label>
                     <select
                       className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                      onChange={(e) => handleKecSelect(e.target.value)}
+                      onChange={(e) => handleDesaSelect(e.target.value)}
                     >
                       <option value="Pilih......">Pilih......</option>
                       <option value="Kecamatan 1">Kecamatan 1</option>
@@ -114,7 +141,7 @@ const PelaporanBencana = () => {
                   </label>
                   <input
                     className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                    type="text"
+                    type="number"
                     placeholder="ex: 1445 korban"
                   />
                 </div>
@@ -124,6 +151,7 @@ const PelaporanBencana = () => {
         </div>
         <div className="flex justify-center mt-5">
           <button
+            onClick={nextPage}
             type=""
             className="bg-secondary-default w-full mx-8 md:mx-14 lg:mx-32 xl:mx-32 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
           >
