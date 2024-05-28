@@ -84,8 +84,7 @@ const EditDesa = () => {
   }, [id]);
 
   async function updateDesa() {
-    const send = await axios.put("/api/desa", {
-      id: id,
+    const send = await axios.put("/api/desa",{
       nama,
       alamat,
       telepon,
@@ -101,7 +100,8 @@ const EditDesa = () => {
       nip_responden,
       jabatan_responden,
       nomor_hp_responden,
-    });
+      id:id
+    })
     if (send.data.status === "success") {
       toast(`✅ ${send.data.message}`, {
         position: "top-right",

@@ -96,7 +96,7 @@ const Dashboard = () => {
             </div>
           </Link>
 
-          <Link href="/">
+          <Link href="/dashboard/tulisBerita">
             <div class="p-4 max-w-sm">
               <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
                 <div class="flex items-center">
