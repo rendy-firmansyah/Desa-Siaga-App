@@ -1,9 +1,25 @@
 import Link from "next/link";
+import { useState } from "react";
 import Image from "next/image";
+import Konfirm from './konfirmasi'
 import bgKesiapsiagaan from '../../../../../public/bg-2.jpg';
 import Router from "next/router";
 
 const Kesiapsiagaan = () => {
+    const [visibleModal, setVisibleModal] = useState(false);
+
+    const visible = () => {
+        setVisibleModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setVisibleModal(false);
+    };
+
+    const handleSimpan = () => {
+        visible();
+    };
+
     const handleBack = () => {
       Router.back();
     };
@@ -202,18 +218,21 @@ const Kesiapsiagaan = () => {
                             </button>   
                         </div>
                         <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 xl:ms-[14px] lg:ms-[14px] md:ms-[14px] ms-0 xl:mt-0 lg:mt-0 md:mt-0 mt-4">
-                            <Link href='/dashboard/kajianResiko/kesimpulan'>
-                                <button
-                                    type=""
-                                    className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
-                                >
-                                    Simpan
-                                </button>
-                            </Link>
+                            <button
+                                type=""
+                                onClick={handleSimpan}
+                                className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+                            >
+                                Simpan
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {visibleModal && (
+                <Konfirm onClose={handleCloseModal} />
+            )}
         </section>
     )
 };

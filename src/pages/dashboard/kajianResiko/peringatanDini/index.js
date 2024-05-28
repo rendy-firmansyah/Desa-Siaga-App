@@ -7,6 +7,9 @@ const PeringatanDini = () => {
     const handleBack = () => {
       Router.back();
     };
+    const nextKuisioner = () => {
+        Router.push('/dashboard/kajianResiko/mitigasi');
+      };
 
     return (
         <section className="container-fluid h-screen relative">
@@ -74,14 +77,13 @@ const PeringatanDini = () => {
                             </button>   
                         </div>
                         <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 xl:ms-[14px] lg:ms-[14px] md:ms-[14px] ms-0 xl:mt-0 lg:mt-0 md:mt-0 mt-4">
-                            <Link href='/dashboard/kajianResiko/mitigasi'>
-                                <button
-                                    type=""
-                                    className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
-                                >
-                                    Lanjut Kuisioner Berikutnya
-                                </button>
-                            </Link>
+                            <button
+                                type=""
+                                onClick={nextKuisioner}
+                                className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+                            >
+                                Lanjut Kuisioner Berikutnya
+                            </button>
                         </div>
                     </div>
                 </div>
