@@ -7,6 +7,7 @@ import nookies from "nookies";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import DataTable from 'datatables.net-dt';
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -44,6 +45,7 @@ const PelaporanBencana2 = () => {
   const nextPage = () => {
     Router.push("/dashboard/pelaporanBencana/pelaporanBencana2");
   };
+
   return (
     <section className="container-fluid w-full h-full relative">
       <div className="absolute -z-10 inset-0">
@@ -75,7 +77,7 @@ const PelaporanBencana2 = () => {
               </div>
             </div>
             <div className="overflow-x-auto mt-4">
-              <table className="min-w-full divide-y divide-gray-200 border-2 shadow-lg shad">
+              <table className="table1 min-w-full divide-y divide-gray-200 border-2 shadow-lg shad">
                 <thead className="">
                   <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

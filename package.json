@@ -12,6 +12,7 @@
     "@prisma/client": "^5.14.0",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
+    "datatables.net-dt": "^2.0.7",
     "jsonwebtoken": "^9.0.2",
     "next": "^14.2.3",
     "nookies": "^2.5.2",
