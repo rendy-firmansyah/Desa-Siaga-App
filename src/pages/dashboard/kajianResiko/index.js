@@ -1,23 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import bgDashboard from "../../../../public/bg-2.jpg";
 import Router from "next/router";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const KajianResiko = () => {
+      const router = useRouter();
+
     const [selectedKec, setSelectedKec] = useState("");
     const [selectedDesa, setSelectedDesa] = useState("");
-  
-    const handleKecSelect = (kec) => {
-      setSelectedKec(kec);
-    };
-    const handleDesaSelect = (desa) => {
-      setSelectedDesa(desa);
-    };
+    const [dataKecamatan,setDataKec] = useState([]);
+    const [dataDesa,setDataDesa] = useState([]);
 
   const kuisioner = () => {
-    Router.push('/dashboard/kajianResiko/ancamanRentan');
+    router.push(`/dashboard/kajianResiko/ancamanRentan?id=${encodeURIComponent(selectedDesa)}`);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get('/api/Kecamatan');
+      setDataKec(response.data);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(`/api/desa?id=${selectedKec}`);
+      setDataDesa(response.data);
+    };
+    fetchData();
+  }, [selectedKec]);
   return (
     <section className="container-fluid h-screen relative">
         <div className="absolute -z-10 inset-0">
@@ -37,11 +52,12 @@ const KajianResiko = () => {
                         </label>
                         <select
                         className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                        onChange={(e) => handleKecSelect(e.target.value)}
+                        onChange={(e) => setSelectedKec(e.target.value)}
                         >
-                        <option value="Pilih......">Pilih......</option>
-                        <option value="Kecamatan 1">Kecamatan 1</option>
-                        <option value="Kecamatan 2">Kecamatan 2</option>
+                        <option >Pilih......</option>
+                        {dataKecamatan.map((kec) => (
+                            <option value={kec.id}>{kec.nama}</option> 
+                        ))}
                         </select>
                     </div>
                     <div className="flex flex-col mt-2">
@@ -49,12 +65,17 @@ const KajianResiko = () => {
                         Pilih Desa
                         </label>
                         <select
+                            disabled={!selectedKec ? "disabled" : ""}
                             className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                            onChange={(e) => handleDesaSelect(e.target.value)}
+                            onChange={(e) => setSelectedDesa(e.target.value)}
                         >
                             <option value="Pilih......">Pilih......</option>
-                            <option value="Kecamatan 1">Kecamatan 1</option>
-                            <option value="Kecamatan 2">Kecamatan 2</option>
+                            {dataDesa ? (
+                                dataDesa.map((desa) => (
+                                    <option value={desa.id}>{desa.nama}</option>
+                                ))
+                                
+                            ): null}
                         </select>
                     </div>
                 </div>
