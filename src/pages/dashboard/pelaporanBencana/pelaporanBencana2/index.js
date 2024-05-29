@@ -7,7 +7,13 @@ import nookies from "nookies";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+
 import DataTable from 'datatables.net-dt';
+
+import AddMeninggal from "./addMeninggal";
+import AddHilang from "./addHilang";
+import AddLuka from "./addLuka";
+
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -35,6 +41,26 @@ export async function getServerSideProps(ctx) {
 const PelaporanBencana2 = () => {
   const [selectedKec, setSelectedKec] = useState("");
   const [selectedDesa, setSelectedDesa] = useState("");
+  const [showModalKorbanMeninggal, setShowModalKorbanMeninggal] =
+    useState(false);
+  const [showModalKorbanHilang, setShowModalKorbanHilang] = useState(false);
+  const [showModalKorbanLuka, setShowModalKorbanLuka] = useState(false);
+
+  const showVisibleKorbanMeninggal = () => {
+    setShowModalKorbanMeninggal(true);
+  };
+  const showVisibleKorbanHilang = () => {
+    setShowModalKorbanHilang(true);
+  };
+  const showVisibleKorbanLuka = () => {
+    setShowModalKorbanLuka(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModalKorbanMeninggal(false);
+    setShowModalKorbanHilang(false);
+    setShowModalKorbanLuka(false);
+  };
 
   const handleKecSelect = (kec) => {
     setSelectedKec(kec);
@@ -58,6 +84,12 @@ const PelaporanBencana2 = () => {
         <div className="bg-white p-8 h-auto w-auto border rounded-2xl shadow-lg mx-8 md:mx-14 lg:mx-32 xl:mx-32 mt-3">
           <h1 className="text-black text-2xl font-bold">Isi Kuisioner :</h1>
           <div className="mt-3">
+            {/* Modal Start */}
+            <AddMeninggal
+              isShow={showModalKorbanMeninggal}
+              onClose={handleCloseModal}
+            />
+            {/* Modal End */}
             <div className="flex flex-col">
               <label className="font-semibold text-md text-black">
                 Jumlah Korban Meninggal
@@ -69,6 +101,7 @@ const PelaporanBencana2 = () => {
                   disabled
                 />
                 <button
+                  onClick={showVisibleKorbanMeninggal}
                   type="button"
                   className="bg-secondary-default mt-3 md:mt-0 lg:mt-0 xl:mt-0 w-full md:w-auto lg:w-auto xl:w-auto px-8 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
                 >
@@ -126,6 +159,12 @@ const PelaporanBencana2 = () => {
             </div>
           </div>
           <div className="mt-3">
+            {/* Modal Start */}
+            <AddHilang
+              isShow={showModalKorbanHilang}
+              onClose={handleCloseModal}
+            />
+            {/* Modal End */}
             <div className="flex flex-col">
               <label className="font-semibold text-md text-black">
                 Jumlah Korban Hilang
@@ -137,6 +176,7 @@ const PelaporanBencana2 = () => {
                   disabled
                 />
                 <button
+                  onClick={showVisibleKorbanHilang}
                   type="button"
                   className="bg-secondary-default mt-3 md:mt-0 lg:mt-0 xl:mt-0 w-full md:w-auto lg:w-auto xl:w-auto px-8 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
                 >
@@ -188,6 +228,7 @@ const PelaporanBencana2 = () => {
             </div>
           </div>
           <div className="mt-3">
+            <AddLuka isShow={showModalKorbanLuka} onClose={handleCloseModal} />
             <div className="flex flex-col">
               <label className="font-semibold text-md text-black">
                 Jumlah Korban Luka Berat/Rawat Inap, Luka Ringan/Rawat Jalan
@@ -199,6 +240,7 @@ const PelaporanBencana2 = () => {
                   disabled
                 />
                 <button
+                  onClick={showVisibleKorbanLuka}
                   type="button"
                   className="bg-secondary-default mt-3 md:mt-0 lg:mt-0 xl:mt-0 w-full md:w-auto lg:w-auto xl:w-auto px-8 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
                 >
