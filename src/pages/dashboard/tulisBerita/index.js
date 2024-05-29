@@ -20,7 +20,7 @@ const DetailBerita = () => {
           </div>
         </div>
       </Link>
-
+      
         <div className="mt-6 grid grid-cols-1 gap-6 flex-col md:flex">
           {Array(3).fill().map((_, index) => (
             <div key={index} className="bg-white rounded-3xl shadow p-6">
