@@ -13,7 +13,7 @@ const DetailBerita = () => {
           <h1 className="text-black text-4xl font-extrabold font-['Inter'] leading-10 text-center">Berita Kebencanaan</h1>
         </div>
 
-      <Link href="/">
+      <Link href="/dashboard/tulisBerita/addBerita">
         <div className="mt-6 flex justify-center">
           <div className="bg-indigo-900 rounded-lg p-1 text-center w-screen">
             <h2 className="text-white text-2xl font-extrabold font-['Inter'] leading-10">+ Tambah Berita</h2>
