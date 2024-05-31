@@ -8,12 +8,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-import DataTable from 'datatables.net-dt';
+import DataTable from "datatables.net-dt";
 
 import AddMeninggal from "./addMeninggal";
 import AddHilang from "./addHilang";
 import AddLuka from "./addLuka";
-
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -38,7 +37,7 @@ export async function getServerSideProps(ctx) {
   };
 }
 
-const PelaporanBencana2 = () => {
+const JumlahKorban = () => {
   const [selectedKec, setSelectedKec] = useState("");
   const [selectedDesa, setSelectedDesa] = useState("");
   const [showModalKorbanMeninggal, setShowModalKorbanMeninggal] =
@@ -69,7 +68,7 @@ const PelaporanBencana2 = () => {
     setSelectedDesa(desa);
   };
   const nextPage = () => {
-    Router.push("/dashboard/pelaporanBencana/pelaporanBencana2");
+    Router.push("/dashboard/pelaporanBencana/jumlahKorban/fasilitas");
   };
 
   return (
@@ -426,4 +425,4 @@ const PelaporanBencana2 = () => {
   );
 };
 
-export default PelaporanBencana2;
+export default JumlahKorban;

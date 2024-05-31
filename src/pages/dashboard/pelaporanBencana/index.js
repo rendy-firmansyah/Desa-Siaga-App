@@ -42,7 +42,7 @@ const PelaporanBencana = () => {
     setSelectedDesa(desa);
   };
   const nextPage = () => {
-    Router.push("/dashboard/pelaporanBencana/pelaporanBencana2");
+    Router.push("/dashboard/pelaporanBencana/jumlahKorban");
   };
   return (
     <section className="container-fluid w-full h-screen relative">
