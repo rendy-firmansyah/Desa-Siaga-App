@@ -53,6 +53,7 @@ export const addBerita = () => {
                         <input
                           className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                           type="file"
+                          accept="image/*"
                         />
                   </div>
                 </div>
