@@ -45,4 +45,13 @@ model desa {
   nomor_hp_responden  String
   kecamatan_id        Int
   kecamatan           kecamatan @relation(fields: [kecamatan_id], references: [id])
+  berita              berita[]
+}
+model berita{
+  id                  Int @id@default(autoincrement())
+  judul               String
+  deskripsi           String
+  gambar              String
+  desa_id             Int
+  desa                desa @relation(fields: [desa_id], references: [id])
 }
