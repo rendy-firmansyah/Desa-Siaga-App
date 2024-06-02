@@ -46,6 +46,7 @@ model desa {
   kecamatan_id        Int
   kecamatan           kecamatan @relation(fields: [kecamatan_id], references: [id])
   berita              berita[]
+  pelaporanAwal       pelaporanAwal[]
 }
 model berita{
   id                  Int @id@default(autoincrement())
@@ -53,5 +54,66 @@ model berita{
   deskripsi           String
   gambar              String
   desa_id             Int
+  created_at          DateTime @default(now())
   desa                desa @relation(fields: [desa_id], references: [id])
+}
+model pelaporanAwal {
+  id                      Int @id @default(autoincrement())
+  jenisBencana            String
+  waktuKejadian           DateTime
+  deskripsi               String
+  lokasi                  String
+  desa_id                 Int
+  desa                    desa @relation(fields: [desa_id], references: [id])
+  jumlahPendudukTerancam  Int
+  created_at              DateTime @default(now())
+  korbanMeninggal         korbanMeninggal[]
+  korbanHilang            korbanHilang[]
+  korbanLuka              korbanLuka[]
+  korbanPengungsi         korbanPengungsi[]
+}
+model korbanMeninggal {
+  id                      Int @id @default(autoincrement())
+  nama                    String 
+  alamat                  String
+  jenisKelamin            String
+  usia                    Int
+  tempatMeninggal         String
+  penyebab                String
+  pelaporan_id            Int
+  pelaporan               pelaporanAwal @relation(fields: [pelaporan_id], references: [id])
+}
+model korbanHilang {
+  id                    Int @id @default(autoincrement())
+  nama                  String
+  alamat                String
+  jenisKelamin          String
+  usia                  Int
+  lokasiHilang          String
+  pelaporan_id          Int
+  pelaporan             pelaporanAwal @relation(fields: [pelaporan_id], references: [id])
+}
+model korbanLuka {
+  id                    Int @id @default(autoincrement())
+  namaFaskes            String
+  jenisRawat            String
+  lakiLaki              Int
+  wanita                Int
+  jumlah                Int
+  pelaporan_id          Int
+  pelaporan             pelaporanAwal @relation(fields: [pelaporan_id], references: [id])
+}
+model korbanPengungsi {
+  id                    Int @id @default(autoincrement())
+  Kabupaten             String
+  Desa                  String
+  lokasi                String
+  gangguanAnak          String
+  gangguanDewasa        String
+  lakiLaki              Int
+  perempuan             Int
+  jumlah                Int
+  kk                    Int
+  pelaporan_id          Int
+  pelaporan             pelaporanAwal @relation(fields: [pelaporan_id], references: [id])
 }
