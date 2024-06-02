@@ -88,14 +88,40 @@ export default async function BeritaHandler(req, res) {
         }
     }
     if(req.method === 'PUT'){
-        try {
             const id = req.query.id;
-            const { judul, deskripsi } = req.body;
-            const berita = await prisma.berita.update({ where: { id: Number(id) }, data: { judul, deskripsi } });
-            return res.status(200).json(berita);
-        } catch (error) {
-            console.error("Error during DB operation:", error);
-            return res.status(500).json({ message: "Server error!", status: 'failed' });
-        }
+
+            const form = new IncomingForm();
+            form.parse(req, async (err, fields, files) => {
+                if (err) {
+                    console.error("Formidable error:", err);
+                    return res.status(500).json({ message: "Server error!", status: 'failed' });
+                }
+                try {
+        
+                    const { judul, deskripsi } = fields;
+                    const gambar = files.gambar;
+                    if (gambar[0]){
+                        const imagekit = new ImageKit({
+                            publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+                            privateKey: process.env.IMAGEKIT_SECRET_KEY,
+                            urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
+                        });
+
+                        const upload = await imagekit.upload({
+                            file: fs.readFileSync(gambar[0].filepath), // Read file content
+                            fileName: gambar[0].originalFilename // Access original filename
+                        });
+                        const berita = await prisma.berita.update({ where: { id: Number(id) }, data: { judul:judul[0], deskripsi: deskripsi[0], gambar: upload.url } });
+                        return res.status(200).json(berita);
+                    }
+                    const berita = await prisma.berita.update({ where: { id: Number(id) }, data: { judul:judul[0], deskripsi:deskripsi[0] } });
+                    return res.status(200).json(berita);
+                } catch (error) {
+                    console.error("Error during DB operation:", error);
+                    return res.status(500).json({ message: "Server error!", status: 'failed' });
+                }
+
+            });
+
     }
 }
