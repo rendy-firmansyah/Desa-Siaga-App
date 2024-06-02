@@ -70,7 +70,14 @@ export default async function BeritaHandler(req, res) {
             return res.status(200).json(berita);
         }
         try {
-            const berita = await prisma.berita.findMany();
+            const berita = await prisma.berita.findMany({
+                orderBy: {
+                  created_at: 'desc',
+                },
+                include: {
+                  desa: true,
+                },
+              });
             return res.status(200).json(berita);
         } catch (error) {
             console.error("Error during DB operation:", error);
