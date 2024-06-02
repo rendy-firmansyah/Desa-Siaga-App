@@ -9,7 +9,7 @@ export default async function korbanMeninggalHandler(req,res){
         }
 
         try {
-            const pelaporan = await prisma.pelaporanAwal.create({
+            const pelaporan = await prisma.korbanMeninggal.create({
                 data:{
                     nama,
                     alamat : alamat,
@@ -23,6 +23,14 @@ export default async function korbanMeninggalHandler(req,res){
 
             return res.status(200).json("Berhasil menambahkan data korban meinggal")
         } catch (error) {   
+            return res.status(500).json({message: "Server error!", status : 'failed'})
+        }
+    }
+    if(req.method === 'GET'){
+        try {
+            const pelaporan = await prisma.korbanMeninggal.findMany();
+            return res.status(200).json(pelaporan)
+        } catch (error) {
             return res.status(500).json({message: "Server error!", status : 'failed'})
         }
     }
