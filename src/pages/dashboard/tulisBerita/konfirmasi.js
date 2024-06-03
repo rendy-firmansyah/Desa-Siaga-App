@@ -5,11 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Router from "next/router";
 
-const Konfirmasi = ({ onClose,id }) => {
-    const handleSimpan = () => {
-        Router.push('/dashboard/tulisBerita');
-      };
-      
+const Konfirmasi = ({ onClose,id, onDeleteSuccess }) => {
     // console.log(id);
     const handleDelete = async (id) => {
         try {
@@ -26,7 +22,8 @@ const Konfirmasi = ({ onClose,id }) => {
               progress: 1,
               theme: "light",
             });
-            Router.push('/dashboard/tulisBerita');
+            onClose();
+            onDeleteSuccess();
           } else {
             toast(`❌ ${response.data.message}`, {
               position: "top-right",
