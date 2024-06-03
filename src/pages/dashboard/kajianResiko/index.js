@@ -39,9 +39,10 @@ const KajianResiko = () => {
                         className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                         onChange={(e) => handleKecSelect(e.target.value)}
                         >
-                        <option value="Pilih......">Pilih......</option>
-                        <option value="Kecamatan 1">Kecamatan 1</option>
-                        <option value="Kecamatan 2">Kecamatan 2</option>
+                        <option>Pilih......</option>
+                        {dataKecamatan.map((kec) => (
+                            <option value={kec.id}>{kec.nama}</option> 
+                        ))}
                         </select>
                     </div>
                     <div className="flex flex-col mt-2">
