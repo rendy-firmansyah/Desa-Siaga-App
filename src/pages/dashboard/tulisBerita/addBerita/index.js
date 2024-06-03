@@ -1,12 +1,91 @@
-import React from "react";
-import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import Router from "next/router";
+import React from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const addBerita = () => {
   const backTo = () => {
     Router.back();}
+
+  const [image, setImage] = useState("");
+  const [judulBerita, setJudulBerita] = useState("");
+  const [deskripsiBerita, setDeskripsiBerita] = useState("");
+  const [selectedKec, setSelectedKec] = useState("");
+  const [selectedDesa, setSelectedDesa] = useState("");
+  const [dataKecamatan,setDataKec] = useState([]);
+  const [dataDesa,setDataDesa] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get('/api/Kecamatan');
+      setDataKec(response.data);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(`/api/desa?id=${selectedKec}`);
+      setDataDesa(response.data);
+    };
+    fetchData();
+  }, [selectedKec]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('judul', judulBerita);
+    formData.append('deskripsi', deskripsiBerita);
+    formData.append('desa_id', selectedDesa);
+    formData.append('gambar', image);
+
+    try {
+      const response = await axios.post('/api/berita', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      if (response.data.status === "success") {
+        toast(`✅ ${response.data.message}`, {
+          position: "top-right",
+          autoClose: 1,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: 1,
+          theme: "light",
+        });
+        Router.back();
+      } else {
+        toast(`❌ ${response.data.message}`, {
+          position: "top-right",
+          autoClose: 0.1,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: 1,
+          theme: "light",
+        });
+      }
+
+      // Reset form fields
+      setImage(null);
+      setJudulBerita("");
+      setSelectedKec("");
+      setSelectedDesa("");
+      setDeskripsiBerita("");
+    } catch (error) {
+      console.error('Error sending form data:', error);
+    }
+  };
+    
   return (
     <section className="container-fluid h-screen">
+      <ToastContainer/>
       <div className="flex flex-col justify-center pb-10">
         <div className="flex justify-between mx-8 md:mx-14 lg:mx-32 xl:mx-32 mt-10">
           <h1 className="text-black text-xl font-bold">Data Wilayah Desa</h1>
@@ -42,94 +121,108 @@ export const addBerita = () => {
           </div>
         </div>
         <div className="bg-white p-6 h-auto w-auto border shadow-lg mx-8 md:mx-14 lg:mx-32 xl:mx-32 mt-3">
-          <form>
-            <div className="grid grid-cols-1">
-              <div className="input-berita mx-3">
-                <div className="mt-5">
-                  <div className="flex flex-col">
-                        <label className="font-semibold text-md text-black">
-                          Input Gambar
-                        </label>
-                        <input
-                          className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                          type="file"
-                          accept="image/*"
-                        />
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                    <label className="font-semibold text-md text-black">
-                      Judul Berita
-                    </label>
-                    <input
-                      onChange={(e) => setLuas(e.target.value)}
-                      className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                      type="text"
-                      placeholder="Terjadi banjir bandang di jember"
-                    />
-                  </div>
-              </div>
+    <form onSubmit={handleSubmit}>
+      <div className="grid grid-cols-1">
+        <div className="input-berita mx-3">
+          <div className="mt-5">
+            <div className="flex flex-col">
+              <label className="font-semibold text-md text-black">
+                Input Gambar
+              </label>
+              <input
+                onChange={(e) => setImage(e.target.files[0])}
+                className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+                type="file"
+                accept="image/*"
+              />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 ">
-              <div className="input-dataumum mx-3">
-                <div className="mt-5">
-                  <div className="flex flex-col">
-                    <label className="font-semibold text-md text-black">
-                      Kecamatan
-                    </label>
-                    
-                    <select
-                      className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                      onChange={(e) => handleKecSelect(e.target.value)}
-                    >
-                      <option value="Pilih......">Pilih......</option>
-                      <option value="Kecamatan 1">Kecamatan 1</option>
-                      <option value="Kecamatan 2">Kecamatan 2</option>
-                    </select>
-                  </div>
-                 
-                </div>
-              </div>
-              <div className="input-karateristik mx-3 mt-5 md:mt-0">
-                <div className="mt-5">
-                  <div className="flex flex-col mt-2">
-                    <label className="font-semibold text-md text-black">
-                      Desa
-                    </label>
-                    <select
-                      className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                      onChange={(e) => handleKecSelect(e.target.value)}
-                    >
-                      <option value="Pilih......">Pilih......</option>
-                      <option value="Desa 1">Desa 1</option>
-                      <option value="Desa 2">Desa 2</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-1">
-              <div className="input-berita mx-3">
-                <div className="mt-5">
-                  <div className="flex flex-col">
-                        <label className="font-semibold text-md text-black ">
-                          Deskripsi Berita
-                        </label>
-                        <textarea id="message" rows="4" className="border-primary-default bg-input-default block p-2.5 w-full text-sm text-gray-900" placeholder="banjir di jember disebabkan karena curah hujan tinggi yang tak kunjung berhenti, meskipun diri ini sudah tak bisa tuk memilikinya lagi"></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
+          </div>
+          <div className="flex flex-col">
+            <label className="font-semibold text-md text-black">
+              Judul Berita
+            </label>
+            <input
+              value={judulBerita}
+              onChange={(e) => setJudulBerita(e.target.value)}
+              className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+              type="text"
+              placeholder="Terjadi banjir bandang di jember"
+            />
+          </div>
         </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 ">
+        <div className="input-dataumum mx-3">
+          <div className="mt-5">
+            <div className="flex flex-col">
+              <label className="font-semibold text-md text-black">
+                Kecamatan
+              </label>
+              
+              <select
+                value={selectedKec}
+                onChange={(e) => setSelectedKec(e.target.value)}
+                className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+              >
+                <option value="">Pilih......</option>
+                {dataKecamatan.map((kec) => (
+                  <option key={kec.id} value={kec.id}>{kec.nama}</option> 
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div className="input-karateristik mx-3 mt-5 md:mt-0">
+          <div className="mt-5">
+            <div className="flex flex-col mt-2">
+              <label className="font-semibold text-md text-black">
+                Desa
+              </label>
+              <select
+                disabled={!selectedKec}
+                value={selectedDesa}
+                onChange={(e) => setSelectedDesa(e.target.value)}
+                className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+              >
+                <option value="">Pilih......</option>
+                {dataDesa.map((desa) => (
+                  <option key={desa.id} value={desa.id}>{desa.nama}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-1">
+        <div className="input-berita mx-3">
+          <div className="mt-5">
+            <div className="flex flex-col">
+              <label className="font-semibold text-md text-black ">
+                Deskripsi Berita
+              </label>
+              <textarea
+                value={deskripsiBerita}
+                onChange={(e) => setDeskripsiBerita(e.target.value)}
+                id="message"
+                rows="4"
+                className="border-primary-default bg-input-default block p-2.5 w-full text-sm text-gray-900"
+                placeholder="banjir di jember disebabkan karena curah hujan tinggi yang tak kunjung berhenti, meskipun diri ini sudah tak bisa tuk memilikinya lagi"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      
         <div className="flex justify-center mt-5">
           <button
-            type=""
+            type="submit"
             className="bg-secondary-default w-full mx-8 md:mx-14 lg:mx-32 xl:mx-32 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
           >
             Simpan Data
           </button>
         </div>
+    </form>
+    </div>
       </div>
     </section>
   )
