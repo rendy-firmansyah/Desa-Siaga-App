@@ -2,9 +2,37 @@ import Link from "next/link";
 import Image from "next/image";
 import bgDashboard from "../../../../../public/bg-2.jpg";
 import axios from "axios";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 const AddMeninggal = ({ isShow, onClose }) => {
   if (!isShow) return null;
+
+  const router = useRouter();
+  const { id } = router.query;
+
+  const [nama, setNama] = useState("");
+  const [alamat, setAlamat] = useState("");
+  const [kelamin, setKelamin] = useState("");
+  const [usia, setUsia] = useState(0);
+  const [tempat, setTempat] = useState("");
+  const [penyebab, setPenyebab] = useState("");
+
+  const addKorbanMeninggal = async () => {
+    const res = await axios.post("/api/pelaporanAwal/korbanmeninggal", {
+      nama: nama,
+      alamat: alamat,
+      jenisKelamin: kelamin,
+      usia: usia,
+      tempatMeninggal: tempat,
+      penyebab: penyebab,
+      pelaporan_id: id,
+    });
+
+    console.log(res.data);
+    onClose(true);
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-[700px] max-h-[400px] md:h-auto lg:h-auto xl:h-auto overflow-y-auto md:overflow-hidden lg:overflow-hidden xl:overflow-hidden border rounded-lg bg-white">
@@ -28,21 +56,21 @@ const AddMeninggal = ({ isShow, onClose }) => {
                   className="border rounded p-2 mt-1 text-black"
                   type="text"
                   placeholder="ex: fulan"
-                  //   onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setNama(e.target.value)}
                 />
                 <label className="text-gray-600 mt-2">Jenis Kelamin</label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
                   type="text"
                   placeholder="ex: laki-laki/perempuan"
-                  //   onChange={(e) => setAlamat(e.target.value)}
+                  onChange={(e) => setKelamin(e.target.value)}
                 />
                 <label className="text-gray-600 mt-2">Usia</label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
                   type="number"
                   placeholder="ex: 17"
-                  //   onChange={(e) => setAlamat(e.target.value)}
+                  onChange={(e) => setUsia(e.target.value)}
                 />
               </div>
               <div className="flex flex-col">
@@ -53,21 +81,21 @@ const AddMeninggal = ({ isShow, onClose }) => {
                   className="border rounded p-2 mt-1 text-black"
                   type="text"
                   placeholder="ex: jl. sudirman xxxx"
-                  //   onChange={(e) => setAlamat(e.target.value)}
+                  onChange={(e) => setAlamat(e.target.value)}
                 />
                 <label className="text-gray-600 mt-2">Tempat Meninggal</label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
                   type="text"
                   placeholder="ex: desa xxxx"
-                  //   onChange={(e) => setAlamat(e.target.value)}
+                  onChange={(e) => setTempat(e.target.value)}
                 />
                 <label className="text-gray-600 mt-2">Penyebab Kematian</label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
                   type="text"
                   placeholder="ex: hanyut karena banjir"
-                  //   onChange={(e) => setAlamat(e.target.value)}
+                  onChange={(e) => setPenyebab(e.target.value)}
                 />
               </div>
             </div>
@@ -82,7 +110,7 @@ const AddMeninggal = ({ isShow, onClose }) => {
             </button>
 
             <button
-              //   onClick={(e) => addKecamatan()}
+              onClick={(e) => addKorbanMeninggal()}
               className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md"
             >
               Save

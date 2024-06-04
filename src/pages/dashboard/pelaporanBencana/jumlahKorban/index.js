@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import bgDashboard from "../../../../../public/bg-2.jpg";
-import Router from "next/router";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import nookies from "nookies";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,8 +38,9 @@ export async function getServerSideProps(ctx) {
 }
 
 const JumlahKorban = () => {
-  const [selectedKec, setSelectedKec] = useState("");
-  const [selectedDesa, setSelectedDesa] = useState("");
+  const [dataMeninggal, setDataMeninggal] = useState([]);
+
+  // Modal Start
   const [showModalKorbanMeninggal, setShowModalKorbanMeninggal] =
     useState(false);
   const [showModalKorbanHilang, setShowModalKorbanHilang] = useState(false);
@@ -61,15 +62,28 @@ const JumlahKorban = () => {
     setShowModalKorbanLuka(false);
   };
 
-  const handleKecSelect = (kec) => {
-    setSelectedKec(kec);
-  };
-  const handleDesaSelect = (desa) => {
-    setSelectedDesa(desa);
-  };
+  // Modal End
+
   const nextPage = () => {
     Router.push("/dashboard/pelaporanBencana/jumlahKorban/fasilitas");
   };
+
+  const router = useRouter();
+  const { id } = router.query;
+
+  const getDataMeninggal = async () => {
+    const response = await axios.get(
+      `/api/pelaporanAwal/korbanmeninggal?id=${id}`
+    );
+    // const data = response.data;
+    setDataMeninggal(response.data);
+  };
+
+  useEffect(() => {
+    getDataMeninggal();
+  }, []);
+
+  // console.log(dataMeninggal);
 
   return (
     <section className="container-fluid w-full h-full relative">
@@ -133,26 +147,31 @@ const JumlahKorban = () => {
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                  </tr>
+                  {/* <tr>
+                    <td className="text-black">testing</td>
+                  </tr> */}
+                  {dataMeninggal.map((items) => {
+                    <tr key={items.id}>
+                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                        {items.nama}
+                      </td>
+                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                        {items.jenisKelamin}
+                      </td>
+                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                        {items.usia}
+                      </td>
+                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                        {items.alamat}
+                      </td>
+                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                        {items.tempatMeninggal}
+                      </td>
+                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                        {items.penyebab}
+                      </td>
+                    </tr>;
+                  })}
                 </tbody>
               </table>
             </div>

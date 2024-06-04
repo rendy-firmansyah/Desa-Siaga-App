@@ -72,305 +72,307 @@ const Fasilitas = () => {
               disabled
             />
           </div>
-          <div className="mt-3">
-            <h1 className="text-black text-md font-semibold">
-              a. Akses ke lokasi kejadian bencana/krisis Kesehatan :{" "}
-            </h1>
-            {/* A1 */}
-            <div className=" ml-5">
-              <div className="flex items-center gap-x-3">
-                <h1 className="text-black font-semibold">
-                  1. Mudah dijangkau menggunakan
-                </h1>
-                <input
-                  className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
-                  type="text"
-                  name=""
-                  onChange={(e) => setA1(e.target.value)}
-                />
-              </div>
-            </div>
-            {/* A2 */}
-            <div className=" ml-5">
-              <div className="flex items-center gap-x-3">
-                <h1 className="text-black font-semibold">2. Sukar, karena</h1>
-                <input
-                  className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
-                  type="text"
-                  name=""
-                  onChange={(e) => setA2(e.target.value)}
-                />
-              </div>
-            </div>
-            {/* A3 */}
-            <div className=" ml-5">
-              <div className="flex items-center gap-x-3">
-                <h1 className="text-black font-semibold">
-                  3. Narahubung/relawan yang bisa dihubungi
-                </h1>
-                <input
-                  className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
-                  type="text"
-                  name=""
-                  onChange={(e) => setA3(e.target.value)}
-                />
-              </div>
-            </div>
-            {/* A4 */}
-            <div className=" ml-5">
-              <div className="flex items-center gap-x-3">
-                <h1 className="text-black font-semibold">
-                  4. Alamat url google maps
-                </h1>
-                <input
-                  className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
-                  type="text"
-                  name=""
-                  onChange={(e) => setA4(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-          {/* B */}
-          <div className="mt-3 flex items-center gap-3">
-            <h1 className="text-black text-md font-semibold">
-              b. Jalur komunikasi yang masih bisa digunakan :
-            </h1>
-            <input
-              className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
-              type="text"
-              name=""
-              onChange={(e) => setB(e.target.value)}
-            />
-          </div>
-          <div className="grid grid-cols-2">
-            <div className="grid-one">
-              {/* C */}
-              <div className="mt-3">
-                <h1 className="text-black text-md font-semibold">
-                  c. Keadaan jaringan Listrik:
-                </h1>
-                <div className="flex items-center gap-x-2 mt-2">
+          <form>
+            <div className="mt-3">
+              <h1 className="text-black text-md font-semibold">
+                a. Akses ke lokasi kejadian bencana/krisis Kesehatan :{" "}
+              </h1>
+              {/* A1 */}
+              <div className=" ml-5">
+                <div className="flex items-center gap-x-3">
+                  <h1 className="text-black font-semibold">
+                    1. Mudah dijangkau menggunakan
+                  </h1>
                   <input
-                    type="radio"
-                    id=""
-                    value="baik"
-                    name="jaringan_listrik"
-                    onChange={(e) => setC(e.target.value)}
+                    className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
+                    type="text"
+                    name=""
+                    onChange={(e) => setA1(e.target.value)}
                   />
-                  <label className="text-black font-semibold text-[16px]">
-                    Baik
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="terputus"
-                    name="jaringan_listrik"
-                    onChange={(e) => setC(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Terputus
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="belum_ada"
-                    name="jaringan_listrik"
-                    onChange={(e) => setC(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Belum tersedia/belum ada
-                  </label>
                 </div>
               </div>
-              {/* D */}
-              <div className="mt-3">
-                <h1 className="text-black text-md font-semibold">
-                  d. sumber air bersih yang digunakan:
-                </h1>
-                <div className="flex items-center gap-x-2 mt-2">
+              {/* A2 */}
+              <div className=" ml-5">
+                <div className="flex items-center gap-x-3">
+                  <h1 className="text-black font-semibold">2. Sukar, karena</h1>
                   <input
-                    type="radio"
-                    id=""
-                    value="tercemar"
-                    name="sumber_air_bersih"
-                    onChange={(e) => setD(e.target.value)}
+                    className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
+                    type="text"
+                    name=""
+                    onChange={(e) => setA2(e.target.value)}
                   />
-                  <label className="text-black font-semibold text-[16px]">
-                    Tercemar
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="tidak_tercemar"
-                    name="sumber_air_bersih"
-                    onChange={(e) => setD(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Tidak Tercemar
-                  </label>
                 </div>
               </div>
-              {/* E */}
-              <div className="mt-3">
-                <h1 className="text-black text-md font-semibold">
-                  e. Fasilitas umum MCK :
-                </h1>
-                <div className="flex items-center gap-x-2 mt-2">
+              {/* A3 */}
+              <div className=" ml-5">
+                <div className="flex items-center gap-x-3">
+                  <h1 className="text-black font-semibold">
+                    3. Narahubung/relawan yang bisa dihubungi
+                  </h1>
                   <input
-                    type="radio"
-                    id=""
-                    value="rusak"
-                    name="fasilitas_mck"
-                    onChange={(e) => setE(e.target.value)}
+                    className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
+                    type="text"
+                    name=""
+                    onChange={(e) => setA3(e.target.value)}
                   />
-                  <label className="text-black font-semibold text-[16px]">
-                    Rusak
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="tidak_rusak"
-                    name="fasilitas_mck"
-                    onChange={(e) => setE(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Tidak Rusak
-                  </label>
                 </div>
               </div>
-              {/* F */}
-              <div className="mt-3">
-                <h1 className="text-black text-md font-semibold">
-                  f. Fasilitas ibadah (masjid/mushollah) :
-                </h1>
-                <div className="flex items-center gap-x-2 mt-2">
+              {/* A4 */}
+              <div className=" ml-5">
+                <div className="flex items-center gap-x-3">
+                  <h1 className="text-black font-semibold">
+                    4. Alamat url google maps
+                  </h1>
                   <input
-                    type="radio"
-                    id=""
-                    value="rusak"
-                    name="fasilitas_ibadah"
-                    onChange={(e) => setF(e.target.value)}
+                    className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
+                    type="text"
+                    name=""
+                    onChange={(e) => setA4(e.target.value)}
                   />
-                  <label className="text-black font-semibold text-[16px]">
-                    Rusak
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="tidak_rusak"
-                    name="fasilitas_ibadah"
-                    onChange={(e) => setF(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Tidak Rusak
-                  </label>
                 </div>
               </div>
             </div>
-            <div className="grid-two">
-              {/* G */}
-              <div className="mt-3">
-                <h1 className="text-black text-md font-semibold">
-                  g. Bangunan sekolah :
-                </h1>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="rusak"
-                    name="bangunan_sekolah"
-                    onChange={(e) => setG(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Rusak
-                  </label>
+            {/* B */}
+            <div className="mt-3 flex items-center gap-3">
+              <h1 className="text-black text-md font-semibold">
+                b. Jalur komunikasi yang masih bisa digunakan :
+              </h1>
+              <input
+                className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
+                type="text"
+                name=""
+                onChange={(e) => setB(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-2">
+              <div className="grid-one">
+                {/* C */}
+                <div className="mt-3">
+                  <h1 className="text-black text-md font-semibold">
+                    c. Keadaan jaringan Listrik:
+                  </h1>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="baik"
+                      name="jaringan_listrik"
+                      onChange={(e) => setC(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Baik
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="terputus"
+                      name="jaringan_listrik"
+                      onChange={(e) => setC(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Terputus
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="belum_ada"
+                      name="jaringan_listrik"
+                      onChange={(e) => setC(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Belum tersedia/belum ada
+                    </label>
+                  </div>
                 </div>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="tidak_rusak"
-                    name="bangunan_sekolah"
-                    onChange={(e) => setG(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Tidak Rusak
-                  </label>
+                {/* D */}
+                <div className="mt-3">
+                  <h1 className="text-black text-md font-semibold">
+                    d. sumber air bersih yang digunakan:
+                  </h1>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="tercemar"
+                      name="sumber_air_bersih"
+                      onChange={(e) => setD(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tercemar
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="tidak_tercemar"
+                      name="sumber_air_bersih"
+                      onChange={(e) => setD(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tidak Tercemar
+                    </label>
+                  </div>
+                </div>
+                {/* E */}
+                <div className="mt-3">
+                  <h1 className="text-black text-md font-semibold">
+                    e. Fasilitas umum MCK :
+                  </h1>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="rusak"
+                      name="fasilitas_mck"
+                      onChange={(e) => setE(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Rusak
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="tidak_rusak"
+                      name="fasilitas_mck"
+                      onChange={(e) => setE(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tidak Rusak
+                    </label>
+                  </div>
+                </div>
+                {/* F */}
+                <div className="mt-3">
+                  <h1 className="text-black text-md font-semibold">
+                    f. Fasilitas ibadah (masjid/mushollah) :
+                  </h1>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="rusak"
+                      name="fasilitas_ibadah"
+                      onChange={(e) => setF(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Rusak
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="tidak_rusak"
+                      name="fasilitas_ibadah"
+                      onChange={(e) => setF(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tidak Rusak
+                    </label>
+                  </div>
                 </div>
               </div>
-              {/* H */}
-              <div className="mt-3">
-                <h1 className="text-black text-md font-semibold">
-                  h. Bangunan balai desa :
-                </h1>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="rusak"
-                    name="balai_desa"
-                    onChange={(e) => setH(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Rusak
-                  </label>
+              <div className="grid-two">
+                {/* G */}
+                <div className="mt-3">
+                  <h1 className="text-black text-md font-semibold">
+                    g. Bangunan sekolah :
+                  </h1>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="rusak"
+                      name="bangunan_sekolah"
+                      onChange={(e) => setG(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Rusak
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="tidak_rusak"
+                      name="bangunan_sekolah"
+                      onChange={(e) => setG(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tidak Rusak
+                    </label>
+                  </div>
                 </div>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="tidak_rusak"
-                    name="balai_desa"
-                    onChange={(e) => setH(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Tidak Rusak
-                  </label>
+                {/* H */}
+                <div className="mt-3">
+                  <h1 className="text-black text-md font-semibold">
+                    h. Bangunan balai desa :
+                  </h1>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="rusak"
+                      name="balai_desa"
+                      onChange={(e) => setH(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Rusak
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="tidak_rusak"
+                      name="balai_desa"
+                      onChange={(e) => setH(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tidak Rusak
+                    </label>
+                  </div>
                 </div>
-              </div>
-              {/* I */}
-              <div className="mt-3">
-                <h1 className="text-black text-md font-semibold">
-                  i. Bangunan pustu :
-                </h1>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="rusak"
-                    name="pustu"
-                    onChange={(e) => setI(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Rusak
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-2">
-                  <input
-                    type="radio"
-                    id=""
-                    value="tidak_rusak"
-                    name="pustu"
-                    onChange={(e) => setI(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Tidak Rusak
-                  </label>
+                {/* I */}
+                <div className="mt-3">
+                  <h1 className="text-black text-md font-semibold">
+                    i. Bangunan pustu :
+                  </h1>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="rusak"
+                      name="pustu"
+                      onChange={(e) => setI(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Rusak
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <input
+                      type="radio"
+                      id=""
+                      value="tidak_rusak"
+                      name="pustu"
+                      onChange={(e) => setI(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tidak Rusak
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
         <div className="flex justify-center mt-5">
           <button
