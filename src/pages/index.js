@@ -66,8 +66,8 @@ const Landing = () => {
         {/* Berita Section*/}
         <section className="mb-[56px]">
           <div className="grid grid-cols-12">
-        {berita.map((items) => (
             <div className="xl:col-span-8 lg:col-span-12 md:col-span-12 col-span-12">
+        {berita.map((items) => (
               <div className="grid grid-cols-12 mb-[20px]">
                 <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12">
                   <div className="w-full h-full">
@@ -99,6 +99,7 @@ const Landing = () => {
                   </div>
                 </div>
               </div>
+            ))}
               <div className="xl:mt-[40px] lg:my-[40px] md:my-[30px] my-[30px] flex justify-center">
                 <Link href="">
                   <button
@@ -109,7 +110,7 @@ const Landing = () => {
                   </button>
                 </Link>
               </div>
-            </div>))}
+            </div>
 
             <div className="xl:col-span-4 lg:col-span-12 md:col-span-12 col-span-12 xl:ps-[50px]">
               <div>

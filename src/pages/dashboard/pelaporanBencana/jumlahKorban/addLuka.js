@@ -70,11 +70,13 @@ const AddLuka = ({ isShow, onClose }) => {
                   type="text"
                   placeholder="ex: fulan"
                   onChange={(e) => setnama(e.target.value)}
+                  required
                 />
                 <label className="text-gray-600 mt-2">Jenis Rawat</label>
                 <select
                   className="border rounded p-2 mt-1 text-black"
                   onChange={(e) => setjenis(e.target.value)}
+                  required
                 >
                   <option value="">Pilih jenis perawatan</option>
                   <option value="Rawat Inap">Rawat Inap</option>
@@ -88,6 +90,7 @@ const AddLuka = ({ isShow, onClose }) => {
                   type="number"
                   placeholder="ex: 10"
                   onChange={(e) => handleJumlahLaki(e)}
+                  required
                 />
               </div>
               <div className="flex flex-col">
@@ -99,6 +102,7 @@ const AddLuka = ({ isShow, onClose }) => {
                   type="number"
                   placeholder="ex: 10"
                   onChange={(e) => handleJumlahWanita(e)}
+                  required
                 />
                 <label className="text-gray-600 mt-2">Jumlah Total Korban</label>
                 <input
@@ -107,6 +111,7 @@ const AddLuka = ({ isShow, onClose }) => {
                   value={jumlah}
                   type="number"
                   placeholder="ex: 10"
+                  required
                 />
               </div>
             </div>

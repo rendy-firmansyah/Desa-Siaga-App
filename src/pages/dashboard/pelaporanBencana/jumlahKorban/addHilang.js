@@ -55,12 +55,14 @@ const AddHilang = ({ isShow, onClose }) => {
                   type="text"
                   placeholder="ex: fulan"
                   onChange={(e) => setNama(e.target.value)}
+                  required
                 />
 
                 <label className="text-gray-600 mt-2">Jenis Kelamin</label>
                 <select
                   onChange={(e) => setKelamin(e.target.value)}
                   className="border rounded p-2 mt-1 text-black "
+                  required
                 >
                   <option value="">Jenis Kelamin</option>
                     <option value="Laki-Laki">Laki-Laki</option>
@@ -73,6 +75,7 @@ const AddHilang = ({ isShow, onClose }) => {
                   type="number"
                   placeholder="ex: 17"
                   onChange={(e) => setUsia(e.target.value)}
+                  required
                 />
               </div>
               <div className="flex flex-col">
@@ -84,6 +87,7 @@ const AddHilang = ({ isShow, onClose }) => {
                   type="text"
                   placeholder="ex: jl. sudirman xxxx"
                   onChange={(e) => setAlamat(e.target.value)}
+                  required
                 />
                 <label className="text-gray-600 mt-2">Lokasi Hilang</label>
                 <input
@@ -91,6 +95,7 @@ const AddHilang = ({ isShow, onClose }) => {
                   type="text"
                   placeholder="ex: desa xxxx"
                   onChange={(e) => setLokasi(e.target.value)}
+                  required
                 />
               </div>
             </div>
