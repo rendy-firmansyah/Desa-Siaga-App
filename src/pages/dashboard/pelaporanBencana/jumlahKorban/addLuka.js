@@ -81,7 +81,7 @@ const AddLuka = ({ isShow, onClose }) => {
                   <option value="Rawat Jalan">Rawat Jalan</option>
                 </select>
                 <label className="text-gray-600 mt-2">
-                  Jenis Kelamin Laki-laki
+                  Jumlah Korban Laki-laki
                 </label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
@@ -92,7 +92,7 @@ const AddLuka = ({ isShow, onClose }) => {
               </div>
               <div className="flex flex-col">
                 <label className="text-gray-600 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
-                  Jenis Kelamin Wanita
+                  Jumlah Korban Wanita
                 </label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
@@ -100,7 +100,7 @@ const AddLuka = ({ isShow, onClose }) => {
                   placeholder="ex: 10"
                   onChange={(e) => handleJumlahWanita(e)}
                 />
-                <label className="text-gray-600 mt-2">Jumlah</label>
+                <label className="text-gray-600 mt-2">Jumlah Total Korban</label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
                   disabled

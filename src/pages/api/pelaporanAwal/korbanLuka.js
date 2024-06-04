@@ -37,7 +37,8 @@ export default async function korbanMeninggalHandler(req, res) {
   }
   if (req.method === "GET") {
     try {
-      const pelaporan = await prisma.korbanLuka.findMany();
+      const id = req.query.id;
+      const pelaporan = await prisma.korbanLuka.findMany({where : {pelaporan_id : parseInt(id)} });
       return res.status(200).json(pelaporan);
     } catch (error) {
       return res

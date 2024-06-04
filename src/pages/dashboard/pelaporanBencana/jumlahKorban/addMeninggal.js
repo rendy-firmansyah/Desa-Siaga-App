@@ -59,12 +59,14 @@ const AddMeninggal = ({ isShow, onClose }) => {
                   onChange={(e) => setNama(e.target.value)}
                 />
                 <label className="text-gray-600 mt-2">Jenis Kelamin</label>
-                <input
-                  className="border rounded p-2 mt-1 text-black"
-                  type="text"
-                  placeholder="ex: laki-laki/perempuan"
+                <select
                   onChange={(e) => setKelamin(e.target.value)}
-                />
+                  className="border rounded p-2 mt-1 text-black "
+                >
+                  <option value="">Jenis Kelamin</option>
+                    <option value="Laki-Laki">Laki-Laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
                 <label className="text-gray-600 mt-2">Usia</label>
                 <input
                   className="border rounded p-2 mt-1 text-black"

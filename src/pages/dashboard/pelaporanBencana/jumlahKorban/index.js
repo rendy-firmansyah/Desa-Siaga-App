@@ -39,10 +39,11 @@ export async function getServerSideProps(ctx) {
 
 const JumlahKorban = () => {
   const [dataMeninggal, setDataMeninggal] = useState([]);
+  const [dataMenghilang, setDataMenghilang] = useState([]);
+  const [dataKorbanLuka, setDataKorbanLuka] = useState([]);
 
   // Modal Start
-  const [showModalKorbanMeninggal, setShowModalKorbanMeninggal] =
-    useState(false);
+  const [showModalKorbanMeninggal, setShowModalKorbanMeninggal] = useState(false);
   const [showModalKorbanHilang, setShowModalKorbanHilang] = useState(false);
   const [showModalKorbanLuka, setShowModalKorbanLuka] = useState(false);
 
@@ -71,19 +72,29 @@ const JumlahKorban = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const getDataMeninggal = async () => {
-    const response = await axios.get(
-      `/api/pelaporanAwal/korbanmeninggal?id=${id}`
-    );
-    // const data = response.data;
-    setDataMeninggal(response.data);
-  };
-
   useEffect(() => {
+    const getDataMeninggal = async () => {
+      const response = await axios.get(`/api/pelaporanAwal/korbanmeninggal?id=${id}`);
+      setDataMeninggal(response.data);
+    };
     getDataMeninggal();
   }, []);
 
-  // console.log(dataMeninggal);
+  useEffect(() => {
+    const getDataMenghilang = async () => {
+      const response = await axios.get(`/api/pelaporanAwal/korbanHilang?id=${id}`);
+      setDataMenghilang(response.data);
+    };
+    getDataMenghilang();
+  }, []);
+
+  useEffect(() => {
+    const getDataLuka = async () => {
+      const response = await axios.get(`/api/pelaporanAwal/korbanLuka?id=${id}`);
+      setDataKorbanLuka(response.data);
+    };
+    getDataLuka();
+  }, []);
 
   return (
     <section className="container-fluid w-full h-full relative">
@@ -146,33 +157,31 @@ const JumlahKorban = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  {/* <tr>
-                    <td className="text-black">testing</td>
-                  </tr> */}
-                  {dataMeninggal.map((items) => {
-                    <tr key={items.id}>
-                      <td class="text-black px-6 py-4 whitespace-nowrap">
+
+                {dataMeninggal.map((items) => (
+                  <tbody key={items.id} className="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
                         {items.nama}
                       </td>
-                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
                         {items.jenisKelamin}
                       </td>
-                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
                         {items.usia}
                       </td>
-                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
                         {items.alamat}
                       </td>
-                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
                         {items.tempatMeninggal}
                       </td>
-                      <td class="text-black px-6 py-4 whitespace-nowrap">
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
                         {items.penyebab}
                       </td>
-                    </tr>;
-                  })}
-                </tbody>
+                    </tr>
+                  </tbody>
+                ))}
               </table>
             </div>
           </div>
@@ -223,25 +232,27 @@ const JumlahKorban = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                  </tr>
-                </tbody>
+                {dataMenghilang.map((items) => (
+                  <tbody key={items.id} className="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
+                        {items.nama}
+                      </td>
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
+                        {items.jenisKelamin}
+                      </td>
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
+                        {items.usia}
+                      </td>
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
+                        {items.alamat}
+                      </td>
+                      <td className="text-black px-6 py-4 whitespace-nowrap">
+                        {items.lokasiHilang}
+                      </td>
+                    </tr>
+                  </tbody>
+                ))}
               </table>
             </div>
           </div>
@@ -287,22 +298,26 @@ const JumlahKorban = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                  </tr>
-                </tbody>
+                {dataKorbanLuka
+                  .filter((items) => items.jenisRawat === "Rawat Inap")
+                  .map((items) => (
+                    <tbody key={items.id} className="bg-white divide-y divide-gray-200">
+                      <tr>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.namaFaskes}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.lakiLaki}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.wanita}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.jumlah}
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
               </table>
             </div>
             <h1 className="text-black font-bold text-xl my-4">
@@ -326,22 +341,26 @@ const JumlahKorban = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                    <td class="text-black px-6 py-4 whitespace-nowrap">
-                      testing
-                    </td>
-                  </tr>
-                </tbody>
+                {dataKorbanLuka
+                  .filter((items) => items.jenisRawat === "Rawat Jalan")
+                  .map((items) => (
+                    <tbody key={items.id} className="bg-white divide-y divide-gray-200">
+                      <tr>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.namaFaskes}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.lakiLaki}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.wanita}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.jumlah}
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
               </table>
             </div>
           </div>
