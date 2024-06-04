@@ -13,6 +13,7 @@ import DataTable from "datatables.net-dt";
 import AddMeninggal from "./addMeninggal";
 import AddHilang from "./addHilang";
 import AddLuka from "./addLuka";
+import AddPengungsi from "./addPengungsi";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -46,6 +47,7 @@ const JumlahKorban = () => {
   const [showModalKorbanMeninggal, setShowModalKorbanMeninggal] = useState(false);
   const [showModalKorbanHilang, setShowModalKorbanHilang] = useState(false);
   const [showModalKorbanLuka, setShowModalKorbanLuka] = useState(false);
+  const [showModalJumlahPengungsi, setShowModalJumlahPengungsi] = useState(false);
 
   const showVisibleKorbanMeninggal = () => {
     setShowModalKorbanMeninggal(true);
@@ -56,11 +58,15 @@ const JumlahKorban = () => {
   const showVisibleKorbanLuka = () => {
     setShowModalKorbanLuka(true);
   };
+  const showVisibleJumlahPengungsi = () => {
+    setShowModalJumlahPengungsi(true);
+  };
 
   const handleCloseModal = () => {
     setShowModalKorbanMeninggal(false);
     setShowModalKorbanHilang(false);
     setShowModalKorbanLuka(false);
+    setShowModalJumlahPengungsi(false)
   };
 
   // Modal End
@@ -365,6 +371,12 @@ const JumlahKorban = () => {
             </div>
           </div>
           <div className="mt-3">
+            {/* Modal Start */}
+            <AddPengungsi
+              isShow={showModalJumlahPengungsi}
+              onClose={handleCloseModal}
+            />
+            {/* Modal End */}
             <div className="flex flex-col">
               <label className="font-semibold text-md text-black">
                 Jumlah Korban Pengungsi
@@ -377,6 +389,7 @@ const JumlahKorban = () => {
                 />
                 <button
                   type="button"
+                  onClick={showVisibleJumlahPengungsi}
                   className="bg-secondary-default mt-3 md:mt-0 lg:mt-0 xl:mt-0 w-full md:w-auto lg:w-auto xl:w-auto px-8 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
                 >
                   Tambah
@@ -384,65 +397,81 @@ const JumlahKorban = () => {
               </div>
             </div>
             <div className="overflow-x-auto mt-4">
-              <table className="w-auto divide-y divide-gray-200 border-2 shadow-lg shad">
+              <table className="min-w-full divide-y divide-gray-200 border-2 shadow-lg shad">
                 <thead className="overflow-x-auto">
                   <tr>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Kab/Kota
-                    </th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Kec,
-                      <br />
-                      Desa/Dusun
-                    </th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='2'>
                       Lokasi
                       <br />
                       Pengungsian
                     </th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Gangguan Jiwa/Psikosial
-                      <div className="grid grid-cols-2 gap-2 mt-1">
-                        <span className="px-2">Anak</span>
-                        <span className="px-2">Dewasa</span>
-                      </div>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colSpan='2'>
+                      Gangguan Jiwa
+                      <br />
+                      /Psikosial
                     </th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colSpan='4'>
                       Jumlah Pengungsi
-                      <div className="grid grid-cols-4 gap-2 mt-1">
-                        <span>Laki-Laki</span>
-                        <span>Perempuan</span>
-                        <span>Jumlah</span>
-                        <span>KK</span>
-                      </div>
                     </th>
+                  </tr>
+                  <tr>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Anak</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Dewasa</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">L</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">P</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   <tr>
-                    <td className="text-black px-6 py-4 whitespace-nowrap">
-                      Testing
-                    </td>
-                    <td className="text-black px-6 py-4 whitespace-nowrap">
-                      Testing
-                    </td>
-                    <td className="text-black px-6 py-4 whitespace-nowrap">
-                      Testing
-                    </td>
-                    <td className="text-black px-6 py-4 whitespace-nowrap">
-                      <div className="grid grid-cols-2 gap-2 mt-1">
-                        <span className="px-2">Testing</span>
-                        <span className="px-2">Testing</span>
-                      </div>
-                    </td>
-                    <td className="text-black px-6 py-4 whitespace-nowrap">
-                      <div className="grid grid-cols-4 gap-2">
-                        <span>Testing</span>
-                        <span>Testing</span>
-                        <span>Testing</span>
-                        <span>Testing</span>
-                      </div>
-                    </td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="overflow-x-auto mt-4">
+              <table className="min-w-full divide-y divide-gray-200 border-2 shadow-lg shad">
+                <thead className="overflow-x-auto">
+                  <tr>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='3'>
+                      LOKASI <br />
+                      PENGUNGSIAN
+                    </th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colSpan='6'>
+                      Jumlah Penduduk Rentan
+                    </th>
+                  </tr>
+                  <tr>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='2'>Bayi</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='2'>Balita</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='2'>Bumil</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='2'>Buteki</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colSpan='2'>Cacat</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colSpan='2'>Lansia</th>
+                  </tr>
+                  <tr>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">L</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">P</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">L</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">P</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  <tr>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
+                    <td className="text-black text-center">test</td>
                   </tr>
                 </tbody>
               </table>
