@@ -16,10 +16,6 @@ export const addBerita = () => {
     const [deskripsiBerita, setDeskripsiBerita] = useState("");
     const [selectedKec, setSelectedKec] = useState("");
     const [selectedDesa, setSelectedDesa] = useState("");
-    const [dataKecamatan,setDataKec] = useState([]);
-    const [dataDesa,setDataDesa] = useState([]);
-    // const [dataBerita,setDataBerita] = useState([]);
-
     const { id } = router.query
 
   useEffect(() => {

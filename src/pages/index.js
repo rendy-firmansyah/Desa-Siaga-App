@@ -2,8 +2,21 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Landing = () => {
+
+  const [berita,setBerita] = useState([]);
+
+  const fetchData = async () => {
+    const response = await axios.get('/api/berita?id=');
+    setBerita(response.data);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <main>
       <Navbar />
@@ -48,60 +61,30 @@ const Landing = () => {
           </div>
         </section>
 
+
+
         {/* Berita Section*/}
         <section className="mb-[56px]">
           <div className="grid grid-cols-12">
+        {berita.map((items) => (
             <div className="xl:col-span-8 lg:col-span-12 md:col-span-12 col-span-12">
               <div className="grid grid-cols-12 mb-[20px]">
                 <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12">
                   <div className="w-full h-full">
-                    <Image src="/berita-1.png" width={530} height={374} />
+                    {/* <Image src='{items.gambar}' width={530} height={374} /> */}
+                    <img className="w-64 h-52 rounded-2xl" src={items.gambar} alt="News"/>
                   </div>
                 </div>
                 <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 xl:ps-7 lg:ps-7 md:ps-7 ps-0 xl:mt-[0px] lg:mt-[0px] md:mt-[0px] mt-[10px] flex items-center">
                   <div className="">
                     <div className="font-bold xl:text-[24px] lg:text-[20px] text-black md:text-[18px]">
-                      Lorem ipsum is placeholder
+                      {items.judul}
                     </div>
                     <div className="font-normal xl:text-[20px] lg:text-[16px] text-gray-600 md:text-[16px]">
                       Febuary 13, 2024
                     </div>
                     <div className="font-normal xl:text-[20px] lg:text-[18px] text-black my-2 md:text-[14px]">
-                      Lorem ipsum is placeholder text commonly used in the
-                      graphic, print, and publishing industries for previewing
-                      layouts and visual mockups.......
-                    </div>
-                    <div className="xl:mt-[40px] lg:mt-[40px] md:mt-[20px] mt-[20px]">
-                      <Link href="/detail_berita">
-                        <button
-                          type="submit"
-                          className="xl:w-[200px] xl:h-[50px] lg:w-[200px] lg:h-[50px] bg-secondary-default xl:text-[14px] lg:text-[14px] font-bold md:w-[180px] md:h-[40px] w-[200px] h-[40px] md:text-[12px]"
-                        >
-                          Baca Selengkapnya
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="grid grid-cols-12 mb-[20px]">
-                <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12">
-                  <div className="w-full h-full">
-                    <Image src="/berita-1.png" width={530} height={374} />
-                  </div>
-                </div>
-                <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 xl:ps-7 lg:ps-7 md:ps-7 ps-0 xl:mt-[0px] lg:mt-[0px] md:mt-[0px] mt-[10px] flex items-center">
-                  <div className="">
-                    <div className="font-bold xl:text-[24px] lg:text-[20px] text-black md:text-[18px]">
-                      Lorem ipsum is placeholder
-                    </div>
-                    <div className="font-normal xl:text-[20px] lg:text-[16px] text-gray-600 md:text-[16px]">
-                      Febuary 13, 2024
-                    </div>
-                    <div className="font-normal xl:text-[20px] lg:text-[18px] text-black my-2 md:text-[14px]">
-                      Lorem ipsum is placeholder text commonly used in the
-                      graphic, print, and publishing industries for previewing
-                      layouts and visual mockups.......
+                      {items.deskripsi}
                     </div>
                     <div className="xl:mt-[40px] lg:mt-[40px] md:mt-[20px] mt-[20px]">
                       <Link href="/detail_berita">
@@ -126,7 +109,8 @@ const Landing = () => {
                   </button>
                 </Link>
               </div>
-            </div>
+            </div>))}
+
             <div className="xl:col-span-4 lg:col-span-12 md:col-span-12 col-span-12 xl:ps-[50px]">
               <div>
                 <div className="font-bold xl:text-[24px] lg:text-[24px] md:text-[24px] text-[20px] text-black mb-[25px] xl:text-start md:text-center">
