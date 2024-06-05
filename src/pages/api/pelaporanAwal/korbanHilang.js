@@ -21,7 +21,7 @@ export default async function korbanMeninggalHandler(req, res) {
         },
       });
 
-      return res.status(200).json("Berhasil menambahkan data korban hilang");
+      return res.status(200).json({message:"Berhasil menambahkan data korban hilang" , status: "success"});
     } catch (error) {
       return res
         .status(500)
