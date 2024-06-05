@@ -67,39 +67,47 @@ const Landing = () => {
         <section className="mb-[56px]">
           <div className="grid grid-cols-12">
             <div className="xl:col-span-8 lg:col-span-12 md:col-span-12 col-span-12">
-        {berita.map((items) => (
-              <div className="grid grid-cols-12 mb-[20px]">
-                <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12">
-                  <div className="w-full h-full">
-                    {/* <Image src='{items.gambar}' width={530} height={374} /> */}
-                    <img className="w-64 h-52 rounded-2xl" src={items.gambar} alt="News"/>
+            {berita.map((items, index) => {
+                const date = new Date(items.created_at); // Mengubah timestamp menjadi objek Date
+                const formattedDate = date.toLocaleDateString('id-ID', {
+                  day: '2-digit',
+                  month: 'long',
+                  year: 'numeric'
+                });
+
+                return (
+                  <div key={index} className="grid grid-cols-12 mb-[20px]">
+                    <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12">
+                      <div className="w-full h-full">
+                        <img className="w-64 h-52" src={items.gambar} alt="News" />
+                      </div>
+                    </div>
+                    <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 xl:ps-7 lg:ps-7 md:ps-7 ps-0 xl:mt-[0px] lg:mt-[0px] md:mt-[0px] mt-[10px] flex items-center">
+                      <div>
+                        <div className="font-bold xl:text-[24px] lg:text-[20px] text-black md:text-[18px]">
+                          {items.judul}
+                        </div>
+                        <div className="font-normal xl:text-[20px] lg:text-[16px] text-gray-600 md:text-[16px]">
+                          {formattedDate}
+                        </div>
+                        <div className="font-normal xl:text-[20px] lg:text-[18px] text-black my-2 md:text-[14px]">
+                          {items.deskripsi}
+                        </div>
+                        <div className="xl:mt-[40px] lg:mt-[40px] md:mt-[20px] mt-[20px]">
+                          <Link href="/detail_berita">
+                            <button
+                              type="submit"
+                              className="xl:w-[200px] xl:h-[50px] lg:w-[200px] lg:h-[50px] bg-secondary-default xl:text-[14px] lg:text-[14px] font-bold md:w-[180px] md:h-[40px] w-[200px] h-[40px] md:text-[12px]"
+                            >
+                              Baca Selengkapnya
+                            </button>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 xl:ps-7 lg:ps-7 md:ps-7 ps-0 xl:mt-[0px] lg:mt-[0px] md:mt-[0px] mt-[10px] flex items-center">
-                  <div className="">
-                    <div className="font-bold xl:text-[24px] lg:text-[20px] text-black md:text-[18px]">
-                      {items.judul}
-                    </div>
-                    <div className="font-normal xl:text-[20px] lg:text-[16px] text-gray-600 md:text-[16px]">
-                      Febuary 13, 2024
-                    </div>
-                    <div className="font-normal xl:text-[20px] lg:text-[18px] text-black my-2 md:text-[14px]">
-                      {items.deskripsi}
-                    </div>
-                    <div className="xl:mt-[40px] lg:mt-[40px] md:mt-[20px] mt-[20px]">
-                      <Link href="/detail_berita">
-                        <button
-                          type="submit"
-                          className="xl:w-[200px] xl:h-[50px] lg:w-[200px] lg:h-[50px] bg-secondary-default xl:text-[14px] lg:text-[14px] font-bold md:w-[180px] md:h-[40px] w-[200px] h-[40px] md:text-[12px]"
-                        >
-                          Baca Selengkapnya
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+                );
+              })}
               <div className="xl:mt-[40px] lg:my-[40px] md:my-[30px] my-[30px] flex justify-center">
                 <Link href="">
                   <button
