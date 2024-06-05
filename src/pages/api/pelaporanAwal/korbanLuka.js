@@ -16,7 +16,7 @@ export default async function korbanMeninggalHandler(req, res) {
       return res.status(400).json({ message: "Data tidak boleh Kosong!" });
     }
 
-    // try {
+    try {
     const pelaporan = await prisma.korbanLuka.create({
       data: {
         namaFaskes,
@@ -29,11 +29,11 @@ export default async function korbanMeninggalHandler(req, res) {
     });
     return res
       .status(200)
-      .json({ message: "Berhasil Menambahkan data Korban Luka - Luka" });
-    // }
-    // catch (error) {
-    //     return res.status(500).json({message: "Server error!", status : 'failed'})
-    // }
+      .json({ message: "Berhasil Menambahkan data Korban Luka - Luka", status : 'success'});
+    }
+    catch (error) {
+        return res.status(500).json({message: "Server error!", status : 'failed'})
+    }
   }
   if (req.method === "GET") {
     try {

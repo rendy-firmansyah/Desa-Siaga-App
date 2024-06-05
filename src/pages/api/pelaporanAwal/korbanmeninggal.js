@@ -36,7 +36,7 @@ export default async function korbanMeninggalHandler(req, res) {
         },
       });
 
-      return res.status(200).json("Berhasil menambahkan data korban meinggal");
+      return res.status(200).json({message:"Berhasil menambahkan data korban meinggal", status: "success"});
     } catch (error) {
       return res
         .status(500)
@@ -45,7 +45,6 @@ export default async function korbanMeninggalHandler(req, res) {
   }
   if (req.method === "GET") {
     try {
-      // const pelaporan = await prisma.korbanMeninggal.findMany();
       const id = req.query.id;
       const pelaporan = await prisma.korbanMeninggal.findMany({
         where: { pelaporan_id: parseInt(id) },
