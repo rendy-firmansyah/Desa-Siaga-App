@@ -105,15 +105,20 @@ model korbanLuka {
 }
 model korbanPengungsi {
   id                    Int @id @default(autoincrement())
-  Kabupaten             String
-  Desa                  String
   lokasi                String
-  gangguanAnak          String
-  gangguanDewasa        String
+  gangguanAnak          Int
+  gangguanDewasa        Int
   lakiLaki              Int
   perempuan             Int
   jumlah                Int
-  kk                    Int
+  bayi                  Int
+  balita                Int
+  bumil                 Int
+  buteki                Int
+  cacatLaki             Int
+  cacatPerempuan        Int
+  lansiaLaki            Int
+  lansiaPerempuan       Int
   pelaporan_id          Int
   pelaporan             pelaporanAwal @relation(fields: [pelaporan_id], references: [id])
 }
