@@ -17,6 +17,10 @@ const Landing = () => {
     fetchData();
   }, []);
 
+  const topThreeBerita = berita
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    .slice(0, 3);
+
   return (
     <main>
       <Navbar />
@@ -125,32 +129,23 @@ const Landing = () => {
                 <div className="font-bold xl:text-[24px] lg:text-[24px] md:text-[24px] text-[20px] text-black mb-[25px] xl:text-start md:text-center">
                   Berita Terbaru
                 </div>
-                <div className="xl:w-full xl:flex-col lg:w-full lg:flex md:flex">
-                  <div className="xl:flex xl:mx-0 lg:flex md:flex-col flex xl:items-start lg:items-start md:items-start items-center lg:mx-[10px] md:mx-[10px] xl:my-[20px] lg:my-[20px] md:my-0 my-[20px]">
-                    <div>
-                      <div className="xl:w-[230px] xl:h-[153px] lg:w-[230px] lg:h-[153px] md:w-[140px] md:h-[93px] w-[140px] relative">
-                        <Image src="/berita-1.png" width={230} height={153} className="w-full h-full object-cover" />
+                {topThreeBerita.map((items, index) => (
+                  <div key={index} className="xl:w-full xl:flex-col lg:w-full lg:flex md:flex">
+                    <div className="xl:flex xl:mx-0 lg:flex md:flex-col flex xl:items-start lg:items-start md:items-start items-center lg:mx-[10px] md:mx-[10px] xl:my-[20px] lg:my-[20px] md:my-0 my-[20px]">
+                      <div>
+                        <div className="xl:w-[230px] xl:h-[153px] lg:w-[230px] lg:h-[153px] md:w-[140px] md:h-[93px] w-[140px] relative">
+                          {/* <Image src={items.gambar} width={230} height={153} className="w-full h-full object-cover" /> */}
+                          <img className="w-64 h-40" src={items.gambar} alt="News" />
+                        </div>
                       </div>
-                    </div>
-                    <div className="xl:mt-0 md:mt-[10px] xl:w-[230px] lg:w-[230px] md:w-[140px] w-full xl:ms-0 lg:ms-0 md:ms-0 ms-[20px]">
-                      <div className="font-bold text-black xl:text-[18px] lg:text-[16px] md:text-[14px] xl:text-center lg:text-center md:text-center text-start">
-                        Lorem ipsum is placeholder
-                      </div>
-                    </div>
-                  </div>
-                  <div className="xl:flex xl:mx-0 lg:flex md:flex-col flex xl:items-start lg:items-start md:items-start items-center lg:mx-[10px] md:mx-[10px] xl:my-[20px] lg:my-[20px] md:my-0 my-[20px]">
-                    <div>
-                      <div className="xl:w-[230px] xl:h-[153px] lg:w-[230px] lg:h-[153px] md:w-[140px] md:h-[93px] w-[140px] relative">
-                        <Image src="/berita-1.png" width={230} height={153} className="w-full h-full object-cover" />
-                      </div>
-                    </div>
-                    <div className="xl:mt-0 md:mt-[10px] xl:w-[230px] lg:w-[230px] md:w-[140px] w-full xl:ms-0 lg:ms-0 md:ms-0 ms-[20px]">
-                      <div className="font-bold text-black xl:text-[18px] lg:text-[16px] md:text-[14px] xl:text-center lg:text-center md:text-center text-start">
-                        Lorem ipsum is placeholder
+                      <div className="xl:mt-0 md:mt-[10px] xl:w-[230px] lg:w-[230px] md:w-[140px] w-full xl:ms-0 lg:ms-0 md:ms-0 ms-[20px]">
+                        <div className="font-bold text-black xl:text-[18px] lg:text-[16px] md:text-[14px] xl:text-center lg:text-center md:text-center text-start">
+                          {items.judul}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
