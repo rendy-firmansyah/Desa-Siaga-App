@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const AddMeninggal = ({ isShow, onClose }) => {
+const AddMeninggal = ({ isShow, onClose, onSuccess}) => {
   if (!isShow) return null;
 
   const router = useRouter();
@@ -29,7 +29,7 @@ const AddMeninggal = ({ isShow, onClose }) => {
       pelaporan_id: id,
     });
 
-    console.log(res.data);
+    onSuccess();
     onClose(true);
   };
 

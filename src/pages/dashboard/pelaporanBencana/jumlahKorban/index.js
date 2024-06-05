@@ -78,27 +78,27 @@ const JumlahKorban = () => {
   const router = useRouter();
   const { id } = router.query;
 
+  const getDataMeninggal = async () => {
+    const response = await axios.get(`/api/pelaporanAwal/korbanmeninggal?id=${id}`);
+    setDataMeninggal(response.data);
+  };
   useEffect(() => {
-    const getDataMeninggal = async () => {
-      const response = await axios.get(`/api/pelaporanAwal/korbanmeninggal?id=${id}`);
-      setDataMeninggal(response.data);
-    };
     getDataMeninggal();
   }, []);
 
+  const getDataMenghilang = async () => {
+    const response = await axios.get(`/api/pelaporanAwal/korbanHilang?id=${id}`);
+    setDataMenghilang(response.data);
+  };
   useEffect(() => {
-    const getDataMenghilang = async () => {
-      const response = await axios.get(`/api/pelaporanAwal/korbanHilang?id=${id}`);
-      setDataMenghilang(response.data);
-    };
     getDataMenghilang();
   }, []);
 
+  const getDataLuka = async () => {
+    const response = await axios.get(`/api/pelaporanAwal/korbanLuka?id=${id}`);
+    setDataKorbanLuka(response.data);
+  };
   useEffect(() => {
-    const getDataLuka = async () => {
-      const response = await axios.get(`/api/pelaporanAwal/korbanLuka?id=${id}`);
-      setDataKorbanLuka(response.data);
-    };
     getDataLuka();
   }, []);
 
@@ -118,6 +118,7 @@ const JumlahKorban = () => {
             <AddMeninggal
               isShow={showModalKorbanMeninggal}
               onClose={handleCloseModal}
+              onSuccess={() => getDataMeninggal()}
             />
             {/* Modal End */}
             <div className="flex flex-col">
@@ -196,6 +197,7 @@ const JumlahKorban = () => {
             <AddHilang
               isShow={showModalKorbanHilang}
               onClose={handleCloseModal}
+              onSuccess={() => getDataMenghilang()}
             />
             {/* Modal End */}
             <div className="flex flex-col">
@@ -263,7 +265,7 @@ const JumlahKorban = () => {
             </div>
           </div>
           <div className="mt-3">
-            <AddLuka isShow={showModalKorbanLuka} onClose={handleCloseModal} />
+            <AddLuka isShow={showModalKorbanLuka} onClose={handleCloseModal} onSuccess={() => getDataLuka()} />
             <div className="flex flex-col">
               <label className="font-semibold text-md text-black">
                 Jumlah Korban Luka Berat/Rawat Inap, Luka Ringan/Rawat Jalan

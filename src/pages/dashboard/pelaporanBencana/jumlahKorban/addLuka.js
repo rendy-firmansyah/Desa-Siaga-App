@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const AddLuka = ({ isShow, onClose }) => {
+const AddLuka = ({ isShow, onClose, onSuccess }) => {
   if (!isShow) return null;
 
   const router = useRouter();
@@ -35,7 +35,7 @@ const AddLuka = ({ isShow, onClose }) => {
       pelaporan_id: id,
     });
 
-    console.log(res.data);
+    onSuccess();
     onClose(true);
   };
 
