@@ -386,6 +386,7 @@ const JumlahKorban = () => {
             <AddPengungsi
               isShow={showModalJumlahPengungsi}
               onClose={handleCloseModal}
+              onSuccess={() => getDataPengungsi()}
             />
             {/* Modal End */}
             <div className="flex flex-col">

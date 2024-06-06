@@ -11,20 +11,20 @@ const AddPengungsi = ({ isShow, onClose, onSuccess}) => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [lokasi, setLokasi] = useState("");
-  const [gangguanAnak, setGangguanAnak] = useState("");
-  const [gangguanDewasa, setGangguanDewasa] = useState("");
+  const [lokasi, setLokasi] = useState(0);
+  const [gangguanAnak, setGangguanAnak] = useState(0);
+  const [gangguanDewasa, setGangguanDewasa] = useState(0);
   const [lakiLaki, setLakiLaki] = useState(0);
   const [perempuan, setPerempuan] = useState(0);
-  const [bayi, setBayi] = useState("");
-  const [balita, setBalita] = useState("");
-  const [bumil, setBumil] = useState("");
-  const [buteki, setButeki] = useState("");
-  const [cacatLaki, setCacatLaki] = useState("");
-  const [cacatPerempuan, setCacatPerempuan] = useState("");
-  const [lansiaLaki, setLansiaLaki] = useState("");
-  const [lansiaPerempuan, setLansiaPerempuan] = useState("");
-  const [jumlah, setJumlah] = useState("");
+  const [bayi, setBayi] = useState(0);
+  const [balita, setBalita] = useState(0);
+  const [bumil, setBumil] = useState(0);
+  const [buteki, setButeki] = useState(0);
+  const [cacatLaki, setCacatLaki] = useState(0);
+  const [cacatPerempuan, setCacatPerempuan] = useState(0);
+  const [lansiaLaki, setLansiaLaki] = useState(0);
+  const [lansiaPerempuan, setLansiaPerempuan] = useState(0);
+  const [jumlah, setJumlah] = useState(0);
 
   useEffect(() => {
     // Menghitung jumlah laki-laki dan perempuan setiap kali nilai LakiLaki atau perempuan berubah
