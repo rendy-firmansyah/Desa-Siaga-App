@@ -71,6 +71,7 @@ model pelaporanAwal {
   korbanHilang            korbanHilang[]
   korbanLuka              korbanLuka[]
   korbanPengungsi         korbanPengungsi[]
+  aksesDanKeadaan         aksesDanKeadaan[]
 }
 model korbanMeninggal {
   id                      Int @id @default(autoincrement())
@@ -119,6 +120,23 @@ model korbanPengungsi {
   cacatPerempuan        Int
   lansiaLaki            Int
   lansiaPerempuan       Int
+  pelaporan_id          Int
+  pelaporan             pelaporanAwal @relation(fields: [pelaporan_id], references: [id])
+}
+model aksesDanKeadaan {
+  id                    Int   @id @default(autoincrement())
+  mudahDiakses          String
+  sukar                 String
+  Narahubung            String
+  alamat                String
+  jalurKomuikasi        String
+  keadaanListrik        String
+  bangunanSekolah       String
+  bangunanBalai         String
+  sumberAir             String
+  fasilitasUmum         String
+  bangunanPustu         String
+  fasilitasIbadah       String
   pelaporan_id          Int
   pelaporan             pelaporanAwal @relation(fields: [pelaporan_id], references: [id])
 }
