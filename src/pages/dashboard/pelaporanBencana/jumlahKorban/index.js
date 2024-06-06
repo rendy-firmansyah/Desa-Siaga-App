@@ -72,12 +72,12 @@ const JumlahKorban = () => {
 
   // Modal End
 
-  const nextPage = () => {
-    Router.push("/dashboard/pelaporanBencana/jumlahKorban/fasilitas");
-  };
-
+  
   const router = useRouter();
   const { id } = router.query;
+  const nextPage = () => {
+    router.push(`/dashboard/pelaporanBencana/jumlahKorban/fasilitas?id=${id}`);
+  };
 
   const getDataMeninggal = async () => {
     const response = await axios.get(`/api/pelaporanAwal/korbanmeninggal?id=${id}`);
