@@ -94,7 +94,7 @@ const Fasilitas = () => {
       });
 
       router.push(
-        "/dashboard/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan"
+        `/dashboard/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan?id=${id}`
       );
       
     } else {
@@ -109,12 +109,6 @@ const Fasilitas = () => {
       });
     }
   };
-
-  // const nextPage = () => {
-  //   Router.push(
-  //     "/dashboard/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan"
-  //   );
-  // };
 
   return (
     <section className="container-fluid w-full h-full relative">
