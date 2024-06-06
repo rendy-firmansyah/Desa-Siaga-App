@@ -30,21 +30,6 @@ const AddPengungsi = ({ isShow, onClose, onSuccess}) => {
     // Menghitung jumlah laki-laki dan perempuan setiap kali nilai LakiLaki atau perempuan berubah
     setJumlah(lakiLaki + perempuan);
   }, [lakiLaki, perempuan]);
-
-  console.log(lokasi);
-  console.log(gangguanAnak);
-  console.log(gangguanDewasa);
-  console.log(lakiLaki);
-  console.log(perempuan);
-  console.log(bayi);
-  console.log(balita);
-  console.log(bumil);
-  console.log(buteki);
-  console.log(cacatLaki);
-  console.log(cacatPerempuan);
-  console.log(lansiaLaki);
-  console.log(lansiaPerempuan);
-  console.log(jumlah);
   
   const addPengungsi = async () => {
     const res = await axios.post("/api/pelaporanAwal/korbanPengungsi", {
