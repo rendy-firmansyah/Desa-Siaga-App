@@ -1,12 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import bgDashboard from "../../../../../../public/bg-2.jpg";
-import Router from "next/router";
-import { useState } from "react";
+// import Router from "next/router";
 import nookies from "nookies";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -32,27 +33,92 @@ export async function getServerSideProps(ctx) {
 }
 
 const Fasilitas = () => {
-  const [A1, setA1] = useState("");
-  const [A2, setA2] = useState("");
-  const [A3, setA3] = useState("");
-  const [A4, setA4] = useState("");
-  const [B, setB] = useState("");
-  const [C, setC] = useState("");
-  const [D, setD] = useState("");
-  const [E, setE] = useState("");
-  const [F, setF] = useState("");
-  const [G, setG] = useState("");
-  const [H, setH] = useState("");
-  const [I, setI] = useState("");
+  const [mudahDiakses, setMudahDiakses] = useState("");
+  const [sukar, setSukar] = useState("");
+  const [Narahubung, setNarahubung] = useState("");
+  const [alamat, setAlamat] = useState("");
+  const [jalurKomuikasi, setJalurKomuikasi] = useState("");
+  const [keadaanListrik, setKeadaanListrik] = useState("");
+  const [bangunanSekolah, setBangunanSekolah] = useState("");
+  const [bangunanBalai, setBangunanBalai] = useState("");
+  const [sumberAir, setSumberAir] = useState("");
+  const [fasilitasUmum, setFasilitasUmum] = useState("");
+  const [bangunanPustu, setBangunanPustu] = useState("");
+  const [fasilitasIbadah, setFasilitasIbadah] = useState("");
+  const [totalData, setTotalData] = useState([]);
 
-  const nextPage = () => {
-    Router.push(
-      "/dashboard/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan"
-    );
+  const router = useRouter();
+  const { id } = router.query;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`/api/pelaporanAwal/korbanmeninggal?id=${id}`);
+        const data = res.data; // Data yang diterima dari API
+        const total = data.length; // Menghitung panjang array data
+        setTotalData(total);
+      } catch (error) {
+        console.error('Error fetching data', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const addFasilitas = async () => {
+    const res = await axios.post("/api/pelaporanAwal/aksesDanKeadaan", {
+      mudahDiakses,
+      sukar,
+      Narahubung,
+      alamat,
+      jalurKomuikasi,
+      keadaanListrik,
+      bangunanSekolah,
+      bangunanBalai,
+      sumberAir,
+      fasilitasUmum,
+      bangunanPustu,
+      fasilitasIbadah,
+      pelaporan_id: id,
+    });
+    console.log(res.data);
+    if (res.data.status === "success") {
+      toast(`✅ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+
+      router.push(
+        "/dashboard/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan"
+      );
+      
+    } else {
+      toast(`❌ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,  
+        theme: "light",
+      });
+    }
   };
+
+  // const nextPage = () => {
+  //   Router.push(
+  //     "/dashboard/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan"
+  //   );
+  // };
 
   return (
     <section className="container-fluid w-full h-full relative">
+      <ToastContainer/>
       <div className="absolute -z-10 inset-0">
         <Image src={bgDashboard} alt="background-image" className="h-full" />
       </div>
@@ -69,7 +135,8 @@ const Fasilitas = () => {
             <input
               className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
               type="number"
-              disabled
+              disabled 
+              value={totalData}
             />
           </div>
           <form>
@@ -87,7 +154,7 @@ const Fasilitas = () => {
                     className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                     type="text"
                     name=""
-                    onChange={(e) => setA1(e.target.value)}
+                    onChange={(e) => setMudahDiakses(e.target.value)}
                   />
                 </div>
               </div>
@@ -99,7 +166,7 @@ const Fasilitas = () => {
                     className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                     type="text"
                     name=""
-                    onChange={(e) => setA2(e.target.value)}
+                    onChange={(e) => setSukar(e.target.value)}
                   />
                 </div>
               </div>
@@ -113,7 +180,7 @@ const Fasilitas = () => {
                     className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                     type="text"
                     name=""
-                    onChange={(e) => setA3(e.target.value)}
+                    onChange={(e) => setNarahubung(e.target.value)}
                   />
                 </div>
               </div>
@@ -127,7 +194,7 @@ const Fasilitas = () => {
                     className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                     type="text"
                     name=""
-                    onChange={(e) => setA4(e.target.value)}
+                    onChange={(e) => setAlamat(e.target.value)}
                   />
                 </div>
               </div>
@@ -141,7 +208,7 @@ const Fasilitas = () => {
                 className="w-72 h-8 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                 type="text"
                 name=""
-                onChange={(e) => setB(e.target.value)}
+                onChange={(e) => setJalurKomuikasi(e.target.value)}
               />
             </div>
             <div className="grid grid-cols-2">
@@ -157,7 +224,7 @@ const Fasilitas = () => {
                       id=""
                       value="baik"
                       name="jaringan_listrik"
-                      onChange={(e) => setC(e.target.value)}
+                      onChange={(e) => setKeadaanListrik(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Baik
@@ -169,7 +236,7 @@ const Fasilitas = () => {
                       id=""
                       value="terputus"
                       name="jaringan_listrik"
-                      onChange={(e) => setC(e.target.value)}
+                      onChange={(e) => setKeadaanListrik(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Terputus
@@ -181,7 +248,7 @@ const Fasilitas = () => {
                       id=""
                       value="belum_ada"
                       name="jaringan_listrik"
-                      onChange={(e) => setC(e.target.value)}
+                      onChange={(e) => setKeadaanListrik(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Belum tersedia/belum ada
@@ -199,7 +266,7 @@ const Fasilitas = () => {
                       id=""
                       value="tercemar"
                       name="sumber_air_bersih"
-                      onChange={(e) => setD(e.target.value)}
+                      onChange={(e) => setSumberAir(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tercemar
@@ -211,7 +278,7 @@ const Fasilitas = () => {
                       id=""
                       value="tidak_tercemar"
                       name="sumber_air_bersih"
-                      onChange={(e) => setD(e.target.value)}
+                      onChange={(e) => setSumberAir(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tidak Tercemar
@@ -229,7 +296,7 @@ const Fasilitas = () => {
                       id=""
                       value="rusak"
                       name="fasilitas_mck"
-                      onChange={(e) => setE(e.target.value)}
+                      onChange={(e) => setFasilitasUmum(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Rusak
@@ -241,7 +308,7 @@ const Fasilitas = () => {
                       id=""
                       value="tidak_rusak"
                       name="fasilitas_mck"
-                      onChange={(e) => setE(e.target.value)}
+                      onChange={(e) => setFasilitasUmum(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tidak Rusak
@@ -259,7 +326,7 @@ const Fasilitas = () => {
                       id=""
                       value="rusak"
                       name="fasilitas_ibadah"
-                      onChange={(e) => setF(e.target.value)}
+                      onChange={(e) => setFasilitasIbadah(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Rusak
@@ -271,7 +338,7 @@ const Fasilitas = () => {
                       id=""
                       value="tidak_rusak"
                       name="fasilitas_ibadah"
-                      onChange={(e) => setF(e.target.value)}
+                      onChange={(e) => setFasilitasIbadah(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tidak Rusak
@@ -291,7 +358,7 @@ const Fasilitas = () => {
                       id=""
                       value="rusak"
                       name="bangunan_sekolah"
-                      onChange={(e) => setG(e.target.value)}
+                      onChange={(e) => setBangunanSekolah(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Rusak
@@ -303,7 +370,7 @@ const Fasilitas = () => {
                       id=""
                       value="tidak_rusak"
                       name="bangunan_sekolah"
-                      onChange={(e) => setG(e.target.value)}
+                      onChange={(e) => setBangunanSekolah(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tidak Rusak
@@ -321,7 +388,7 @@ const Fasilitas = () => {
                       id=""
                       value="rusak"
                       name="balai_desa"
-                      onChange={(e) => setH(e.target.value)}
+                      onChange={(e) => setBangunanBalai(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Rusak
@@ -333,7 +400,7 @@ const Fasilitas = () => {
                       id=""
                       value="tidak_rusak"
                       name="balai_desa"
-                      onChange={(e) => setH(e.target.value)}
+                      onChange={(e) => setBangunanBalai(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tidak Rusak
@@ -351,7 +418,7 @@ const Fasilitas = () => {
                       id=""
                       value="rusak"
                       name="pustu"
-                      onChange={(e) => setI(e.target.value)}
+                      onChange={(e) => setBangunanPustu(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Rusak
@@ -363,7 +430,7 @@ const Fasilitas = () => {
                       id=""
                       value="tidak_rusak"
                       name="pustu"
-                      onChange={(e) => setI(e.target.value)}
+                      onChange={(e) => setBangunanPustu(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tidak Rusak
@@ -376,7 +443,7 @@ const Fasilitas = () => {
         </div>
         <div className="flex justify-center mt-5">
           <button
-            onClick={nextPage}
+            onClick={(e) => addFasilitas()}
             type=""
             className="bg-secondary-default w-full mx-8 md:mx-14 lg:mx-32 xl:mx-32 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
           >
