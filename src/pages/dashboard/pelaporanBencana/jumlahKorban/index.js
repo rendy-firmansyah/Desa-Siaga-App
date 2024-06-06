@@ -42,6 +42,7 @@ const JumlahKorban = () => {
   const [dataMeninggal, setDataMeninggal] = useState([]);
   const [dataMenghilang, setDataMenghilang] = useState([]);
   const [dataKorbanLuka, setDataKorbanLuka] = useState([]);
+  const [dataPengungsi, setDataPengungsi] = useState([]);
 
   // Modal Start
   const [showModalKorbanMeninggal, setShowModalKorbanMeninggal] = useState(false);
@@ -100,6 +101,14 @@ const JumlahKorban = () => {
   };
   useEffect(() => {
     getDataLuka();
+  }, []);
+
+  const getDataPengungsi = async () => {
+    const response = await axios.get(`/api/pelaporanAwal/korbanPengungsi?id=${id}`);
+    setDataPengungsi(response.data);
+  };
+  useEffect(() => {
+    getDataPengungsi();
   }, []);
 
   return (
@@ -424,16 +433,18 @@ const JumlahKorban = () => {
                     <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                  </tr>
-                </tbody>
+                {dataPengungsi.map((items) => (
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td className="text-black text-center">{items.lokasi}</td>
+                      <td className="text-black text-center">{items.gangguanAnak}</td>
+                      <td className="text-black text-center">{items.gangguanDewasa}</td>
+                      <td className="text-black text-center">{items.lakiLaki}</td>
+                      <td className="text-black text-center">{items.perempuan}</td>
+                      <td className="text-black text-center">{items.jumlah}</td>
+                    </tr>
+                  </tbody>
+                ))}
               </table>
             </div>
             <div className="overflow-x-auto mt-4">
@@ -463,19 +474,21 @@ const JumlahKorban = () => {
                     <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">P</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                    <td className="text-black text-center">test</td>
-                  </tr>
-                </tbody>
+                {dataPengungsi.map((items) => (
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td className="text-black text-center">{items.lokasi}</td>
+                      <td className="text-black text-center">{items.bayi}</td>
+                      <td className="text-black text-center">{items.balita}</td>
+                      <td className="text-black text-center">{items.bumil}</td>
+                      <td className="text-black text-center">{items.buteki}</td>
+                      <td className="text-black text-center">{items.cacatLaki}</td>
+                      <td className="text-black text-center">{items.cacatPerempuan}</td>
+                      <td className="text-black text-center">{items.lansiaLaki}</td>
+                      <td className="text-black text-center">{items.lansiaPerempuan}</td>
+                    </tr>
+                  </tbody>
+                ))}
               </table>
             </div>
           </div>

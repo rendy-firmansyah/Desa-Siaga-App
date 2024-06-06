@@ -5,9 +5,73 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const AddPengungsi = ({ isShow, onClose }) => {
+const AddPengungsi = ({ isShow, onClose, onSuccess}) => {
   if (!isShow) return null;
+
+  const router = useRouter();
+  const { id } = router.query;
+
+  const [lokasi, setLokasi] = useState("");
+  const [gangguanAnak, setGangguanAnak] = useState("");
+  const [gangguanDewasa, setGangguanDewasa] = useState("");
+  const [lakiLaki, setLakiLaki] = useState(0);
+  const [perempuan, setPerempuan] = useState(0);
+  const [bayi, setBayi] = useState("");
+  const [balita, setBalita] = useState("");
+  const [bumil, setBumil] = useState("");
+  const [buteki, setButeki] = useState("");
+  const [cacatLaki, setCacatLaki] = useState("");
+  const [cacatPerempuan, setCacatPerempuan] = useState("");
+  const [lansiaLaki, setLansiaLaki] = useState("");
+  const [lansiaPerempuan, setLansiaPerempuan] = useState("");
+  const [jumlah, setJumlah] = useState("");
+
+  useEffect(() => {
+    // Menghitung jumlah laki-laki dan perempuan setiap kali nilai LakiLaki atau perempuan berubah
+    setJumlah(lakiLaki + perempuan);
+  }, [lakiLaki, perempuan]);
+
+  console.log(lokasi);
+  console.log(gangguanAnak);
+  console.log(gangguanDewasa);
+  console.log(lakiLaki);
+  console.log(perempuan);
+  console.log(bayi);
+  console.log(balita);
+  console.log(bumil);
+  console.log(buteki);
+  console.log(cacatLaki);
+  console.log(cacatPerempuan);
+  console.log(lansiaLaki);
+  console.log(lansiaPerempuan);
+  console.log(jumlah);
   
+  const addPengungsi = async () => {
+    const res = await axios.post("/api/pelaporanAwal/korbanPengungsi", {
+      lokasi,
+      gangguanAnak,
+      gangguanDewasa,
+      lakiLaki,
+      perempuan,
+      jumlah,
+      bayi,
+      balita,
+      bumil,
+      buteki,
+      cacatLaki,
+      cacatPerempuan,
+      lansiaLaki,
+      lansiaPerempuan,
+      pelaporan_id: id,
+    });
+    console.log(res.data);
+    
+
+    onSuccess();
+    onClose(true);
+  };
+
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-[700px] max-h-auto md:h-auto lg:h-auto xl:h-auto overflow-y-auto md:overflow-hidden lg:overflow-hidden xl:overflow-hidden border rounded-lg bg-white">
@@ -34,6 +98,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                     className="border rounded p-2 mt-1 text-black"
                     type="text"
                     placeholder="ex: Desa Sumbersar"
+                    onChange={(e) => setLokasi(e.target.value)}
                     required
                   />
                 </div>
@@ -48,6 +113,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                         className="border rounded p-2 mt-1 text-black"
                         type="number"
                         placeholder="ex: 100"
+                        onChange={(e) => setGangguanAnak(e.target.value)}
                         required
                       />
                     </div>
@@ -61,6 +127,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                         className="border rounded p-2 mt-1 text-black"
                         type="number"
                         placeholder="ex: 100"
+                        onChange={(e) => setGangguanDewasa(e.target.value)}
                         required
                       />
                     </div>
@@ -77,6 +144,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                         className="border rounded p-2 mt-1 text-black"
                         type="number"
                         placeholder="ex: 100"
+                        onChange={(e) => setLakiLaki(parseInt(e.target.value))}
                         required
                       />
                     </div>
@@ -90,6 +158,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                         className="border rounded p-2 mt-1 text-black"
                         type="number"
                         placeholder="ex: 100"
+                        onChange={(e) => setPerempuan(parseInt(e.target.value))}
                         required
                       />
                     </div>
@@ -106,6 +175,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                         className="border rounded p-2 mt-1 text-black"
                         type="number"
                         placeholder="ex: 100"
+                        onChange={(e) => setBayi(e.target.value)}
                         required
                       />
                     </div>
@@ -117,6 +187,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                         className="border rounded p-2 mt-1 text-black"
                         type="number"
                         placeholder="ex: 100"
+                        onChange={(e) => setBumil(e.target.value)}
                         required
                       />
                     </div>
@@ -131,6 +202,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                             className="border rounded p-2 mt-1 text-black"
                             type="number"
                             placeholder="ex: 100"
+                            onChange={(e) => setCacatLaki(e.target.value)}
                             required
                           />
                         </div>
@@ -144,6 +216,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                             className="border rounded p-2 mt-1 text-black"
                             type="number"
                             placeholder="ex: 100"
+                            onChange={(e) => setCacatPerempuan(e.target.value)}
                             required
                           />
                         </div>
@@ -159,6 +232,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                         className="border rounded p-2 mt-1 text-black"
                         type="number"
                         placeholder="ex: 100"
+                        onChange={(e) => setBalita(e.target.value)}
                         required
                       />
                     </div>
@@ -170,6 +244,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                         className="border rounded p-2 mt-1 text-black"
                         type="number"
                         placeholder="ex: 100"
+                        onChange={(e) => setButeki(e.target.value)}
                         required
                       />
                     </div>
@@ -184,6 +259,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                             className="border rounded p-2 mt-1 text-black"
                             type="number"
                             placeholder="ex: 100"
+                            onChange={(e) => setLansiaLaki(e.target.value)}
                             required
                           />
                         </div>
@@ -197,6 +273,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
                             className="border rounded p-2 mt-1 text-black"
                             type="number"
                             placeholder="ex: 100"
+                            onChange={(e) => setLansiaPerempuan(e.target.value)}
                             required
                           />
                         </div>
@@ -217,6 +294,7 @@ const AddPengungsi = ({ isShow, onClose }) => {
             </button>
 
             <button
+              onClick={(e) => addPengungsi()}
               className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md"
             >
               Save
