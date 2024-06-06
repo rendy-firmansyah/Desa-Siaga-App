@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed" : "node prisma/userseeder.js && node prisma/wilayahseeder.js && node prisma/beritaseeder.js"
+    "seed": "node prisma/userseeder.js && node prisma/wilayahseeder.js && node prisma/beritaseeder.js"
   },
   "dependencies": {
     "@prisma/client": "^5.14.0",
@@ -22,6 +22,7 @@
     "nookies": "^2.5.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-paginate": "^8.2.0",
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {
