@@ -22,7 +22,7 @@ export async function getServerSideProps(ctx) {
   } else if (cookies.role === "super admin") {
     return {
       redirect: {
-        destination: "/admin",
+        destination: "/dashboard/superAdmin",
       },
     };
   }
