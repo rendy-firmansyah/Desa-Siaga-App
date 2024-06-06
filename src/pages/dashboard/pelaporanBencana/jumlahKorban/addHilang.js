@@ -4,6 +4,8 @@ import bgDashboard from "../../../../../public/bg-2.jpg";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddHilang = ({ isShow, onClose,onSuccess }) => {
   if (!isShow) return null;
@@ -27,13 +29,36 @@ const AddHilang = ({ isShow, onClose,onSuccess }) => {
       pelaporan_id: id,
     });
 
-    onSuccess();
-    onClose(true);
+    if (res.data.status === "success") {
+      toast(`✅ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+      onClose(true);
+      onSuccess();
+    } else {
+      toast(`❌ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+    }
+
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-[700px] max-h-[400px] md:h-auto lg:h-auto xl:h-auto overflow-y-auto md:overflow-hidden lg:overflow-hidden xl:overflow-hidden border rounded-lg bg-white">
+      {/* <ToastContainer/> */}
         <div className="flex flex-col p-5 rounded-lg shadow">
           <div className="flex">
             <div className="">

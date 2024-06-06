@@ -113,6 +113,7 @@ const JumlahKorban = () => {
 
   return (
     <section className="container-fluid w-full h-full relative">
+      <ToastContainer/>
       <div className="absolute -z-10 inset-0">
         <Image src={bgDashboard} alt="background-image" className="h-full" />
       </div>

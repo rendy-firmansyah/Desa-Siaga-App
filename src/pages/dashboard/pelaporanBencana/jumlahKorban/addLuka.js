@@ -4,6 +4,8 @@ import bgDashboard from "../../../../../public/bg-2.jpg";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddLuka = ({ isShow, onClose, onSuccess }) => {
   if (!isShow) return null;
@@ -35,8 +37,29 @@ const AddLuka = ({ isShow, onClose, onSuccess }) => {
       pelaporan_id: id,
     });
 
-    onSuccess();
-    onClose(true);
+    if (res.data.status === "success") {
+      toast(`✅ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+      onClose(true);
+      onSuccess();
+    } else {
+      toast(`❌ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+    }
   };
 
   useEffect(() => {

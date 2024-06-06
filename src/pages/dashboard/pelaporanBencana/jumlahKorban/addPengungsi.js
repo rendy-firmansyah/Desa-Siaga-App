@@ -4,6 +4,8 @@ import bgDashboard from "../../../../../public/bg-2.jpg";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddPengungsi = ({ isShow, onClose, onSuccess}) => {
   if (!isShow) return null;
@@ -49,11 +51,29 @@ const AddPengungsi = ({ isShow, onClose, onSuccess}) => {
       lansiaPerempuan,
       pelaporan_id: id,
     });
-    console.log(res.data);
-    
-
-    onSuccess();
-    onClose(true);
+    if (res.data.status === "success") {
+      toast(`✅ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+      onClose(true);
+      onSuccess();
+    } else {
+      toast(`❌ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+    }
   };
 
 
