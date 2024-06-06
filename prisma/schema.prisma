@@ -72,6 +72,7 @@ model pelaporanAwal {
   korbanLuka              korbanLuka[]
   korbanPengungsi         korbanPengungsi[]
   aksesDanKeadaan         aksesDanKeadaan[]
+  upaya                   upaya[]
 }
 model korbanMeninggal {
   id                      Int @id @default(autoincrement())
@@ -139,4 +140,20 @@ model aksesDanKeadaan {
   fasilitasIbadah       String
   pelaporan_id          Int
   pelaporan             pelaporanAwal @relation(fields: [pelaporan_id], references: [id])
+}
+model upaya {
+  id                            Int @id @default(autoincrement())
+  pelayananKesehatan            String
+  pelayananKesehatanReproduksi  String
+  pengendalianPenyakit          String
+  DVI                           String
+  pelayananGizi                 String
+  logisticKesehatan             String
+  pelayananJiwa                 String
+  HambatanPelayananKesehatan    String
+  bantuanUntukKelompokRentan    String
+  rencanaTindakLanjut           String
+  statusDesa                    String
+  pelaporan_id                  Int
+  pelaporan                     pelaporanAwal @relation(fields: [pelaporan_id],references: [id])
 }
