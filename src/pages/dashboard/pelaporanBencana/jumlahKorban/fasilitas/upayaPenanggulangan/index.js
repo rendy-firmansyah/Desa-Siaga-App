@@ -2,12 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import bgDashboard from "../../../../../../../public/bg-2.jpg";
 import Router from "next/router";
-import { useState } from "react";
 import nookies from "nookies";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 //islogin
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx);
@@ -32,21 +32,70 @@ export async function getServerSideProps(ctx) {
 }
 
 const UpayaPenanggulangan = () => {
-  const [Penanggulangan, setPenanggulangan] = useState("");
-  const [A, setA] = useState("");
-  const [B, setB] = useState("");
-  const [C, setC] = useState("");
-  const [D, setD] = useState("");
-  const [E, setE] = useState("");
-  const [F, setF] = useState("");
-  const [G, setG] = useState("");
-  const [Hambatan, setHambatan] = useState("");
-  const [KelompokRentan, setKelompokRentan] = useState([]);
-  const [Rencana, setRencana] = useState("");
-  const [StatusDesa, setStatusDesa] = useState("");
+  const [upayaPenanggulangan, setUpayaPenanggulangan] = useState("");
+  const [pelayananKesehatan, setPelayananKesehatan] = useState("");
+  const [pelayananKesehatanReproduksi, setPelayananKesehatanReproduksi] = useState("");
+  const [pengendalianPenyakit, setPengendalianPenyakit] = useState("");
+  const [DVI, setDVI] = useState("");
+  const [pelayananGizi, setPelayananGizi] = useState("");
+  const [logisticKesehatan, setLogisticKesehatan] = useState("");
+  const [pelayananJiwa, setPelayananJiwa] = useState("");
+  const [HambatanPelayananKesehatan, setHambatanPelayananKesehatan] = useState("");
+  const [bantuanUntukKelompokRentan, setbantuanUntukKelompokRentan] = useState([]);
+  const [rencanaTindakLanjut, setRencanaTindakLanjut] = useState("");
+  const [statusDesa, setStatusDesa] = useState("");
+
+  const router = useRouter();
+  const { id } = router.query;
+
+  const addUpayaPenanggulangan = async () => {
+    const res = await axios.post("/api/pelaporanAwal/upaya", {
+      upayaPenanggulangan,
+      pelayananKesehatan,
+      pelayananKesehatanReproduksi,
+      pengendalianPenyakit,
+      DVI,
+      pelayananGizi,
+      logisticKesehatan,
+      pelayananJiwa,
+      HambatanPelayananKesehatan,
+      bantuanUntukKelompokRentan,
+      rencanaTindakLanjut,
+      statusDesa,
+      pelaporan_id: id,
+    });
+    console.log(res.data);
+    if (res.data.status === "success") {
+      toast(`✅ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+
+      router.push(
+        `/dashboard`
+      );
+      
+    } else {
+      toast(`❌ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,  
+        theme: "light",
+      });
+    }
+  };
 
   return (
     <section className="container-fluid w-full h-full relative">
+      <ToastContainer/>
       <div className="absolute -z-10 inset-0">
         <Image src={bgDashboard} alt="background-image" className="h-full" />
       </div>
@@ -65,7 +114,7 @@ const UpayaPenanggulangan = () => {
               className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
               type="text"
               name=""
-              onChange={(e) => setPenanggulangan(e.target.value)}
+              onChange={(e) => setUpayaPenanggulangan(e.target.value)}
             />
           </div>
           <div className="grid grid-cols-2 gap-x-3">
@@ -79,7 +128,7 @@ const UpayaPenanggulangan = () => {
                 <textarea
                   className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                   type="text"
-                  onChange={(e) => setA(e.target.value)}
+                  onChange={(e) => setPelayananKesehatan(e.target.value)}
                 />
               </div>
               {/* B */}
@@ -91,7 +140,7 @@ const UpayaPenanggulangan = () => {
                 <textarea
                   className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                   type="text"
-                  onChange={(e) => setB(e.target.value)}
+                  onChange={(e) => setPengendalianPenyakit(e.target.value)}
                 />
               </div>
               {/* C */}
@@ -102,7 +151,7 @@ const UpayaPenanggulangan = () => {
                 <textarea
                   className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                   type="text"
-                  onChange={(e) => setC(e.target.value)}
+                  onChange={(e) => setPelayananGizi(e.target.value)}
                 />
               </div>
               {/* D */}
@@ -113,7 +162,7 @@ const UpayaPenanggulangan = () => {
                 <textarea
                   className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                   type="text"
-                  onChange={(e) => setD(e.target.value)}
+                  onChange={(e) => setPelayananJiwa(e.target.value)}
                 />
               </div>
             </div>
@@ -127,7 +176,7 @@ const UpayaPenanggulangan = () => {
                   className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                   type="text"
                   name=""
-                  onChange={(e) => setE(e.target.value)}
+                  onChange={(e) => setPelayananKesehatanReproduksi(e.target.value)}
                 />
               </div>
               {/* F */}
@@ -139,7 +188,7 @@ const UpayaPenanggulangan = () => {
                   className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                   type="text"
                   name=""
-                  onChange={(e) => setF(e.target.value)}
+                  onChange={(e) => setDVI(e.target.value)}
                 />
               </div>
               {/* G */}
@@ -151,7 +200,7 @@ const UpayaPenanggulangan = () => {
                   className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                   type="text"
                   name=""
-                  onChange={(e) => setG(e.target.value)}
+                  onChange={(e) => setLogisticKesehatan(e.target.value)}
                 />
               </div>
             </div>
@@ -165,7 +214,7 @@ const UpayaPenanggulangan = () => {
               className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
               type="text"
               name=""
-              onChange={(e) => setHambatan(e.target.value)}
+              onChange={(e) => setHambatanPelayananKesehatan(e.target.value)}
             />
           </div>
           <div className="flex flex-col mt-3">
@@ -204,7 +253,7 @@ const UpayaPenanggulangan = () => {
                     id=""
                     name="bayi"
                     value="bayi"
-                    onChange={(e) => setKelompokRentan(e.target.value)}
+                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
                   />
                   <label className="text-black font-semibold text-[16px]">
                     Bayi
@@ -217,7 +266,7 @@ const UpayaPenanggulangan = () => {
                     id=""
                     name="balita"
                     value="balita"
-                    onChange={(e) => setKelompokRentan(e.target.value)}
+                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
                   />
                   <label className="text-black font-semibold text-[16px]">
                     Balita
@@ -230,7 +279,7 @@ const UpayaPenanggulangan = () => {
                     id=""
                     name="buteki"
                     value="buteki"
-                    onChange={(e) => setKelompokRentan(e.target.value)}
+                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
                   />
                   <label className="text-black font-semibold text-[16px]">
                     Buteki
@@ -243,7 +292,7 @@ const UpayaPenanggulangan = () => {
                     id=""
                     name="bumil"
                     value="bumil"
-                    onChange={(e) => setKelompokRentan(e.target.value)}
+                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
                   />
                   <label className="text-black font-semibold text-[16px]">
                     Bumil
@@ -256,7 +305,7 @@ const UpayaPenanggulangan = () => {
                     id=""
                     name="cacat"
                     value="cacat"
-                    onChange={(e) => setKelompokRentan(e.target.value)}
+                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
                   />
                   <label className="text-black font-semibold text-[16px]">
                     Cacat/sakit fisik
@@ -269,7 +318,7 @@ const UpayaPenanggulangan = () => {
                     id=""
                     name="lansia"
                     value="lansia"
-                    onChange={(e) => setKelompokRentan(e.target.value)}
+                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
                   />
                   <label className="text-black font-semibold text-[16px]">
                     Lansia
@@ -287,7 +336,7 @@ const UpayaPenanggulangan = () => {
               className="w-3/4 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
               type="number"
               name=""
-              onChange={(e) => setRencana(e.target.value)}
+              onChange={(e) => setRencanaTindakLanjut(e.target.value)}
             />
           </div>
           <div className="flex mt-3 items-center gap-x-3">
@@ -313,9 +362,10 @@ const UpayaPenanggulangan = () => {
           </button>
           <button
             type=""
+            onClick={(e) => addUpayaPenanggulangan()}
             className="bg-secondary-default w-full mx-8 md:mx-14 lg:mx-32 xl:mx-32 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
           >
-            Lanjut Kuisioner Berikutnya
+            Kirim
           </button>
         </div>
       </div>
