@@ -63,9 +63,9 @@ const buatAkun = () => {
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Role
                 </th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {/* <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Action
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -79,7 +79,7 @@ const buatAkun = () => {
                   <td class="text-black px-6 py-4 whitespace-nowrap">
                     Super Admin
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap flex items-center">
+                  {/* <td class="px-6 py-4 whitespace-nowrap flex items-center">
                     <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
                       <svg
                         width="20px"
@@ -161,7 +161,7 @@ const buatAkun = () => {
                         </g>
                       </svg>
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
             </tbody>
           </table>
