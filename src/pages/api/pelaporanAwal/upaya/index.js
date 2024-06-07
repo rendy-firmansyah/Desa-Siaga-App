@@ -1,8 +1,9 @@
-import prisma from "../../../../lib/prisma";
+import prisma from "../../../../../lib/prisma";
 
 export default async function pelaporanHandler(req, res) {
   if (req.method === "POST") {
       const {
+        upayaPenanggulangan,
         pelayananKesehatan,
         pelayananKesehatanReproduksi,
         pengendalianPenyakit,
@@ -17,6 +18,7 @@ export default async function pelaporanHandler(req, res) {
         pelaporan_id,
       } = req.body;
       if(
+        !upayaPenanggulangan||
         !pelayananKesehatan ||
         !pelayananKesehatanReproduksi ||
         !pengendalianPenyakit ||
@@ -36,6 +38,7 @@ export default async function pelaporanHandler(req, res) {
       try {
         const pelaporan = await prisma.upaya.create({
           data: {
+            upayaPenanggulangan,
             pelayananKesehatan,
             pelayananKesehatanReproduksi,
             pengendalianPenyakit,

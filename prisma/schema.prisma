@@ -143,6 +143,7 @@ model aksesDanKeadaan {
 }
 model upaya {
   id                            Int @id @default(autoincrement())
+  upayaPenanggulangan           String
   pelayananKesehatan            String
   pelayananKesehatanReproduksi  String
   pengendalianPenyakit          String
