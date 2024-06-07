@@ -44,7 +44,7 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                 >
                   <option value="">Pilih Role</option>
                     <option value="super admin">Super Admin</option>
-                    <option value="relawan">Relawan</option>
+                    <option value="user">User</option>
                 </select>
               </div>
               <div className="flex flex-col">
