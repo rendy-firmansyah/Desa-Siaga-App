@@ -8,12 +8,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-import DataTable from "datatables.net-dt";
-
 import AddMeninggal from "./addMeninggal";
 import AddHilang from "./addHilang";
 import AddLuka from "./addLuka";
 import AddPengungsi from "./addPengungsi";
+import ReactPaginate from "react-paginate";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -45,10 +44,12 @@ const JumlahKorban = () => {
   const [dataPengungsi, setDataPengungsi] = useState([]);
 
   // Modal Start
-  const [showModalKorbanMeninggal, setShowModalKorbanMeninggal] = useState(false);
+  const [showModalKorbanMeninggal, setShowModalKorbanMeninggal] =
+    useState(false);
   const [showModalKorbanHilang, setShowModalKorbanHilang] = useState(false);
   const [showModalKorbanLuka, setShowModalKorbanLuka] = useState(false);
-  const [showModalJumlahPengungsi, setShowModalJumlahPengungsi] = useState(false);
+  const [showModalJumlahPengungsi, setShowModalJumlahPengungsi] =
+    useState(false);
 
   const showVisibleKorbanMeninggal = () => {
     setShowModalKorbanMeninggal(true);
@@ -67,12 +68,56 @@ const JumlahKorban = () => {
     setShowModalKorbanMeninggal(false);
     setShowModalKorbanHilang(false);
     setShowModalKorbanLuka(false);
-    setShowModalJumlahPengungsi(false)
+    setShowModalJumlahPengungsi(false);
   };
-
   // Modal End
 
-  
+  // Pagination Korban Meninggal Start
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 3;
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = dataMeninggal.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(dataMeninggal.length / itemsPerPage);
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+  // Pagination Korban Meninggal End
+
+  // Pagination Korban Hilang Start
+  const [currentPageKorbanHilang, setCurrentPageKorbanHilang] = useState(0);
+  const itemsPerPageKorbanHilang = 3;
+  const offsetKorbanHilang = currentPageKorbanHilang * itemsPerPageKorbanHilang;
+  const currentPageDataHilang = dataMenghilang.slice(
+    offsetKorbanHilang,
+    offsetKorbanHilang + itemsPerPageKorbanHilang
+  );
+  const pageCountKorbanHilang = Math.ceil(
+    dataMenghilang.length / itemsPerPageKorbanHilang
+  );
+
+  const handlePageClickKorbanHilang = (event) => {
+    setCurrentPageKorbanHilang(event.selected);
+  };
+  // Pagination Korban Hilang End
+
+  // Pagination Korban Luka Start
+  const [currentPageKorbanLuka, setCurrentPageKorbanLuka] = useState(0);
+  const itemsPerPageKorbanLuka = 3;
+  const offsetKorbanLuka = currentPageKorbanLuka * itemsPerPageKorbanLuka;
+  const currentPageDataLuka = dataKorbanLuka.slice(
+    offsetKorbanLuka,
+    offsetKorbanLuka + itemsPerPageKorbanLuka
+  );
+  const pageCountKorbanLuka = Math.ceil(
+    dataKorbanLuka.length / itemsPerPageKorbanLuka
+  );
+
+  const handlePageClickKorbanLuka = (event) => {
+    setCurrentPageKorbanLuka(event.selected);
+  };
+  // Pagination Korban Luka End
+
   const router = useRouter();
   const { id } = router.query;
   const nextPage = () => {
@@ -80,7 +125,9 @@ const JumlahKorban = () => {
   };
 
   const getDataMeninggal = async () => {
-    const response = await axios.get(`/api/pelaporanAwal/korbanmeninggal?id=${id}`);
+    const response = await axios.get(
+      `/api/pelaporanAwal/korbanmeninggal?id=${id}`
+    );
     setDataMeninggal(response.data);
   };
   useEffect(() => {
@@ -88,7 +135,9 @@ const JumlahKorban = () => {
   }, []);
 
   const getDataMenghilang = async () => {
-    const response = await axios.get(`/api/pelaporanAwal/korbanHilang?id=${id}`);
+    const response = await axios.get(
+      `/api/pelaporanAwal/korbanHilang?id=${id}`
+    );
     setDataMenghilang(response.data);
   };
   useEffect(() => {
@@ -104,7 +153,9 @@ const JumlahKorban = () => {
   }, []);
 
   const getDataPengungsi = async () => {
-    const response = await axios.get(`/api/pelaporanAwal/korbanPengungsi?id=${id}`);
+    const response = await axios.get(
+      `/api/pelaporanAwal/korbanPengungsi?id=${id}`
+    );
     setDataPengungsi(response.data);
   };
   useEffect(() => {
@@ -113,7 +164,7 @@ const JumlahKorban = () => {
 
   return (
     <section className="container-fluid w-full h-full relative">
-      <ToastContainer/>
+      <ToastContainer />
       <div className="absolute -z-10 inset-0">
         <Image src={bgDashboard} alt="background-image" className="h-full" />
       </div>
@@ -123,6 +174,7 @@ const JumlahKorban = () => {
         </h1>
         <div className="bg-white p-8 h-auto w-auto border rounded-2xl shadow-lg mx-8 md:mx-14 lg:mx-32 xl:mx-32 mt-3">
           <h1 className="text-black text-2xl font-bold">Isi Kuisioner :</h1>
+          {/* Table Korban Meninggal */}
           <div className="mt-3">
             {/* Modal Start */}
             <AddMeninggal
@@ -155,6 +207,9 @@ const JumlahKorban = () => {
                 <thead className="">
                   <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      No
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Nama
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -175,33 +230,79 @@ const JumlahKorban = () => {
                   </tr>
                 </thead>
 
-                {dataMeninggal.map((items) => (
-                  <tbody key={items.id} className="bg-white divide-y divide-gray-200">
-                    <tr>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.nama}
-                      </td>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.jenisKelamin}
-                      </td>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.usia}
-                      </td>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.alamat}
-                      </td>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.tempatMeninggal}
-                      </td>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.penyebab}
-                      </td>
-                    </tr>
-                  </tbody>
-                ))}
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {currentPageData.map((items, index1) => {
+                    const indexMeninggal =
+                      index1 + currentPage * itemsPerPage + 1;
+                    return (
+                      <tr key={items.id}>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {indexMeninggal}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.nama}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.jenisKelamin}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.usia}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.alamat}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.tempatMeninggal}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.penyebab}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
               </table>
             </div>
+            {dataMeninggal && dataMeninggal.length > 0 ? (
+              <div className="mt-4 flex justify-center">
+                <ReactPaginate
+                  previousLabel={"← Previous"}
+                  nextLabel={"Next →"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageClick}
+                  containerClassName={
+                    "pagination flex justify-center space-x-2"
+                  }
+                  pageClassName={"page-item"}
+                  pageLinkClassName={
+                    "page-link px-4 py-2 border rounded-md text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  previousClassName={"page-item"}
+                  previousLinkClassName={
+                    "page-link px-4 py-2 mr-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  nextClassName={"page-item"}
+                  nextLinkClassName={
+                    "page-link px-4 py-2 ml-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  activeLinkClassName={
+                    "active-link border-secondary-default text-secondary-default"
+                  }
+                  disabledClassName={
+                    "disabled opacity-50 cursor-not-allowed -z-10"
+                  }
+                />
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
+
+          {/* Table Korban Hilang */}
           <div className="mt-3">
             {/* Modal Start */}
             <AddHilang
@@ -234,6 +335,9 @@ const JumlahKorban = () => {
                 <thead className="">
                   <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      No
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Nama
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -250,32 +354,84 @@ const JumlahKorban = () => {
                     </th>
                   </tr>
                 </thead>
-                {dataMenghilang.map((items) => (
-                  <tbody key={items.id} className="bg-white divide-y divide-gray-200">
-                    <tr>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.nama}
-                      </td>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.jenisKelamin}
-                      </td>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.usia}
-                      </td>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.alamat}
-                      </td>
-                      <td className="text-black px-6 py-4 whitespace-nowrap">
-                        {items.lokasiHilang}
-                      </td>
-                    </tr>
-                  </tbody>
-                ))}
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {currentPageDataHilang.map((items, index2) => {
+                    const indexMenghilang =
+                      index2 +
+                      currentPageKorbanHilang * itemsPerPageKorbanHilang +
+                      1;
+                    return (
+                      <tr key={items.id}>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {indexMenghilang}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.nama}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.jenisKelamin}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.usia}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.alamat}
+                        </td>
+                        <td className="text-black px-6 py-4 whitespace-nowrap">
+                          {items.lokasiHilang}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
               </table>
             </div>
+            {dataMenghilang && dataMenghilang.length > 0 ? (
+              <div className="mt-4 flex justify-center">
+                <ReactPaginate
+                  previousLabel={"← Previous"}
+                  nextLabel={"Next →"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={pageCountKorbanHilang}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageClickKorbanHilang}
+                  containerClassName={
+                    "pagination flex justify-center space-x-2"
+                  }
+                  pageClassName={"page-item"}
+                  pageLinkClassName={
+                    "page-link px-4 py-2 border rounded-md text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  previousClassName={"page-item"}
+                  previousLinkClassName={
+                    "page-link px-4 py-2 mr-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  nextClassName={"page-item"}
+                  nextLinkClassName={
+                    "page-link px-4 py-2 ml-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  activeLinkClassName={
+                    "active-link border-secondary-default text-secondary-default"
+                  }
+                  disabledClassName={
+                    "disabled opacity-50 cursor-not-allowed -z-10"
+                  }
+                />
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
+
+          {/* Table Korban Luka */}
           <div className="mt-3">
-            <AddLuka isShow={showModalKorbanLuka} onClose={handleCloseModal} onSuccess={() => getDataLuka()} />
+            <AddLuka
+              isShow={showModalKorbanLuka}
+              onClose={handleCloseModal}
+              onSuccess={() => getDataLuka()}
+            />
             <div className="flex flex-col">
               <label className="font-semibold text-md text-black">
                 Jumlah Korban Luka Berat/Rawat Inap, Luka Ringan/Rawat Jalan
@@ -303,6 +459,9 @@ const JumlahKorban = () => {
                 <thead className="">
                   <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      No
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Nama FASKES dan Lokasinya
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -316,28 +475,74 @@ const JumlahKorban = () => {
                     </th>
                   </tr>
                 </thead>
-                {dataKorbanLuka
-                  .filter((items) => items.jenisRawat === "Rawat Inap")
-                  .map((items) => (
-                    <tbody key={items.id} className="bg-white divide-y divide-gray-200">
-                      <tr>
-                        <td className="text-black px-6 py-4 whitespace-nowrap">
-                          {items.namaFaskes}
-                        </td>
-                        <td className="text-black px-6 py-4 whitespace-nowrap">
-                          {items.lakiLaki}
-                        </td>
-                        <td className="text-black px-6 py-4 whitespace-nowrap">
-                          {items.wanita}
-                        </td>
-                        <td className="text-black px-6 py-4 whitespace-nowrap">
-                          {items.jumlah}
-                        </td>
-                      </tr>
-                    </tbody>
-                  ))}
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {currentPageDataLuka
+                    .filter((items) => items.jenisRawat === "Rawat Inap")
+                    .map((items, index3) => {
+                      const indexLuka =
+                        index3 +
+                        currentPageKorbanLuka * itemsPerPageKorbanLuka +
+                        1;
+                      return (
+                        <tr key={items.id}>
+                          <td className="text-black px-6 py-4 whitespace-nowrap">
+                            {indexLuka}
+                          </td>
+                          <td className="text-black px-6 py-4 whitespace-nowrap">
+                            {items.namaFaskes}
+                          </td>
+                          <td className="text-black px-6 py-4 whitespace-nowrap">
+                            {items.lakiLaki}
+                          </td>
+                          <td className="text-black px-6 py-4 whitespace-nowrap">
+                            {items.wanita}
+                          </td>
+                          <td className="text-black px-6 py-4 whitespace-nowrap">
+                            {items.jumlah}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
               </table>
             </div>
+            {dataKorbanLuka && dataKorbanLuka.length > 0 ? (
+              <div className="mt-4 flex justify-center">
+                <ReactPaginate
+                  previousLabel={"← Previous"}
+                  nextLabel={"Next →"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={pageCountKorbanLuka}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageClickKorbanLuka}
+                  containerClassName={
+                    "pagination flex justify-center space-x-2"
+                  }
+                  pageClassName={"page-item"}
+                  pageLinkClassName={
+                    "page-link px-4 py-2 border rounded-md text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  previousClassName={"page-item"}
+                  previousLinkClassName={
+                    "page-link px-4 py-2 mr-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  nextClassName={"page-item"}
+                  nextLinkClassName={
+                    "page-link px-4 py-2 ml-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  activeLinkClassName={
+                    "active-link border-secondary-default text-secondary-default"
+                  }
+                  disabledClassName={
+                    "disabled opacity-50 cursor-not-allowed -z-10"
+                  }
+                />
+              </div>
+            ) : (
+              <div></div>
+            )}
             <h1 className="text-black font-bold text-xl my-4">
               Korban Rawat Jalan :
             </h1>
@@ -362,7 +567,10 @@ const JumlahKorban = () => {
                 {dataKorbanLuka
                   .filter((items) => items.jenisRawat === "Rawat Jalan")
                   .map((items) => (
-                    <tbody key={items.id} className="bg-white divide-y divide-gray-200">
+                    <tbody
+                      key={items.id}
+                      className="bg-white divide-y divide-gray-200"
+                    >
                       <tr>
                         <td className="text-black px-6 py-4 whitespace-nowrap">
                           {items.namaFaskes}
@@ -381,7 +589,46 @@ const JumlahKorban = () => {
                   ))}
               </table>
             </div>
+            {dataKorbanLuka && dataKorbanLuka.length > 0 ? (
+              <div className="mt-4 flex justify-center">
+                <ReactPaginate
+                  previousLabel={"← Previous"}
+                  nextLabel={"Next →"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={pageCountKorbanLuka}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageClickKorbanLuka}
+                  containerClassName={
+                    "pagination flex justify-center space-x-2"
+                  }
+                  pageClassName={"page-item"}
+                  pageLinkClassName={
+                    "page-link px-4 py-2 border rounded-md text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  previousClassName={"page-item"}
+                  previousLinkClassName={
+                    "page-link px-4 py-2 mr-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  nextClassName={"page-item"}
+                  nextLinkClassName={
+                    "page-link px-4 py-2 ml-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                  }
+                  activeLinkClassName={
+                    "active-link border-secondary-default text-secondary-default"
+                  }
+                  disabledClassName={
+                    "disabled opacity-50 cursor-not-allowed -z-10"
+                  }
+                />
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
+
+          {/* Table Korban Pengungsi */}
           <div className="mt-3">
             {/* Modal Start */}
             <AddPengungsi
@@ -413,36 +660,63 @@ const JumlahKorban = () => {
               <table className="min-w-full divide-y divide-gray-200 border-2 shadow-lg shad">
                 <thead className="overflow-x-auto">
                   <tr>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='2'>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      rowSpan="2"
+                    >
                       Lokasi
                       <br />
                       Pengungsian
                     </th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colSpan='2'>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      colSpan="2"
+                    >
                       Gangguan Jiwa
                       <br />
                       /Psikosial
                     </th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colSpan='4'>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      colSpan="4"
+                    >
                       Jumlah Pengungsi
                     </th>
                   </tr>
                   <tr>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Anak</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Dewasa</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">L</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">P</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Anak
+                    </th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Dewasa
+                    </th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      L
+                    </th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      P
+                    </th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Jumlah
+                    </th>
                   </tr>
                 </thead>
                 {dataPengungsi.map((items) => (
                   <tbody className="bg-white divide-y divide-gray-200">
                     <tr>
                       <td className="text-black text-center">{items.lokasi}</td>
-                      <td className="text-black text-center">{items.gangguanAnak}</td>
-                      <td className="text-black text-center">{items.gangguanDewasa}</td>
-                      <td className="text-black text-center">{items.lakiLaki}</td>
-                      <td className="text-black text-center">{items.perempuan}</td>
+                      <td className="text-black text-center">
+                        {items.gangguanAnak}
+                      </td>
+                      <td className="text-black text-center">
+                        {items.gangguanDewasa}
+                      </td>
+                      <td className="text-black text-center">
+                        {items.lakiLaki}
+                      </td>
+                      <td className="text-black text-center">
+                        {items.perempuan}
+                      </td>
                       <td className="text-black text-center">{items.jumlah}</td>
                     </tr>
                   </tbody>
@@ -453,27 +727,71 @@ const JumlahKorban = () => {
               <table className="min-w-full divide-y divide-gray-200 border-2 shadow-lg shad">
                 <thead className="overflow-x-auto">
                   <tr>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='3'>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      rowSpan="3"
+                    >
                       LOKASI <br />
                       PENGUNGSIAN
                     </th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colSpan='6'>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      colSpan="6"
+                    >
                       Jumlah Penduduk Rentan
                     </th>
                   </tr>
                   <tr>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='2'>Bayi</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='2'>Balita</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='2'>Bumil</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowSpan='2'>Buteki</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colSpan='2'>Cacat</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colSpan='2'>Lansia</th>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      rowSpan="2"
+                    >
+                      Bayi
+                    </th>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      rowSpan="2"
+                    >
+                      Balita
+                    </th>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      rowSpan="2"
+                    >
+                      Bumil
+                    </th>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      rowSpan="2"
+                    >
+                      Buteki
+                    </th>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      colSpan="2"
+                    >
+                      Cacat
+                    </th>
+                    <th
+                      className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      colSpan="2"
+                    >
+                      Lansia
+                    </th>
                   </tr>
                   <tr>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">L</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">P</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">L</th>
-                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">P</th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      L
+                    </th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      P
+                    </th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      L
+                    </th>
+                    <th className="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      P
+                    </th>
                   </tr>
                 </thead>
                 {dataPengungsi.map((items) => (
@@ -484,10 +802,18 @@ const JumlahKorban = () => {
                       <td className="text-black text-center">{items.balita}</td>
                       <td className="text-black text-center">{items.bumil}</td>
                       <td className="text-black text-center">{items.buteki}</td>
-                      <td className="text-black text-center">{items.cacatLaki}</td>
-                      <td className="text-black text-center">{items.cacatPerempuan}</td>
-                      <td className="text-black text-center">{items.lansiaLaki}</td>
-                      <td className="text-black text-center">{items.lansiaPerempuan}</td>
+                      <td className="text-black text-center">
+                        {items.cacatLaki}
+                      </td>
+                      <td className="text-black text-center">
+                        {items.cacatPerempuan}
+                      </td>
+                      <td className="text-black text-center">
+                        {items.lansiaLaki}
+                      </td>
+                      <td className="text-black text-center">
+                        {items.lansiaPerempuan}
+                      </td>
                     </tr>
                   </tbody>
                 ))}
