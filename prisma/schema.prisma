@@ -152,9 +152,21 @@ model upaya {
   logisticKesehatan             String
   pelayananJiwa                 String
   HambatanPelayananKesehatan    String
-  bantuanUntukKelompokRentan    String
+  bantuanYangDiperlukanSegera   String
   rencanaTindakLanjut           String
   statusDesa                    String
   pelaporan_id                  Int
   pelaporan                     pelaporanAwal @relation(fields: [pelaporan_id],references: [id])
+  kelompokRentan                kelompokRentan[]
+}
+model kelompokRentan {
+  id                            Int @id @default(autoincrement())
+  bayi                          Int
+  bumil                         Int
+  balita                        Int
+  cacat                         Int
+  buteki                        Int
+  lansia                        Int
+  upaya_id                      Int
+  upaya                         upaya @relation(fields: [id],references: [id])
 }
