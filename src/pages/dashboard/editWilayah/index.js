@@ -51,7 +51,7 @@ const dataWilayah = () => {
   //get data kecamatan
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 2;
+  const itemsPerPage = 5;
 
   const getData = async () => {
     const res = await axios.get("/api/Kecamatan");
@@ -244,42 +244,34 @@ const dataWilayah = () => {
             </tbody>
           </table>
         </div>
-        <div className="mt-4 md:flex md:justify-between lg:flex xl:flex lg:justify-between xl:justify-between items-center bg-secondary-default w-auto p-3 rounded-lg">
-          <button
-            onClick={() => handlePageClick({ selected: currentPage - 1 })}
-            className="px-4 py-2 text-secondary-default bg-white rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out"
-            disabled={currentPage === 0}
-          >
-            ← Previous
-          </button>
-          <div className="flex justify-center my-8 md:my-0 lg:my-0 xl:my-0">
-            <ReactPaginate
-              previousLabel={"← Previous"}
-              nextLabel={"Next →"}
-              breakLabel={"..."}
-              breakClassName={"break-me"}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination flex justify-center space-x-2"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link px-4 py-2 border rounded-md text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link px-4 py-2 mr-2 border rounded-md text-gray-700 bg-white-500 text-white hover:bg-gray-600 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"}
-              nextClassName={"page-item"}
-              nextLinkClassName={"page-link px-4 py-2 ml-2 border rounded-md text-gray-700 bg-white-500 text-white hover:bg-blue-600 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"}
-              activeClassName={"active bg-red-500 text-white font-bold border-red-700"}
-              disabledClassName={"disabled opacity-50 cursor-not-allowed"}
-            />
-          </div>
-          <button
-            onClick={() => handlePageClick({ selected: currentPage + 1 })}
-            className="px-4 py-2 text-secondary-default bg-white rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out"
-            disabled={currentPage === pageCount - 1}
-          >
-            Next →
-          </button>
+        <div className="mt-4 flex justify-center">
+          <ReactPaginate
+            previousLabel={"← Previous"}
+            nextLabel={"Next →"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination flex justify-center space-x-2"}
+            pageClassName={"page-item"}
+            pageLinkClassName={
+              "page-link px-4 py-2 border rounded-md text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            }
+            previousClassName={"page-item"}
+            previousLinkClassName={
+              "page-link px-4 py-2 mr-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            }
+            nextClassName={"page-item"}
+            nextLinkClassName={
+              "page-link px-4 py-2 ml-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            }
+            activeLinkClassName={
+              "active-link border-secondary-default text-secondary-default"
+            }
+            disabledClassName={"disabled opacity-50 cursor-not-allowed -z-10"}
+          />
         </div>
       </div>
     </section>
