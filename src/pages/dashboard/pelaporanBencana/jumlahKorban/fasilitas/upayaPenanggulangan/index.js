@@ -34,14 +34,18 @@ export async function getServerSideProps(ctx) {
 const UpayaPenanggulangan = () => {
   const [upayaPenanggulangan, setUpayaPenanggulangan] = useState("");
   const [pelayananKesehatan, setPelayananKesehatan] = useState("");
-  const [pelayananKesehatanReproduksi, setPelayananKesehatanReproduksi] = useState("");
+  const [pelayananKesehatanReproduksi, setPelayananKesehatanReproduksi] =
+    useState("");
   const [pengendalianPenyakit, setPengendalianPenyakit] = useState("");
   const [DVI, setDVI] = useState("");
   const [pelayananGizi, setPelayananGizi] = useState("");
   const [logisticKesehatan, setLogisticKesehatan] = useState("");
   const [pelayananJiwa, setPelayananJiwa] = useState("");
-  const [HambatanPelayananKesehatan, setHambatanPelayananKesehatan] = useState("");
-  const [bantuanUntukKelompokRentan, setbantuanUntukKelompokRentan] = useState([]);
+  const [HambatanPelayananKesehatan, setHambatanPelayananKesehatan] =
+    useState("");
+  const [bantuanUntukKelompokRentan, setbantuanUntukKelompokRentan] = useState(
+    []
+  );
   const [rencanaTindakLanjut, setRencanaTindakLanjut] = useState("");
   const [statusDesa, setStatusDesa] = useState("");
 
@@ -76,10 +80,7 @@ const UpayaPenanggulangan = () => {
         theme: "light",
       });
 
-      router.push(
-        `/dashboard`
-      );
-      
+      router.push(`/dashboard`);
     } else {
       toast(`❌ ${res.data.message}`, {
         position: "top-right",
@@ -87,7 +88,7 @@ const UpayaPenanggulangan = () => {
         closeOnClick: true,
         pauseOnHover: false,
         draggable: false,
-        progress: 1,  
+        progress: 1,
         theme: "light",
       });
     }
@@ -95,7 +96,7 @@ const UpayaPenanggulangan = () => {
 
   return (
     <section className="container-fluid w-full h-full relative">
-      <ToastContainer/>
+      <ToastContainer />
       <div className="absolute -z-10 inset-0">
         <Image src={bgDashboard} alt="background-image" className="h-full" />
       </div>
@@ -176,7 +177,9 @@ const UpayaPenanggulangan = () => {
                   className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
                   type="text"
                   name=""
-                  onChange={(e) => setPelayananKesehatanReproduksi(e.target.value)}
+                  onChange={(e) =>
+                    setPelayananKesehatanReproduksi(e.target.value)
+                  }
                 />
               </div>
               {/* F */}
@@ -246,105 +249,118 @@ const UpayaPenanggulangan = () => {
                 a. Untuk kelompok rentan :
               </h1>
               <div className="ml-5">
-                <div className="flex items-center gap-x-2 mt-3">
-                  <input
-                    type="checkbox"
-                    className="bg-input-default border-primary-default w-5 h-5"
-                    id=""
-                    name="bayi"
-                    value="bayi"
-                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Bayi
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-3">
-                  <input
-                    type="checkbox"
-                    className="bg-input-default border-primary-default w-5 h-5"
-                    id=""
-                    name="balita"
-                    value="balita"
-                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Balita
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-3">
-                  <input
-                    type="checkbox"
-                    className="bg-input-default border-primary-default w-5 h-5"
-                    id=""
-                    name="buteki"
-                    value="buteki"
-                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Buteki
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-3">
-                  <input
-                    type="checkbox"
-                    className="bg-input-default border-primary-default w-5 h-5"
-                    id=""
-                    name="bumil"
-                    value="bumil"
-                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Bumil
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-3">
-                  <input
-                    type="checkbox"
-                    className="bg-input-default border-primary-default w-5 h-5"
-                    id=""
-                    name="cacat"
-                    value="cacat"
-                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Cacat/sakit fisik
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-2 mt-3">
-                  <input
-                    type="checkbox"
-                    className="bg-input-default border-primary-default w-5 h-5"
-                    id=""
-                    name="lansia"
-                    value="lansia"
-                    onChange={(e) => setbantuanUntukKelompokRentan(e.target.value)}
-                  />
-                  <label className="text-black font-semibold text-[16px]">
-                    Lansia
-                  </label>
+                <div className="grid grid-cols-2 gap-x-8">
+                  <div>
+                    {/* Bayi */}
+                    <div className="mt-3 flex flex-col">
+                      <label className="text-black font-semibold text-[16px]">
+                        Bayi
+                      </label>
+                      <input
+                        type="number"
+                        className="bg-input-default border-primary-default rounded"
+                        id=""
+                        onChange={(e) =>
+                          setbantuanUntukKelompokRentan(e.target.value)
+                        }
+                      />
+                    </div>
+                    {/* Balita */}
+                    <div className="mt-3 flex flex-col">
+                      <label className="text-black font-semibold text-[16px]">
+                        Balita
+                      </label>
+                      <input
+                        type="number"
+                        className="bg-input-default border-primary-default rounded"
+                        id=""
+                        onChange={(e) =>
+                          setbantuanUntukKelompokRentan(e.target.value)
+                        }
+                      />
+                    </div>
+                    {/* Buteki */}
+                    <div className="mt-3 flex flex-col">
+                      <label className="text-black font-semibold text-[16px]">
+                        Buteki
+                      </label>
+                      <input
+                        type="number"
+                        className="bg-input-default border-primary-default rounded"
+                        id=""
+                        onChange={(e) =>
+                          setbantuanUntukKelompokRentan(e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    {/* Bumil */}
+                    <div className="mt-3 flex flex-col">
+                      <label className="text-black font-semibold text-[16px]">
+                        Bumil
+                      </label>
+                      <input
+                        type="number"
+                        className="bg-input-default border-primary-default rounded"
+                        id=""
+                        onChange={(e) =>
+                          setbantuanUntukKelompokRentan(e.target.value)
+                        }
+                      />
+                    </div>
+                    {/* Cacat */}
+                    <div className="mt-3 flex flex-col">
+                      <label className="text-black font-semibold text-[16px]">
+                        Cacat/sakit fisik
+                      </label>
+                      <input
+                        type="number"
+                        className="bg-input-default border-primary-default rounded"
+                        id=""
+                        onChange={(e) =>
+                          setbantuanUntukKelompokRentan(e.target.value)
+                        }
+                      />
+                    </div>
+                    {/* Lansia */}
+                    <div className="mt-3 flex flex-col">
+                      <label className="text-black font-semibold text-[16px]">
+                        Lansia
+                      </label>
+                      <input
+                        type="text"
+                        className="bg-input-default border-primary-default rounded"
+                        id=""
+                        onChange={(e) =>
+                          setbantuanUntukKelompokRentan(e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           {/* Rencana Tindak Lanjut */}
-          <div className="flex mt-3 items-center gap-x-3">
+          <div className="flex flex-col mt-3 gap-x-3">
             <label className="font-semibold text-md text-black">
               Rencana Tindak Lanjut :
             </label>
             <input
-              className="w-3/4 border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
+              className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
               type="number"
               name=""
               onChange={(e) => setRencanaTindakLanjut(e.target.value)}
             />
           </div>
-          <div className="flex mt-3 items-center gap-x-3">
+          {/* Status Desa */}
+          <div className="flex flex-col mt-3 gap-x-3">
             <label className="font-semibold text-md text-black">
               Status Desa
             </label>
             <select
-              className="w-3/4 border rounded p-2 mt-1 text-black bg-input-default border-primary-default"
+              className="w-full border rounded p-2 mt-1 text-black bg-input-default border-primary-default"
               onChange={(e) => setStatusDesa(e.target.value)}
             >
               <option value="Pilih jenis perawatan">Pilih status desa</option>
