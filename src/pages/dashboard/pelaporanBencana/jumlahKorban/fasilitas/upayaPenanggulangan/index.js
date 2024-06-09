@@ -34,20 +34,23 @@ export async function getServerSideProps(ctx) {
 const UpayaPenanggulangan = () => {
   const [upayaPenanggulangan, setUpayaPenanggulangan] = useState("");
   const [pelayananKesehatan, setPelayananKesehatan] = useState("");
-  const [pelayananKesehatanReproduksi, setPelayananKesehatanReproduksi] =
-    useState("");
+  const [pelayananKesehatanReproduksi, setPelayananKesehatanReproduksi] = useState("");
   const [pengendalianPenyakit, setPengendalianPenyakit] = useState("");
   const [DVI, setDVI] = useState("");
   const [pelayananGizi, setPelayananGizi] = useState("");
   const [logisticKesehatan, setLogisticKesehatan] = useState("");
   const [pelayananJiwa, setPelayananJiwa] = useState("");
-  const [HambatanPelayananKesehatan, setHambatanPelayananKesehatan] =
-    useState("");
-  const [bantuanUntukKelompokRentan, setbantuanUntukKelompokRentan] = useState(
-    []
-  );
+
+  const [HambatanPelayananKesehatan, setHambatanPelayananKesehatan] = useState("");
+  const [bantuanYangDiperlukanSegera, setBantuanYangDiperlukanSegera] = useState([]);
   const [rencanaTindakLanjut, setRencanaTindakLanjut] = useState("");
   const [statusDesa, setStatusDesa] = useState("");
+  const [bayi, setBayi] = useState("");
+  const [bumil, setBumil] = useState("");
+  const [balita, setBalita] = useState("");
+  const [cacat, setCacat] = useState("");
+  const [buteki, setButeki] = useState("");
+  const [lansia, setLansia] = useState("");
 
   const router = useRouter();
   const { id } = router.query;
@@ -63,10 +66,17 @@ const UpayaPenanggulangan = () => {
       logisticKesehatan,
       pelayananJiwa,
       HambatanPelayananKesehatan,
-      bantuanUntukKelompokRentan,
+      bantuanYangDiperlukanSegera,
       rencanaTindakLanjut,
       statusDesa,
       pelaporan_id: id,
+      bayi,
+      bumil,
+      balita,
+      cacat,
+      buteki,
+      lansia
+
     });
     console.log(res.data);
     if (res.data.status === "success") {
@@ -239,8 +249,8 @@ const UpayaPenanggulangan = () => {
               </label>
               <input
                 className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
-                type="number"
-                disabled
+                type="text"
+                onChange={(e) => setBantuanYangDiperlukanSegera(e.target.value)}
               />
             </div>
             {/* Kelompok Rentan */}
@@ -260,9 +270,7 @@ const UpayaPenanggulangan = () => {
                         type="number"
                         className="bg-input-default border-primary-default rounded"
                         id=""
-                        onChange={(e) =>
-                          setbantuanUntukKelompokRentan(e.target.value)
-                        }
+                        onChange={(e) => setBayi(e.target.value)}
                       />
                     </div>
                     {/* Balita */}
@@ -274,9 +282,7 @@ const UpayaPenanggulangan = () => {
                         type="number"
                         className="bg-input-default border-primary-default rounded"
                         id=""
-                        onChange={(e) =>
-                          setbantuanUntukKelompokRentan(e.target.value)
-                        }
+                        onChange={(e) => setBalita(e.target.value)}
                       />
                     </div>
                     {/* Buteki */}
@@ -288,9 +294,7 @@ const UpayaPenanggulangan = () => {
                         type="number"
                         className="bg-input-default border-primary-default rounded"
                         id=""
-                        onChange={(e) =>
-                          setbantuanUntukKelompokRentan(e.target.value)
-                        }
+                        onChange={(e) => setButeki(e.target.value)}
                       />
                     </div>
                   </div>
@@ -304,9 +308,7 @@ const UpayaPenanggulangan = () => {
                         type="number"
                         className="bg-input-default border-primary-default rounded"
                         id=""
-                        onChange={(e) =>
-                          setbantuanUntukKelompokRentan(e.target.value)
-                        }
+                        onChange={(e) => setBumil(e.target.value)}
                       />
                     </div>
                     {/* Cacat */}
@@ -318,9 +320,7 @@ const UpayaPenanggulangan = () => {
                         type="number"
                         className="bg-input-default border-primary-default rounded"
                         id=""
-                        onChange={(e) =>
-                          setbantuanUntukKelompokRentan(e.target.value)
-                        }
+                        onChange={(e) => setCacat(e.target.value)}
                       />
                     </div>
                     {/* Lansia */}
@@ -332,9 +332,7 @@ const UpayaPenanggulangan = () => {
                         type="text"
                         className="bg-input-default border-primary-default rounded"
                         id=""
-                        onChange={(e) =>
-                          setbantuanUntukKelompokRentan(e.target.value)
-                        }
+                        onChange={(e) => setLansia(e.target.value)}
                       />
                     </div>
                   </div>
@@ -349,7 +347,8 @@ const UpayaPenanggulangan = () => {
             </label>
             <input
               className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
-              type="number"
+
+              type="text"
               name=""
               onChange={(e) => setRencanaTindakLanjut(e.target.value)}
             />
