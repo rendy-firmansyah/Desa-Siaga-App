@@ -50,7 +50,16 @@ export default async function UserHandler(req,res){
                     role
                 }
             })
-            return res.status(200).json({message : "Registrasi User Berhasil"})
+            return res.status(200).json({message : "Registrasi User Berhasil", status:'success'})
+        } catch (error) {
+            return res.status(500).json({message: "Server error!"})
+        }
+    }
+
+    if (req.method === "GET") {
+        try {
+            const data = await prisma.user.findMany({})
+            return res.status(200).json(data)
         } catch (error) {
             return res.status(500).json({message: "Server error!"})
         }

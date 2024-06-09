@@ -2,9 +2,55 @@ import Link from "next/link";
 import Image from "next/image";
 import bgDashboard from "../../../../../public/bg-2.jpg";
 import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const AddLuka = ({ isShow, onClose }) => {
+const AddAkun = ({ isShow, onClose, onSuccess }) => {
   if (!isShow) return null;
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [role, setRole] = useState("");
+
+  const addAkun = async () => {
+    const res = await axios.put("/api/userManagement", {
+      email,
+      password,
+      username,
+      role,
+    });
+
+    console.log(res.data);
+
+    if (res.data.status === "success") {
+      toast(`✅ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+      
+      onClose(true);
+      onSuccess();
+    } else {
+      toast(`❌ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-[700px] max-h-[400px] md:h-auto lg:h-auto xl:h-auto overflow-y-auto md:overflow-hidden lg:overflow-hidden xl:overflow-hidden border rounded-lg bg-white">
@@ -12,10 +58,10 @@ const AddLuka = ({ isShow, onClose }) => {
           <div className="flex">
             <div className="">
               <h2 className="font-semibold text-gray-800">
-                Tambah Korban Luka Ringan/Berat
+                Tambah Akun
               </h2>
               <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                Isi form untuk menambah data korban Luka-luka
+                Isi form untuk menambah data akun
               </p>
             </div>
           </div>
@@ -24,51 +70,46 @@ const AddLuka = ({ isShow, onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-x-3">
               <div className="flex flex-col">
                 <label className="text-gray-600">
-                  Nama Faskes dan Lokasinya
+                  Username
                 </label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
                   type="text"
                   placeholder="ex: fulan"
-                  //   onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
                 />
-                <label className="text-gray-600 mt-2">Jenis Rawat</label>
+                <label className="text-gray-600 mt-2">Role</label>
                 <select
-                  className="border rounded p-2 mt-1 text-black"
-                  onChange={(e) => handleDesaSelect(e.target.value)}
+                  className="border rounded p-2 mt-1 text-black "
+                  required
+                  onChange={(e) => setRole(e.target.value)}
                 >
-                  <option value="Pilih jenis perawatan">
-                    Pilih jenis perawatan
-                  </option>
-                  <option value="Rawat Inap">Rawat Inap</option>
-                  <option value="Rawat Jalan">Rawat Jalan</option>
+                  <option value="">Pilih Role</option>
+                    <option value="super admin">Super Admin</option>
+                    <option value="user">User</option>
                 </select>
-                <label className="text-gray-600 mt-2">
-                  Jenis Kelamin Laki-laki
-                </label>
-                <input
-                  className="border rounded p-2 mt-1 text-black"
-                  type="number"
-                  placeholder="ex: 10"
-                  //   onChange={(e) => setAlamat(e.target.value)}
-                />
               </div>
               <div className="flex flex-col">
                 <label className="text-gray-600 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
-                  Jenis Kelamin Wanita
+                  Email
                 </label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
-                  type="number"
-                  placeholder="ex: 10"
-                  //   onChange={(e) => setAlamat(e.target.value)}
+                  type="text"
+                  placeholder="ex: email@gmail.com"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
                 />
-                <label className="text-gray-600 mt-2">Jumlah</label>
+                <label className="text-gray-600 mt-2">
+                  Password
+                </label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
-                  type="number"
-                  placeholder="ex: 10"
-                  //   onChange={(e) => setAlamat(e.target.value)}
+                  type="text"
+                  placeholder="ex: ***"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -83,7 +124,7 @@ const AddLuka = ({ isShow, onClose }) => {
             </button>
 
             <button
-              //   onClick={(e) => addKecamatan()}
+              onClick={(e) => addAkun()}
               className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md"
             >
               Save
@@ -95,4 +136,4 @@ const AddLuka = ({ isShow, onClose }) => {
   );
 };
 
-export default AddLuka;
+export default AddAkun;

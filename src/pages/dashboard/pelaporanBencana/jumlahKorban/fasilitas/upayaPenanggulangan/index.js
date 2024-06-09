@@ -40,6 +40,7 @@ const UpayaPenanggulangan = () => {
   const [pelayananGizi, setPelayananGizi] = useState("");
   const [logisticKesehatan, setLogisticKesehatan] = useState("");
   const [pelayananJiwa, setPelayananJiwa] = useState("");
+
   const [HambatanPelayananKesehatan, setHambatanPelayananKesehatan] = useState("");
   const [bantuanYangDiperlukanSegera, setBantuanYangDiperlukanSegera] = useState([]);
   const [rencanaTindakLanjut, setRencanaTindakLanjut] = useState("");
@@ -75,6 +76,7 @@ const UpayaPenanggulangan = () => {
       cacat,
       buteki,
       lansia
+
     });
     console.log(res.data);
     if (res.data.status === "success") {
@@ -345,6 +347,7 @@ const UpayaPenanggulangan = () => {
             </label>
             <input
               className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
+
               type="text"
               name=""
               onChange={(e) => setRencanaTindakLanjut(e.target.value)}

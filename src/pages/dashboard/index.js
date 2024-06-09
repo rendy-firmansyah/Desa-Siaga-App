@@ -21,7 +21,7 @@ export async function getServerSideProps(ctx) {
   } else if (cookies.role == "super admin") {
     return {
       redirect: {
-        destination: "/admin",
+        destination: "/dashboard/superAdmin",
       },
     };
   }
@@ -129,7 +129,7 @@ const Dashboard = () => {
       </div>
       <div className="flex justify-center mt-5 pb-10">
         <button
-          onClick={logout}
+          onClick={() => logout()}
           className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
         >
           Keluar Dashboard

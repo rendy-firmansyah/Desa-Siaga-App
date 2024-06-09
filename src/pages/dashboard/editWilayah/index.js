@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRouter } from "next/router";
+import ReactPaginate from "react-paginate";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -24,7 +25,7 @@ export async function getServerSideProps(ctx) {
   } else if (cookies.role === "super admin") {
     return {
       redirect: {
-        destination: "/admin",
+        destination: "/dashboard/superAdmin",
       },
     };
   }
@@ -49,6 +50,9 @@ const dataWilayah = () => {
 
   //get data kecamatan
   const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5;
+
   const getData = async () => {
     const res = await axios.get("/api/Kecamatan");
     const data = res.data;
@@ -66,10 +70,20 @@ const dataWilayah = () => {
     }
   };
 
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = data.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(data.length / itemsPerPage);
+
   const router = useRouter();
   const passDataDesa = (data) => {
-    router.push(`/dashboard/editWilayah/dataDesa?id=${encodeURIComponent(data.id)}`);
-  }
+    router.push(
+      `/dashboard/editWilayah/dataDesa?id=${encodeURIComponent(data.id)}`
+    );
+  };
 
   return (
     <section className="container-fluid h-screen relative">
@@ -108,120 +122,156 @@ const dataWilayah = () => {
           <table className="min-w-full divide-y divide-gray-200 border-2 shadow-lg shad">
             <thead className="">
               <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Nama Kecamatan
                 </th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Alamat
                 </th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Action
                 </th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              {data.map((items, index) => (
-                <tr key={items.id}>
-                  <td class="text-black px-6 py-4 whitespace-nowrap">
-                    {items.nama}
-                  </td>
-                  <td class="text-black px-6 py-4 whitespace-nowrap">
-                    {items.alamat}
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap flex items-center">
-                    <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
-                      <svg
-                        width="20px"
-                        height="20px"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g
-                          id="SVGRepo_tracerCarrier"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></g>
-                        <g id="SVGRepo_iconCarrier">
-                          {" "}
-                          <path
-                            d="M10 10C10 10.5523 10.4477 11 11 11V17C10.4477 17 10 17.4477 10 18C10 18.5523 10.4477 19 11 19H13C13.5523 19 14 18.5523 14 18C14 17.4477 13.5523 17 13 17V9H11C10.4477 9 10 9.44772 10 10Z"
-                            fill="#0F0F0F"
-                          ></path>{" "}
-                          <path
-                            d="M12 8C12.8284 8 13.5 7.32843 13.5 6.5C13.5 5.67157 12.8284 5 12 5C11.1716 5 10.5 5.67157 10.5 6.5C10.5 7.32843 11.1716 8 12 8Z"
-                            fill="#0F0F0F"
-                          ></path>{" "}
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M23 4C23 2.34315 21.6569 1 20 1H4C2.34315 1 1 2.34315 1 4V20C1 21.6569 2.34315 23 4 23H20C21.6569 23 23 21.6569 23 20V4ZM21 4C21 3.44772 20.5523 3 20 3H4C3.44772 3 3 3.44772 3 4V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V4Z"
-                            fill="#0F0F0F"
-                          ></path>{" "}
-                        </g>
-                      </svg>
-                    </button>
-                    <button
-                      onClick={() => visibleEdit(items)}
-                      class="ml-2 px-3 py-3 bg-amber-400 rounded-md hover:bg-amber-200 focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out"
-                    >
-                      <svg
-                        width="20px"
-                        height="20px"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="#000000"
-                      >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g
-                          id="SVGRepo_tracerCarrier"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></g>
-                        <g id="SVGRepo_iconCarrier">
-                          {" "}
-                          <title></title>{" "}
-                          <g id="Complete">
+              {currentPageData.map((items, index) => {
+                const pageIndex = index + currentPage * itemsPerPage + 1;
+                return (
+                  <tr key={items.id}>
+                    <td className="text-black px-6 py-4 whitespace-nowrap">
+                      {pageIndex}
+                    </td>
+                    <td className="text-black px-6 py-4 whitespace-nowrap">
+                      {items.nama}
+                    </td>
+                    <td className="text-black px-6 py-4 whitespace-nowrap">
+                      {items.alamat}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap flex items-center">
+                      <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
+                        <svg
+                          width="20px"
+                          height="20px"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></g>
+                          <g id="SVGRepo_iconCarrier">
                             {" "}
-                            <g id="edit">
+                            <path
+                              d="M10 10C10 10.5523 10.4477 11 11 11V17C10.4477 17 10 17.4477 10 18C10 18.5523 10.4477 19 11 19H13C13.5523 19 14 18.5523 14 18C14 17.4477 13.5523 17 13 17V9H11C10.4477 9 10 9.44772 10 10Z"
+                              fill="#0F0F0F"
+                            ></path>{" "}
+                            <path
+                              d="M12 8C12.8284 8 13.5 7.32843 13.5 6.5C13.5 5.67157 12.8284 5 12 5C11.1716 5 10.5 5.67157 10.5 6.5C10.5 7.32843 11.1716 8 12 8Z"
+                              fill="#0F0F0F"
+                            ></path>{" "}
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M23 4C23 2.34315 21.6569 1 20 1H4C2.34315 1 1 2.34315 1 4V20C1 21.6569 2.34315 23 4 23H20C21.6569 23 23 21.6569 23 20V4ZM21 4C21 3.44772 20.5523 3 20 3H4C3.44772 3 3 3.44772 3 4V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V4Z"
+                              fill="#0F0F0F"
+                            ></path>{" "}
+                          </g>
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() => visibleEdit(items)}
+                        class="ml-2 px-3 py-3 bg-amber-400 rounded-md hover:bg-amber-200 focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out"
+                      >
+                        <svg
+                          width="20px"
+                          height="20px"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="#000000"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></g>
+                          <g id="SVGRepo_iconCarrier">
+                            {" "}
+                            <title></title>{" "}
+                            <g id="Complete">
                               {" "}
-                              <g>
+                              <g id="edit">
                                 {" "}
-                                <path
-                                  d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8"
-                                  fill="none"
-                                  stroke="#0F0F0F"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                ></path>{" "}
-                                <polygon
-                                  fill="none"
-                                  points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8"
-                                  stroke="#0F0F0F"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                ></polygon>{" "}
+                                <g>
+                                  {" "}
+                                  <path
+                                    d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8"
+                                    fill="none"
+                                    stroke="#0F0F0F"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                  ></path>{" "}
+                                  <polygon
+                                    fill="none"
+                                    points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8"
+                                    stroke="#0F0F0F"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                  ></polygon>{" "}
+                                </g>{" "}
                               </g>{" "}
                             </g>{" "}
-                          </g>{" "}
-                        </g>
-                      </svg>
-                    </button>
-                    {/* <Link href="/dashboard/editWilayah/dataDesa"> */}
-                      <button 
+                          </g>
+                        </svg>
+                      </button>
+                      {/* <Link href="/dashboard/editWilayah/dataDesa"> */}
+                      <button
                         onClick={() => passDataDesa(items)}
-                        class="ml-2 px-5 py-3  text-white font-medium text-sm bg-secondary-default rounded-md hover:bg-secondary-light focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out">
+                        class="ml-2 px-5 py-3  text-white font-medium text-sm bg-secondary-default rounded-md hover:bg-secondary-light focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out"
+                      >
                         Lihat Desa
                       </button>
-                    {/* </Link> */}
-                  </td>
-                </tr>
-              ))}
+                      {/* </Link> */}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+        </div>
+        <div className="mt-4 flex justify-center">
+          <ReactPaginate
+            previousLabel={"← Previous"}
+            nextLabel={"Next →"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination flex justify-center space-x-2"}
+            pageClassName={"page-item"}
+            pageLinkClassName={
+              "page-link px-4 py-2 border rounded-md text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            }
+            previousClassName={"page-item"}
+            previousLinkClassName={
+              "page-link px-4 py-2 mr-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            }
+            nextClassName={"page-item"}
+            nextLinkClassName={
+              "page-link px-4 py-2 ml-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            }
+            activeLinkClassName={
+              "active-link border-secondary-default text-secondary-default"
+            }
+            disabledClassName={"disabled opacity-50 cursor-not-allowed -z-10"}
+          />
         </div>
       </div>
     </section>
