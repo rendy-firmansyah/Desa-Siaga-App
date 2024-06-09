@@ -12,10 +12,16 @@ export default async function pelaporanHandler(req, res) {
         logisticKesehatan,
         pelayananJiwa,
         HambatanPelayananKesehatan,
-        bantuanUntukKelompokRentan,
+        bantuanYangDiperlukanSegera,
         rencanaTindakLanjut,
         statusDesa,
         pelaporan_id,
+        bayi,
+        bumil,
+        balita,
+        cacat,
+        buteki,
+        lansia,
       } = req.body;
       if(
         !upayaPenanggulangan||
@@ -27,10 +33,16 @@ export default async function pelaporanHandler(req, res) {
         !logisticKesehatan ||
         !pelayananJiwa ||
         !HambatanPelayananKesehatan ||
-        !bantuanUntukKelompokRentan ||
+        !bantuanYangDiperlukanSegera ||
         !rencanaTindakLanjut ||
         !statusDesa ||
-        !pelaporan_id
+        !pelaporan_id||
+        !bayi||
+        !bumil||
+        !balita||
+        !cacat||
+        !buteki||
+        !lansia
       ) {
         return res.status(400).json({ message: "Data tidak boleh Kosong!" });
       }
@@ -47,12 +59,23 @@ export default async function pelaporanHandler(req, res) {
             logisticKesehatan,
             pelayananJiwa,
             HambatanPelayananKesehatan,
-            bantuanUntukKelompokRentan,
+            bantuanYangDiperlukanSegera,
             rencanaTindakLanjut,
             statusDesa,
             pelaporan_id: parseInt(pelaporan_id),
           },
         });
+        const kelompokRentan = await prisma.kelompokRentan.create({
+          data: {
+            bayi: parseInt(bayi),
+            bumil: parseInt(bumil),
+            balita: parseInt(balita),
+            cacat: parseInt(cacat),
+            buteki: parseInt(buteki),
+            lansia: parseInt(lansia),
+            upaya_id : parseInt(pelaporan.id),
+          },
+        })
         return res
           .status(200)
           .json({ message: "Berhasil menambahkan data upaya", status: "success" });

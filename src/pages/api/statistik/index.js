@@ -39,7 +39,37 @@ export default async function pelaporanHandler(req, res) {
         return res.status(200).json(data)
       }
       else{
-
+          const data = await prisma.desa.findFirst({
+            where: {
+              id: Number(id),
+            },
+            include: {
+              pelaporanAwal: {
+                orderBy: {
+                  id: 'desc',
+                },
+                take: 1,
+                select: {
+                  jenisBencana: true,
+                  _count: {
+                    select: {
+                      korbanMeninggal: true,
+                      korbanHilang: true,
+                      korbanLuka: true,
+                      korbanPengungsi: true,
+                    },
+                  },
+                  upaya:{
+                    select: {
+                      upayaPenanggulangan : true,
+                      bantuanYangDiperlukanSegera :true,
+                    }
+                  },
+                },
+              },
+            },
+          });
+          return res.status(200).json(data)
       }
     } catch (error) {
       return res.status(500).json({ message: "Server error!", status: "failed" });
