@@ -1,3 +1,4 @@
+import { tree } from "next/dist/build/templates/app-page";
 import prisma from "../../../../lib/prisma";
 import { format } from "date-fns";
 
@@ -58,6 +59,15 @@ export default async function pelaporanHandler(req, res) {
                       korbanLuka: true,
                       korbanPengungsi: true,
                     },
+                  },
+                  aksesDanKeadaan:{
+                    select:{
+                      bangunanSekolah:true,
+                      bangunanBalai : true,
+                      bangunanPustu : true,
+                      fasilitasIbadah :true,
+                      fasilitasUmum :true,
+                    }
                   },
                   upaya:{
                     select: {
