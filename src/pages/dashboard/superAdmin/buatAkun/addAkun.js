@@ -10,6 +10,47 @@ import "react-toastify/dist/ReactToastify.css";
 const AddAkun = ({ isShow, onClose, onSuccess }) => {
   if (!isShow) return null;
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [role, setRole] = useState("");
+
+  const addAkun = async () => {
+    const res = await axios.put("/api/userManagement", {
+      email,
+      password,
+      username,
+      role,
+    });
+
+    console.log(res.data);
+
+    if (res.data.status === "success") {
+      toast(`✅ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+      
+      onClose(true);
+      onSuccess();
+    } else {
+      toast(`❌ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-[700px] max-h-[400px] md:h-auto lg:h-auto xl:h-auto overflow-y-auto md:overflow-hidden lg:overflow-hidden xl:overflow-hidden border rounded-lg bg-white">
@@ -35,12 +76,14 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                   className="border rounded p-2 mt-1 text-black"
                   type="text"
                   placeholder="ex: fulan"
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
                 <label className="text-gray-600 mt-2">Role</label>
                 <select
                   className="border rounded p-2 mt-1 text-black "
                   required
+                  onChange={(e) => setRole(e.target.value)}
                 >
                   <option value="">Pilih Role</option>
                     <option value="super admin">Super Admin</option>
@@ -56,6 +99,7 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                   type="text"
                   placeholder="ex: email@gmail.com"
                   required
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <label className="text-gray-600 mt-2">
                   Password
@@ -64,6 +108,7 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                   className="border rounded p-2 mt-1 text-black"
                   type="text"
                   placeholder="ex: ***"
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
@@ -79,6 +124,7 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
             </button>
 
             <button
+              onClick={(e) => addAkun()}
               className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md"
             >
               Save
