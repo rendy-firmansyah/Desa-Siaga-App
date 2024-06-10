@@ -56,7 +56,7 @@ export default async function BeritaHandler(req, res) {
                     }
                 });
 
-                return res.status(200).json({message: "Berhasil di Simpan",status: 'success'});
+                return res.status(200).json({message: "berhasil menambahkan data", status : "success"});
             } catch (error) {
                 console.error("Error during upload or DB operation:", error);
                 return res.status(500).json({ message: "Server error!", status: 'failed' });
@@ -88,7 +88,7 @@ export default async function BeritaHandler(req, res) {
         try {
             const id = req.query.id;
             const berita = await prisma.berita.delete({ where: { id: Number(id) } });
-            return res.status(200).json({ message: "Data Berhasil di Hapus", status: 'success' });
+            return res.status(200).json({message: "berhasil menghapus data", status : "success"});
         } catch (error) {
             console.error("Error during DB operation:", error);
             return res.status(500).json({ message: "Server error!", status: 'failed' });
@@ -119,10 +119,10 @@ export default async function BeritaHandler(req, res) {
                             fileName: gambar[0].originalFilename // Access original filename
                         });
                         const berita = await prisma.berita.update({ where: { id: Number(id) }, data: { judul:judul[0], deskripsi: deskripsi[0], gambar: upload.url } });
-                        return res.status(200).json({ message: "Data Berhasil di Update", status: 'success' });
+                        return res.status(200).json({message: "berhasil mengedit data", status : "success"});
                     }
                     const berita = await prisma.berita.update({ where: { id: Number(id) }, data: { judul:judul[0], deskripsi:deskripsi[0] } });
-                    return res.status(200).json({ message: "Data Berhasil di Update", status: 'success' });
+                    return res.status(200).json({message: "berhasil mengedit data", status : "success"});
                 } catch (error) {
                     console.error("Error during DB operation:", error);
                     return res.status(500).json({ message: "Server error!", status: 'failed' });

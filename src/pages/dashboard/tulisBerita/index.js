@@ -22,11 +22,11 @@ const DetailBerita = () => {
     setVisibleModal(false);
   };
 
+  const fetchData = async () => {
+    const response = await axios.get('/api/berita?id=');
+    setBerita(response.data);
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get('/api/berita?id=');
-      setBerita(response.data);
-    };
     fetchData();
   }, []);
 
@@ -105,7 +105,7 @@ const DetailBerita = () => {
         </div>
 
         {visibleModal && (
-                <Konfirm onClose={handleCloseModal} id={idBerita} />
+                <Konfirm onClose={handleCloseModal} id={idBerita} onDeleteSuccess={fetchData} />
             )}
       </main>
     </div>
