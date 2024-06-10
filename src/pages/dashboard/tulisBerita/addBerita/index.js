@@ -17,6 +17,13 @@ export const addBerita = () => {
   const [dataKecamatan,setDataKec] = useState([]);
   const [dataDesa,setDataDesa] = useState([]);
 
+  const handleImageChange = (evt) => {
+    const [file] = evt.target.files;
+    if (file) {
+      setImage(URL.createObjectURL(file));
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get('/api/Kecamatan');
@@ -129,12 +136,8 @@ export const addBerita = () => {
               <label className="font-semibold text-md text-black">
                 Input Gambar
               </label>
-              <input
-                onChange={(e) => setImage(e.target.files[0])}
-                className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                type="file"
-                accept="image/*"
-              />
+              <input type="file" id="imgInp" onChange={handleImageChange} />
+              {image && <img id="blah" src={image} alt="Uploaded Image" />}
             </div>
           </div>
           <div className="flex flex-col">
