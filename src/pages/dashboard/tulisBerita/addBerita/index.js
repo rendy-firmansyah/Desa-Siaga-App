@@ -10,12 +10,15 @@ export const addBerita = () => {
     Router.back();}
 
   const [image, setImage] = useState("");
+  const [file, setFile] = useState("");
   const [judulBerita, setJudulBerita] = useState("");
   const [deskripsiBerita, setDeskripsiBerita] = useState("");
   const [selectedKec, setSelectedKec] = useState("");
   const [selectedDesa, setSelectedDesa] = useState("");
   const [dataKecamatan,setDataKec] = useState([]);
   const [dataDesa,setDataDesa] = useState([]);
+
+  console.log(file);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +36,14 @@ export const addBerita = () => {
     fetchData();
   }, [selectedKec]);
 
+  const handleImageChange = (evt) => {
+    const [file] = evt.target.files;
+    if (file) {
+      setImage(URL.createObjectURL(file));
+      setFile(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,7 +51,7 @@ export const addBerita = () => {
     formData.append('judul', judulBerita);
     formData.append('deskripsi', deskripsiBerita);
     formData.append('desa_id', selectedDesa);
-    formData.append('gambar', image);
+    formData.append('gambar', file);
 
     try {
       const response = await axios.post('/api/berita', formData, {
@@ -129,12 +140,14 @@ export const addBerita = () => {
               <label className="font-semibold text-md text-black">
                 Input Gambar
               </label>
-              <input
+              {/* <input
                 onChange={(e) => setImage(e.target.files[0])}
                 className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
                 type="file"
                 accept="image/*"
-              />
+              /> */}
+              <input type="file" id="imgInp" onChange={handleImageChange} />
+              {image && <img id="blah" src={image} alt="Uploaded Image" />}
             </div>
           </div>
           <div className="flex flex-col">
