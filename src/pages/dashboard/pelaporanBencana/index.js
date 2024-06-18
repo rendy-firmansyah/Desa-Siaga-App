@@ -45,12 +45,12 @@ const PelaporanBencana = () => {
   const [lokasiKejadian, setLokasiKejadian] = useState("");
   const [jumlahPenduduk, setJumlahPenduduk] = useState(0);
 
-  console.log(selectedDesa);
-  console.log(jenisBencana);
-  console.log(waktuBencana);
-  console.log(deskripsiBencana);
-  console.log(lokasiKejadian);
-  console.log(jumlahPenduduk);
+  // console.log(selectedDesa);
+  // console.log(jenisBencana);
+  // console.log(waktuBencana);
+  // console.log(deskripsiBencana);
+  // console.log(lokasiKejadian);
+  // console.log(jumlahPenduduk);
 
   useEffect(() => {
     const fetchData = async () => {
