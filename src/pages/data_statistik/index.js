@@ -61,7 +61,7 @@ const DataStatistik = () => {
                       <div className="flex justify-between items-center">
                           {item.nama}
                         <p className="text-black font-semibold"></p>
-                        <div className={`w-[100px] h-[40px] flex items-center justify-center font-semibold text-[20px] text-white ${item.status_desa === 'Tidak aman' ? 'bg-red-default' : item.status_desa === 'Aman' ? 'bg-green-default' : 'bg-gray-700'}`}>{item.status_desa === 'Aman' ? 'Aman' : item.status_desa === 'Tidak aman' ? 'Tidak Aman' : 'Belum Dinilai'}</div>
+                        <div className={`w-[100px] h-[40px] flex items-center justify-center font-semibold text-[20px] text-black ${item.status_desa === 'Tidak aman text-white' ? 'bg-red-default' : item.status_desa === 'Aman' ? 'bg-green-default text-white' : 'bg-gray-700 text-white'}`}>{item.status_desa === 'Aman' ? 'Aman' : item.status_desa === 'Tidak aman' ? 'Tidak Aman' : 'Belum Dinilai'}</div>
                       </div>
                     </button>
                 </div>
