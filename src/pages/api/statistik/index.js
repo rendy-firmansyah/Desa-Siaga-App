@@ -36,7 +36,38 @@ export default async function pelaporanHandler(req, res) {
             },
           },
           });
-        return res.status(200).json(data)
+
+          function formatData(data) {
+            let formattedData = [];
+        
+            data.forEach(kecamatan => {
+        
+                let formattedKecamatan = {
+                    id: kecamatan.id,
+                    nama: kecamatan.nama,
+                    desa: []
+                };
+        
+                kecamatan.desa.forEach(desa => {
+                    
+                  let formattedDesa = {
+                        id: desa.id,
+                        nama: desa.nama,
+                        status_desa: (desa.pelaporanAwal.length > 0) ? desa.pelaporanAwal[0].upaya[0].statusDesa : "" // Mengambil status desa, jika ada
+                    };
+                    
+                    formattedKecamatan.desa.push(formattedDesa);
+                });
+        
+                formattedData.push(formattedKecamatan);
+            });
+        
+            return formattedData;
+        }
+
+        const formattedData = formatData(data) 
+
+        return res.status(200).json(formattedData)
       }
       else{
           const data = await prisma.desa.findFirst({
@@ -72,13 +103,14 @@ export default async function pelaporanHandler(req, res) {
                     select: {
                       upayaPenanggulangan : true,
                       bantuanYangDiperlukanSegera :true,
+                      kelompokRentan: true,
                     }
                   },
                 },
               },
             },
           });
-          return res.status(200).json(data)
+          return res.status(200).json([data])
       }
     } catch (error) {
       return res.status(500).json({ message: "Server error!", status: "failed" });
