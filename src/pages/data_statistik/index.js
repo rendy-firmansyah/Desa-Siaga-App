@@ -58,7 +58,7 @@ const DataStatistik = () => {
                 {items.desa.map((item) => (
                 <div id="collapse-body" className={`${isOpen ? 'block' : 'hidden'}`} aria-labelledby="collapse-heading">
                     <button className="w-full p-5 border border-gray-200" onClick={() => detailDesa(item)}>
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-center text-black">
                           {item.nama}
                         <p className="text-black font-semibold"></p>
                         <div className={`w-[100px] h-[40px] flex items-center justify-center font-semibold text-[20px] text-black ${item.status_desa === 'Tidak aman text-white' ? 'bg-red-default' : item.status_desa === 'Aman' ? 'bg-green-default text-white' : 'bg-gray-700 text-white'}`}>{item.status_desa === 'Aman' ? 'Aman' : item.status_desa === 'Tidak aman' ? 'Tidak Aman' : 'Belum Dinilai'}</div>
