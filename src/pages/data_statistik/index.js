@@ -7,12 +7,12 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 const DataStatistik = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(null);
   const [data,setData] = useState([]);
   const router = useRouter();
 
-  const toggleAccordion = () => {
-    setIsOpen(!isOpen);
+  const toggleAccordion = (index) => {
+    setIsOpen(isOpen === index ? null : index);
   };
 
   const fetchData = async () => {
@@ -45,27 +45,27 @@ const DataStatistik = () => {
               </div>
             </div>
             <div className="w-full h-auto bg-white xl:px-[50px] lg:px-[35px] md:px-[25px] px-[15px] xl:py-[50px] lg:py-[35px] md:py-[25px] py-[15px] shadow-lg mt-[35px]">
-            {data.map((items) => (
+            {data.map((items, index) => (
               <div id="accordion-collapse" data-accordion="collapse">
                 <h2 id="collapse-heading">
-                  <button onClick={toggleAccordion} type="button" className="w-full xl:h-[60px] lg:h-[60px] md:h-[50px] bg-green-default flex items-center justify-between xl:px-[28px] lg:px-[28px] md:px-[28px] px-[15px] " data-accordion-target="#collapse-body" aria-expanded="true" aria-controls="collapse-body">
+                  <button onClick={() => toggleAccordion(index)} type="button" className="w-full xl:h-[60px] lg:h-[60px] md:h-[50px] my-[10px] bg-green-default flex items-center justify-between xl:px-[28px] lg:px-[28px] md:px-[28px] px-[15px] " data-accordion-target="#collapse-body" aria-expanded={isOpen === index} aria-controls="collapse-body">
                     <span className="text-white font-semibold xl:text-[20px] lg:text-[20px] md:text-[16px] text-[16px]">{items.nama}</span>
                     <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                       <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                     </svg>
                   </button>
                 </h2>
+                <div id="collapse-body" className={`${isOpen === index ? 'block' : 'hidden'}`} aria-labelledby="collapse-heading">
                 {items.desa.map((item) => (
-                <div id="collapse-body" className={`${isOpen ? 'block' : 'hidden'}`} aria-labelledby="collapse-heading">
                     <button className="w-full p-5 border border-gray-200" onClick={() => detailDesa(item)}>
                       <div className="flex justify-between items-center text-black">
                           {item.nama}
                         <p className="text-black font-semibold"></p>
-                        <div className={`w-[100px] h-[40px] flex items-center justify-center font-semibold text-[20px] text-black ${item.status_desa === 'Tidak aman text-white' ? 'bg-red-default' : item.status_desa === 'Aman' ? 'bg-green-default text-white' : 'bg-gray-700 text-white'}`}>{item.status_desa === 'Aman' ? 'Aman' : item.status_desa === 'Tidak aman' ? 'Tidak Aman' : 'Belum Dinilai'}</div>
+                        <div className={`w-[120px] h-[40px] flex items-center justify-center font-semibold text-[16px] text-black ${item.status_desa === 'Tidak aman text-white' ? 'bg-red-default' : item.status_desa === 'Aman' ? 'bg-green-default text-white' : 'bg-gray-700 text-white'}`}>{item.status_desa === 'Aman' ? 'Aman' : item.status_desa === 'Tidak aman' ? 'Tidak Aman' : 'Belum Dinilai'}</div>
                       </div>
                     </button>
-                </div>
                 ))}
+                </div>
               </div>
               ))}
             </div>
