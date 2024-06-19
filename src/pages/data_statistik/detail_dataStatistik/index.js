@@ -32,7 +32,7 @@ const DetailDataStatistik = () => {
         }
       }, [id]);
     
-    //   console.log(data);
+    console.log(data);
     
 
   return (
@@ -42,7 +42,7 @@ const DetailDataStatistik = () => {
         <div className="mt-[150px] mb-[250px]">
             <div className="flex justify-between">
                 <div className="text-black font-semibold text-[20px]">Kecamatan Arjasa, Desa Arjasa</div>
-                <div className={`w-[100px] h-[40px] flex text-center items-center justify-center font-semibold text-[20px] text-white ${status === 'Tidak aman' ? 'bg-red-default' : status === 'Aman' ? 'bg-green-default' : 'bg-gray-700 text-white'}`}>{status ? status : 'Belum Dinilai'} </div>
+                <div className={`w-[120px] h-[40px] flex text-center items-center justify-center font-semibold text-[16px] text-white ${status === 'Tidak aman' ? 'bg-red-default' : status === 'Aman' ? 'bg-green-default' : 'bg-gray-700 text-white'}`}>{status ? status : 'Belum Dinilai'} </div>
             </div>
             {data.map((items) => (
             <div className="w-full bg-white xl:px-[50px] lg:px-[35px] md:px-[25px] px-[15px] xl:py-[50px] lg:py-[35px] py-[15px] md:py-[25px] shadow-lg mt-[35px]">
