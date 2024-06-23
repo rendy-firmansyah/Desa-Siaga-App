@@ -4,15 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const Landing = () => {
-
-  const [berita,setBerita] = useState([]);
+  const [berita, setBerita] = useState([]);
 
   const fetchData = async () => {
-    const response = await axios.get('/api/berita?id=');
+    const response = await axios.get("/api/berita?id=");
     setBerita(response.data);
   };
+
+  const router = useRouter();
+  const getBeritaWithID = (data) => {
+    router.push(`/detail_berita?id=${encodeURIComponent(data.id)}`);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -65,25 +71,27 @@ const Landing = () => {
           </div>
         </section>
 
-
-
         {/* Berita Section*/}
         <section className="mb-[56px]">
           <div className="grid grid-cols-12">
             <div className="xl:col-span-8 lg:col-span-12 md:col-span-12 col-span-12">
-            {berita.map((items, index) => {
+              {berita.map((items, index) => {
                 const date = new Date(items.created_at); // Mengubah timestamp menjadi objek Date
-                const formattedDate = date.toLocaleDateString('id-ID', {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric'
+                const formattedDate = date.toLocaleDateString("id-ID", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
                 });
 
                 return (
                   <div key={index} className="grid grid-cols-12 mb-[20px]">
                     <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12">
                       <div className="w-full h-full">
-                        <img className="w-64 h-52" src={items.gambar} alt="News" />
+                        <img
+                          className="w-64 h-52"
+                          src={items.gambar}
+                          alt="News"
+                        />
                       </div>
                     </div>
                     <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 xl:ps-7 lg:ps-7 md:ps-7 ps-0 xl:mt-[0px] lg:mt-[0px] md:mt-[0px] mt-[10px] flex items-center">
@@ -98,14 +106,15 @@ const Landing = () => {
                           {items.deskripsi}
                         </div>
                         <div className="xl:mt-[40px] lg:mt-[40px] md:mt-[20px] mt-[20px]">
-                          <Link href="/detail_berita">
-                            <button
-                              type="submit"
-                              className="xl:w-[200px] xl:h-[50px] lg:w-[200px] lg:h-[50px] bg-secondary-default xl:text-[14px] lg:text-[14px] font-bold md:w-[180px] md:h-[40px] w-[200px] h-[40px] md:text-[12px]"
-                            >
-                              Baca Selengkapnya
-                            </button>
-                          </Link>
+                          {/* <Link href="/detail_berita"> */}
+                          <button
+                            // type="submit"
+                            onClick={() => getBeritaWithID(items)}
+                            className="xl:w-[200px] xl:h-[50px] lg:w-[200px] lg:h-[50px] bg-secondary-default xl:text-[14px] lg:text-[14px] font-bold md:w-[180px] md:h-[40px] w-[200px] h-[40px] md:text-[12px]"
+                          >
+                            Baca Selengkapnya
+                          </button>
+                          {/* </Link> */}
                         </div>
                       </div>
                     </div>
@@ -130,12 +139,19 @@ const Landing = () => {
                   Berita Terbaru
                 </div>
                 {topThreeBerita.map((items, index) => (
-                  <div key={index} className="xl:w-full xl:flex-col lg:w-full lg:flex md:flex">
+                  <div
+                    key={index}
+                    className="xl:w-full xl:flex-col lg:w-full lg:flex md:flex"
+                  >
                     <div className="xl:flex xl:mx-0 lg:flex md:flex-col flex xl:items-start lg:items-start md:items-start items-center lg:mx-[10px] md:mx-[10px] xl:my-[20px] lg:my-[20px] md:my-0 my-[20px]">
                       <div>
                         <div className="xl:w-[230px] xl:h-[153px] lg:w-[230px] lg:h-[153px] md:w-[140px] md:h-[93px] w-[140px] relative">
                           {/* <Image src={items.gambar} width={230} height={153} className="w-full h-full object-cover" /> */}
-                          <img className="w-64 h-40" src={items.gambar} alt="News" />
+                          <img
+                            className="w-64 h-40"
+                            src={items.gambar}
+                            alt="News"
+                          />
                         </div>
                       </div>
                       <div className="xl:mt-0 md:mt-[10px] xl:w-[230px] lg:w-[230px] md:w-[140px] w-full xl:ms-0 lg:ms-0 md:ms-0 ms-[20px]">
