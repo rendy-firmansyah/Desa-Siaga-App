@@ -124,7 +124,7 @@ const Landing = () => {
               <div className="xl:mt-[40px] lg:my-[40px] md:my-[30px] my-[30px] flex justify-center">
                 <Link href="">
                   <button
-                    type="submit"
+                    // type="submit"
                     className="xl:w-[200px] xl:h-[50px] lg:w-[200px] lg:h-[50px] bg-secondary-default xl:text-[14px] lg:text-[14px] font-bold md:w-[180px] md:h-[40px] w-[180px] h-[40px] md:text-[12px]"
                   >
                     Lihat Lainnya
