@@ -12,7 +12,7 @@ export default async function pengkajianHandler(req, res) {
             data:{
                 jenis_ancaman,
                 riwayat,
-                desa_id
+                desa_id : parseInt(desa_id)
             }
         })
         return res

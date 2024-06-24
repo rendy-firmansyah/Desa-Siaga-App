@@ -35,7 +35,7 @@ export default async function peraturanHandler(req, res) {
                     g,
                     h,
                     total:hasilPerhitungan,
-                    pengkajian_id
+                    pengkajian_id:parseInt(pengkajian_id)
                 }
             })
 
