@@ -10,14 +10,14 @@ export default async function pengkajianHandler(req, res) {
     try{
         const pengkajian = await prisma.pengkajian.create({
             data:{
-                jenins_ancaman,
+                jenis_ancaman,
                 riwayat,
                 desa_id
             }
         })
         return res
         .status(200)
-        .json({message:"Berhasil Menambahkan data Kebijakan Peraturan",status:'success'})
+        .json({message:"Berhasil Menambahkan data Kebijakan Peraturan",status:'success',pengkajian_id:pengkajian.id})
     }
     catch(error){
         return res.status(500).json({message:"server error",status:'error'})
