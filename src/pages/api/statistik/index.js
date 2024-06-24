@@ -51,10 +51,14 @@ export default async function pelaporanHandler(req, res) {
                 kecamatan.desa.forEach(desa => {
                     
                   let formattedDesa = {
-                        id: desa.id,
-                        nama: desa.nama,
-                        status_desa: (desa.pelaporanAwal.length > 0) ? desa.pelaporanAwal[0].upaya[0].statusDesa : "" // Mengambil status desa, jika ada
-                    };
+                    id: desa.id,
+                    nama: desa.nama,
+                    status_desa: (desa.pelaporanAwal && desa.pelaporanAwal.length > 0 && 
+                                  desa.pelaporanAwal[0].upaya && desa.pelaporanAwal[0].upaya.length > 0 && 
+                                  desa.pelaporanAwal[0].upaya[0].statusDesa) ? 
+                                  desa.pelaporanAwal[0].upaya[0].statusDesa : ""
+                };
+                
                     
                     formattedKecamatan.desa.push(formattedDesa);
                 });
@@ -67,7 +71,7 @@ export default async function pelaporanHandler(req, res) {
 
         const formattedData = formatData(data) 
 
-        return res.status(200).json(formattedData)
+        return res.status(200).json(data)
       }
       else{
           const data = await prisma.desa.findFirst({
