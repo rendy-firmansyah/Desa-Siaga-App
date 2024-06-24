@@ -47,6 +47,7 @@ model desa {
   kecamatan           kecamatan @relation(fields: [kecamatan_id], references: [id])
   berita              berita[]
   pelaporanAwal       pelaporanAwal[]
+  pengkajian          pengkajian[]
 }
 model berita{
   id                  Int @id@default(autoincrement())
@@ -168,5 +169,27 @@ model kelompokRentan {
   buteki                        Int
   lansia                        Int
   upaya_id                      Int
-  upaya                         upaya @relation(fields: [id],references: [id])
+  upaya                         upaya @relation(fields: [upaya_id],references: [id])
+}
+model pengkajian {
+  id                            Int @id @default(autoincrement())
+  jenis_ancaman                 String
+  riwayat                       String
+  desa_id                       Int
+  desa                          desa @relation(fields: [desa_id],references: [id])
+  peraturan                     peraturan[]
+}
+model peraturan{
+  id                            Int @id @default(autoincrement())
+  a                             Boolean
+  b                             Boolean
+  c                             Boolean
+  d                             Boolean
+  e                             Boolean
+  f                             Boolean
+  g                             Boolean
+  h                             Boolean
+  total                         Int
+  pengkajian_id                 Int
+  pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
 }
