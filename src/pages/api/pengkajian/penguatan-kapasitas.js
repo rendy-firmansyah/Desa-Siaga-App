@@ -1,15 +1,14 @@
 import prisma from "../../../../lib/prisma";
 
-export default async function peraturanHandler(req, res) {
+export default async function kapasitasHandler(req, res) {
   if (req.method === "POST") {
         const {a,b,c,d,e,f,g,h,pengkajian_id} = req.body
 
-        if(!a || !b || !c || !d || !e || !f || !g || !h){
+        if(!a || !b || !c || !d || !e || !f || !g || !h,pengkajian_id){
             return res.status(400).json({message:"data tidak lengkap",status:'error'})
         }
 
         try{
-            // Menghitung jumlah true
             const jumlahTrue = (a ? 1 : 0) +
             (b ? 1 : 0) +
             (c ? 1 : 0) +
@@ -20,24 +19,25 @@ export default async function peraturanHandler(req, res) {
             (h ? 1 : 0);
 
             let hasilPerhitungan = jumlahTrue * 2.33;
-            const peraturan = await prisma.peraturan.create({
+
+            const peraturan = await prisma.kapasistas.create({
                 data:{
                     a,
-                    b,
-                    c,
-                    d,
-                    e,
-                    f,
-                    g,
+                    b,  
+                    c,  
+                    d,  
+                    e,  
+                    f,  
+                    g,  
                     h,
-                    total:hasilPerhitungan,
+                    total:hasilPerhitungan,  
                     pengkajian_id:parseInt(pengkajian_id)
                 }
             })
 
             return res
             .status(200)
-            .json({message:"Berhasil Menambahkan data Kebijakan Peraturan",status:'success'})
+            .json({message:"Berhasil Menambahkan data Penguatan Kapasitas",status:'success'})
         }
         catch(error){
             return res.status(500).json({message:"server error",status:'error'})

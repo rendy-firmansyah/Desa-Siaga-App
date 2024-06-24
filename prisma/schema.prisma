@@ -178,6 +178,10 @@ model pengkajian {
   desa_id                       Int
   desa                          desa @relation(fields: [desa_id],references: [id])
   peraturan                     peraturan[]
+  kapasitas                     kapasitas[]
+  peringatanDini                peringatanDini[]
+  mitigasi                      mitigasi[]
+  kesiapSiagaan                 kesiapSiagaan[]
 }
 model peraturan{
   id                            Int @id @default(autoincrement())
@@ -189,6 +193,65 @@ model peraturan{
   f                             Boolean
   g                             Boolean
   h                             Boolean
+  total                         Int
+  pengkajian_id                 Int
+  pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
+}
+model kapasitas{
+  id                            Int @id @default(autoincrement())
+  a                             Boolean
+  b                             Boolean
+  c                             Boolean
+  d                             Boolean
+  e                             Boolean
+  f                             Boolean
+  g                             Boolean
+  h                             Boolean
+  total                         Int
+  pengkajian_id                 Int
+  pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
+}
+model peringatanDini {
+  id                            Int @id @default(autoincrement())
+  a                             Boolean
+  b                             Boolean
+  total                         Int
+  pengkajian_id                 Int
+  pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
+}
+model mitigasi {
+  id                            Int @id @default(autoincrement())
+  a                             Boolean
+  b                             Boolean
+  c                             Boolean
+  d                             Boolean
+  e                             Boolean
+  f                             Boolean
+  g                             Boolean
+  h                             Boolean
+  i                             Boolean
+  j                             Boolean
+  k                             Boolean
+  total                         Int
+  pengkajian_id                 Int
+  pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
+}
+model kesiapSiagaan{
+  id                            Int @id @default(autoincrement())
+  a                             Boolean
+  b                             Boolean
+  c                             Boolean
+  d                             Boolean
+  e                             Boolean
+  f                             Boolean
+  g                             Boolean
+  h                             Boolean
+  i                             Boolean
+  j                             Boolean
+  k                             Boolean
+  l                             Boolean
+  m                             Boolean
+  n                             Boolean
   total                         Int
   pengkajian_id                 Int
   pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
