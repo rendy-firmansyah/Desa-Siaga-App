@@ -13,17 +13,47 @@ export default async function peraturanHandler(req, res) {
     try{
     // Menghitung jumlah true
     const jumlahTrue =
-      (a ? 1 : 0) +
-      (b ? 1 : 0) +
-      (c ? 1 : 0) +
-      (d ? 1 : 0) +
-      (e ? 1 : 0) +
-      (f ? 1 : 0) +
-      (g ? 1 : 0) +
-      (h ? 1 : 0);
+      (JSON.parse(a) ? 1 : 0) + 
+      (JSON.parse(b) ? 1 : 0) +
+      (JSON.parse(c) ? 1 : 0) +
+      (JSON.parse(d) ? 1 : 0) +
+      (JSON.parse(e) ? 1 : 0) +
+      (JSON.parse(f) ? 1 : 0) +
+      (JSON.parse(g) ? 1 : 0) +
+      (JSON.parse(h) ? 1 : 0);
 
     // Mengkalikan jumlah true dengan 2.33 jika semua true
     let hasilPerhitungan = jumlahTrue * 2.33;
+
+    const find = await prisma.peraturan.findFirst({
+      where: {
+        pengkajian_id: parseInt(pengkajian_id),
+      },
+    });
+
+    if (find) {
+      const peraturan = await prisma.peraturan.update({
+        where: {
+          id: find.id,
+        },
+        data: {
+          a: JSON.parse(a),
+          b: JSON.parse(b),
+          c: JSON.parse(c),
+          d: JSON.parse(d),
+          e: JSON.parse(e),
+          f: JSON.parse(f),
+          g: JSON.parse(g),
+          h: JSON.parse(h),
+          total: hasilPerhitungan,
+        },
+      })
+      return res.status(200).json({
+        message: "Berhasil Menambahkan data Kebijakan Peraturan",
+        status: "success",
+      });   
+    }
+
     const peraturan = await prisma.peraturan.create({
       data: {
         a: JSON.parse(a),

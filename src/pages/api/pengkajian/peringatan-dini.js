@@ -9,10 +9,33 @@ export default async function peringatanDIniHandler(req, res) {
     }
 
     try {
-        const jumlahTrue = (a ? 1 : 0) +
-                           (b ? 1 : 0)
+        const jumlahTrue = (JSON.parse(a) ? 1 : 0) +
+                           (JSON.parse(b) ? 1 : 0)
 
         let hasilPerhitungan = jumlahTrue * 2.33;
+
+        const find = await prisma.peringatanDini.findFirst({
+            where: {
+                pengkajian_id: parseInt(pengkajian_id),
+            },
+        });
+
+        if (find) {
+          const peringatanDini = await prisma.peringatanDini.update({
+            where: {
+              id: find.id,
+            },
+            data: {
+              a,
+              b,
+              total: hasilPerhitungan,
+            },
+          });
+
+          return res
+            .status(200)
+            .json({ message: "Berhasil Mengupdate data Penguatan Kapasitas", status: "success" });
+        }
 
         const peringatanDini = await prisma.peringatanDini.create({
             data: {
