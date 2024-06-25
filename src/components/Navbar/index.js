@@ -6,10 +6,12 @@ const Navbar = () => {
   return (
     <nav className="shadow-md w-full fixed top-0 z-50">
       <div className="flex items-center justify-between bg-primary-default py-6 xl:px-20 lg:px-10 md:px-10 px-[10px]">
-        <div className="cursor-pointer flex items-center">
-          <Image src="/brand.png" alt="Brand" width={60} height={60} />
-          <div className='ml-2 text-xl font-semibold'>Mitigasi Bencana</div>
-        </div>
+        <Link href="/">
+          <div className="cursor-pointer flex items-center">
+            <Image src="/brand.png" alt="Brand" width={60} height={60} />
+            <div className='ml-2 text-xl font-semibold'>Mitigasi Bencana</div>
+          </div>
+        </Link>
         <ul className='flex items-center'>
           <Link href="/auth">
             <li className="text-lg font-medium">Login</li>
