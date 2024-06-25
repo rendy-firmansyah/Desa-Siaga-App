@@ -15,7 +15,7 @@ const DetailDataStatistik = () => {
 
     console.log(status);
 
-    // console.log(id);
+    console.log(id);
 
     useEffect(() => {
         if (id) {

@@ -11,6 +11,12 @@ const DetailBerita = () => {
   const router = useRouter();
   const { id } = router.query;
   const [data, setData] = useState([]);
+  const [berita, setBerita] = useState([]);
+
+  const fetchData = async () => {
+    const response = await axios.get("/api/berita?id=");
+    setBerita(response.data);
+  };
 
   useEffect(() => {
     if (id) {
@@ -22,6 +28,19 @@ const DetailBerita = () => {
       getDataWithId();
     }
   }, [id]);
+
+  const getBeritaWithID = (data) => {
+    router.push(`/detail_berita?id=${encodeURIComponent(data.id)}`);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const topThreeBerita = berita
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    .slice(0, 3);
+
   return (
     <main>
       <Navbar />
@@ -94,44 +113,29 @@ const DetailBerita = () => {
             </div>
             <div className="xl:col-span-4 lg:col-span-4 md:col-span-12 col-span-12 xl:ps-[40px] lg:ps-[20px] md:ps-0 ps-0 xl:mt-0 lg:mt-0 md:mt-[50px] mt-[50px]">
               <div>
-                <div className="font-bold xl:text-[24px] lg:text-[24px] md:text-[24px] text-[20px] text-black mb-[25px] xl:text-start lg:text-start md:text-center text-center">
+                <div className="font-bold xl:text-[24px] lg:text-[24px] md:text-[24px] text-[20px] text-black mb-[25px] xl:text-start md:text-center">
                   Berita Terbaru
                 </div>
-                <div className="xl:w-full xl:flex-col lg:w-full lg:flex-col md:flex">
-                  <div className="xl:flex xl:mx-0 lg:flex md:flex-col flex xl:items-start lg:items-start md:items-start items-center lg:mx-[0px] md:mx-[10px] xl:my-[20px] lg:my-[20px] md:my-0 my-[20px]">
-                    <div>
-                      <div className="xl:w-[230px] xl:h-[153px] lg:w-[230px] lg:h-[153px] md:w-[140px] md:h-[93px] w-[140px] relative">
-                        <Image
-                          src="/berita-1.png"
-                          width={230}
-                          height={153}
-                          className="w-full h-full object-cover"
-                        />
+                <div className="xl:flex-col xl:justify-normal lg:flex lg:justify-center md:flex md:justify-center">
+                  {topThreeBerita.map((items, index) => (
+                    <div key={index} onClick={() => getBeritaWithID(items)} className="xl:flex-col lg:flex-col md:flex-col flex xl:w-[230px] lg:w-[230px] md:w-[140px] w-full xl:mx-0 xl:items-start lg:items-start md:items-start items-center lg:mx-[10px] md:mx-[10px] xl:my-[20px] lg:my-[20px] md:my-0 my-[20px] cursor-pointer">
+                      <div className="xl:w-[230px] lg:w-[230px] md:w-[140px] w-[140px]">
+                        <div className="xl:w-[230px] xl:h-[153px] lg:w-[230px] lg:h-[153px] md:w-[140px] md:h-[93px] w-[140px] relative">
+                          {/* <Image src={items.gambar} width={230} height={153} className="w-full h-full object-cover" /> */}
+                          <img
+                            className="w-64 h-40"
+                            src={items.gambar}
+                            alt="News"
+                          />
+                        </div>
+                      </div>
+                      <div className="xl:mt-[10px] lg:mt-[10px] md:mt-[10px] mt-0 xl:w-[230px] lg:w-[230px] md:w-[140px] w-auto xl:ms-0 lg:ms-0 md:ms-0 ms-[20px]">
+                        <div className="font-bold text-black xl:text-[18px] lg:text-[16px] md:text-[14px] xl:text-center lg:text-center md:text-center text-start">
+                          {items.judul}
+                        </div>
                       </div>
                     </div>
-                    <div className="xl:mt-0 md:mt-[10px] xl:w-[230px] lg:w-[230px] md:w-[140px] w-full xl:ms-0 lg:ms-0 md:ms-0 ms-[20px]">
-                      <div className="font-bold text-black xl:text-[18px] lg:text-[16px] md:text-[14px] xl:text-center lg:text-center md:text-center text-start">
-                        Lorem ipsum is placeholder
-                      </div>
-                    </div>
-                  </div>
-                  <div className="xl:flex xl:mx-0 lg:flex md:flex-col flex xl:items-start lg:items-start md:items-start items-center lg:mx-[0px] md:mx-[10px] xl:my-[20px] lg:my-[20px] md:my-0 my-[20px]">
-                    <div>
-                      <div className="xl:w-[230px] xl:h-[153px] lg:w-[230px] lg:h-[153px] md:w-[140px] md:h-[93px] w-[140px] relative">
-                        <Image
-                          src="/berita-1.png"
-                          width={230}
-                          height={153}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="xl:mt-0 md:mt-[10px] xl:w-[230px] lg:w-[230px] md:w-[140px] w-full xl:ms-0 lg:ms-0 md:ms-0 ms-[20px]">
-                      <div className="font-bold text-black xl:text-[18px] lg:text-[16px] md:text-[14px] xl:text-center lg:text-center md:text-center text-start">
-                        Lorem ipsum is placeholder
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
