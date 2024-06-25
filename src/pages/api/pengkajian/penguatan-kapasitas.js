@@ -9,18 +9,46 @@ export default async function kapasitasHandler(req, res) {
         }
 
         try{
-            const jumlahTrue = (a ? 1 : 0) +
-            (b ? 1 : 0) +
-            (c ? 1 : 0) +
-            (d ? 1 : 0) +
-            (e ? 1 : 0) +
-            (f ? 1 : 0) +
-            (g ? 1 : 0) +
-            (h ? 1 : 0);
+            const jumlahTrue = (JSON.parse(a) ? 1 : 0) +
+            (JSON.parse(b) ? 1 : 0) +
+            (JSON.parse(c) ? 1 : 0) +
+            (JSON.parse(d) ? 1 : 0) +
+            (JSON.parse(e) ? 1 : 0) +
+            (JSON.parse(f) ? 1 : 0) +
+            (JSON.parse(g) ? 1 : 0) +
+            (JSON.parse(h) ? 1 : 0);
 
             let hasilPerhitungan = jumlahTrue * 2.33;
 
-            const peraturan = await prisma.kapasistas.create({
+            const find = await prisma.kapasitas.findFirst({
+                where: {
+                    pengkajian_id: parseInt(pengkajian_id),
+                },
+            });
+
+            if (find) {
+                const kapasitas = await prisma.kapasitas.update({
+                    where: {
+                        id: find.id,
+                    },
+                    data: {
+                        a,
+                        b,
+                        c,
+                        d,
+                        e,
+                        f,
+                        g,
+                        h,
+                        total: hasilPerhitungan,
+                    },
+                });
+
+                return res
+                    .status(200)
+                    .json({ message: "Berhasil Mengupdate data Penguatan Kapasitas", status: "success" });
+            }
+            const peraturan = await prisma.kapasitas.create({
                 data:{
                     a,
                     b,  
