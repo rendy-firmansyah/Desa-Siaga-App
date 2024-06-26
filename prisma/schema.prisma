@@ -52,7 +52,7 @@ model desa {
 model berita{
   id                  Int @id@default(autoincrement())
   judul               String
-  deskripsi           String
+  deskripsi           String @db.Text
   gambar              String
   desa_id             Int
   created_at          DateTime @default(now())
