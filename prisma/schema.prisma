@@ -52,7 +52,7 @@ model desa {
 model berita{
   id                  Int @id@default(autoincrement())
   judul               String
-  deskripsi           String
+  deskripsi           String @db.Text
   gambar              String
   desa_id             Int
   created_at          DateTime @default(now())
@@ -193,7 +193,7 @@ model peraturan{
   f                             Boolean
   g                             Boolean
   h                             Boolean
-  total                         Int
+  total                         Float
   pengkajian_id                 Int
   pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
 }
@@ -207,7 +207,7 @@ model kapasitas{
   f                             Boolean
   g                             Boolean
   h                             Boolean
-  total                         Int
+  total                         Float
   pengkajian_id                 Int
   pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
 }
@@ -215,7 +215,7 @@ model peringatanDini {
   id                            Int @id @default(autoincrement())
   a                             Boolean
   b                             Boolean
-  total                         Int
+  total                         Float
   pengkajian_id                 Int
   pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
 }
@@ -232,7 +232,7 @@ model mitigasi {
   i                             Boolean
   j                             Boolean
   k                             Boolean
-  total                         Int
+  total                         Float
   pengkajian_id                 Int
   pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
 }
@@ -252,7 +252,7 @@ model kesiapSiagaan{
   l                             Boolean
   m                             Boolean
   n                             Boolean
-  total                         Int
+  total                         Float
   pengkajian_id                 Int
   pengkajian                    pengkajian @relation(fields: [pengkajian_id],references: [id])
 }

@@ -4,13 +4,8 @@ export default async function kapasitasHandler(req, res) {
   if (req.method === "POST") {
     const { a, b, c, d, e, f, g, h, pengkajian_id } = req.body;
 
-    if (!a || !b || !c || !d || !e || !f || !g || !h || !pengkajian_id) {
-      return res
-        .status(400)
-        .json({ message: "data tidak lengkap", status: "error" });
-    }
 
-    // try {
+    try {
     const jumlahTrue =
       (JSON.parse(a) ? 1 : 0) +
       (JSON.parse(b) ? 1 : 0) +
@@ -23,35 +18,35 @@ export default async function kapasitasHandler(req, res) {
 
     let hasilPerhitungan = jumlahTrue * 2.33;
 
-    // const find = await prisma.kapasitas.findFirst({
-    //   where: {
-    //     pengkajian_id: parseInt(pengkajian_id),
-    //   },
-    // });
+    const find = await prisma.kapasitas.findFirst({
+      where: {
+        pengkajian_id: parseInt(pengkajian_id),
+      },
+    });
 
-    // if (find) {
-    //   const kapasitas = await prisma.kapasitas.update({
-    //     where: {
-    //       id: find.id,
-    //     },
-    //     data: {
-    //       a,
-    //       b,
-    //       c,
-    //       d,
-    //       e,
-    //       f,
-    //       g,
-    //       h,
-    //       total: hasilPerhitungan,
-    //     },
-    //   });
+    if (find) {
+      const kapasitas = await prisma.kapasitas.update({
+        where: {
+          id: find.id,
+        },
+        data: {
+          a : JSON.parse(a),
+          b : JSON.parse(b),
+          c : JSON.parse(c),
+          d : JSON.parse(d),
+          e : JSON.parse(e),
+          f : JSON.parse(f),
+          g : JSON.parse(g),
+          h : JSON.parse(h),
+          total: hasilPerhitungan,
+        },
+      });
 
-    //   return res.status(200).json({
-    //     message: "Berhasil Mengupdate data Penguatan Kapasitas",
-    //     status: "success",
-    //   });
-    // }
+      return res.status(200).json({
+        message: "Berhasil Mengupdate data Penguatan Kapasitas",
+        status: "success",
+      });
+    }
     const peraturan = await prisma.kapasitas.create({
       data: {
         a: JSON.parse(a),
@@ -71,8 +66,8 @@ export default async function kapasitasHandler(req, res) {
       message: "Berhasil Menambahkan data Penguatan Kapasitas",
       status: "success",
     });
-    // } catch (error) {
-    //   return res.status(500).json({ message: "server error", status: "error" });
-    // }
+    } catch (error) {
+      return res.status(500).json({ message: "server error", status: "error" });
+    }
   }
 }

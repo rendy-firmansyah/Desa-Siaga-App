@@ -23,4 +23,50 @@ export default async function pengkajianHandler(req, res) {
         return res.status(500).json({message:"server error",status:'error'})
     }
   }
+  if(req.method === "GET"){
+    const id = req.query.id
+    const Peraturan = await prisma.peraturan.findFirst({
+        where:{
+            pengkajian_id : parseInt(id)
+        },
+        select:{
+            total:true
+        }
+    })
+    const kapasitas = await prisma.kapasitas.findFirst({
+        where:{
+            pengkajian_id : parseInt(id)
+        },
+        select:{
+            total:true
+        }
+    })
+    const peringatanDini = await prisma.peringatanDini.findFirst({
+        where:{
+            pengkajian_id : parseInt(id)
+        },
+        select:{
+            total:true
+        }
+    })
+    const mitigasi = await prisma.mitigasi.findFirst({
+        where:{
+            pengkajian_id : parseInt(id)
+        },
+        select:{
+            total:true
+        }
+    })
+    const kesiapSiagaan = await prisma.kesiapSiagaan.findFirst({
+        where:{
+            pengkajian_id : parseInt(id)
+        },
+        select:{
+            total:true
+        }
+    })
+
+    const persentase = ((Peraturan?.total || 0) + (kapasitas?.total || 0) + (peringatanDini?.total || 0) + (mitigasi?.total || 0) + (kesiapSiagaan?.total || 0))
+    return res.status(200).json({persentase})
+  }
 }

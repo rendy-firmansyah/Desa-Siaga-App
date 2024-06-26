@@ -4,25 +4,6 @@ export default async function mitigasiHandler(req, res) {
   if (req.method === "POST") {
     const { a, b, c, d, e, f, g, h, i, j, k, pengkajian_id } = req.body;
 
-    if (
-      !a ||
-      !b ||
-      !c ||
-      !d ||
-      !e ||
-      !f ||
-      !g ||
-      !h ||
-      !i ||
-      !j ||
-      !k ||
-      !pengkajian_id
-    ) {
-      return res
-        .status(400)
-        .json({ message: "data tidak lengkap", status: "error" });
-    }
-
     try {
       const checkboxTrue =
         (JSON.parse(a) ? 1 : 0) +
@@ -39,37 +20,37 @@ export default async function mitigasiHandler(req, res) {
 
       let nilaiPerhitungan = checkboxTrue * 2.33;
 
-      // const find = await prisma.mitigasi.findFirst({
-      //     where: {
-      //         pengkajian_id: parseInt(pengkajian_id),
-      //     },
-      // });
+      const find = await prisma.mitigasi.findFirst({
+          where: {
+              pengkajian_id: parseInt(pengkajian_id),
+          },
+      });
 
-      // if (find) {
-      //   const mitigasi = await prisma.mitigasi.update({
-      //     where: {
-      //       id: find.id,
-      //     },
-      //     data: {
-      //       a,
-      //       b,
-      //       c,
-      //       d,
-      //       e,
-      //       f,
-      //       g,
-      //       h,
-      //       i,
-      //       j,
-      //       k,
-      //       total: nilaiPerhitungan,
-      //     },
-      //   })
+      if (find) {
+        const mitigasi = await prisma.mitigasi.update({
+          where: {
+            id: find.id,
+          },
+          data: {
+            a : JSON.parse(a),
+            b : JSON.parse(b),
+            c : JSON.parse(c),
+            d : JSON.parse(d),
+            e : JSON.parse(e),
+            f : JSON.parse(f),
+            g : JSON.parse(g),
+            h : JSON.parse(h),
+            i : JSON.parse(i),
+            j : JSON.parse(j),
+            k : JSON.parse(k),
+            total: nilaiPerhitungan,
+          },
+        })
 
-      //   return res
-      //     .status(200)
-      //     .json({ message: "Berhasil Mengupdate data Penguatan Kapasitas", status: "success" });
-      // }
+        return res
+          .status(200)
+          .json({ message: "Berhasil Mengupdate data Penguatan Kapasitas", status: "success" });
+      }
 
       const mitigasi = await prisma.mitigasi.create({
         data: {
