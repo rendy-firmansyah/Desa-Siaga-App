@@ -66,8 +66,43 @@ export default async function BeritaHandler(req, res) {
     if(req.method === 'GET'){
         if (req.query.id) {
             const id = req.query.id;
-            const berita = await prisma.berita.findUnique({ where: { id: Number(id) } });
-            return res.status(200).json(berita);
+            const berita = await prisma.berita.findUnique({ where: { id: Number(id) }, include: { desa: true } });
+
+            function ubahFormatJson(inputJson) {
+                // Mendapatkan data desa dari input JSON
+                const { created_at, desa } = inputJson;
+                const { nama, alamat } = desa;
+              
+                // Mengubah format tanggal dari created_at
+                const date = new Date(created_at);
+                const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+              
+                // Membuat objek JSON baru sesuai dengan format yang diinginkan
+                const outputJson = {
+                  id: inputJson.id,
+                  judul: inputJson.judul,
+                  deskripsi: inputJson.deskripsi,
+                  gambar: inputJson.gambar,
+                  create_at: formattedDate,
+                  nama_desa: nama,
+                  alamat_desa: alamat
+                };
+              
+                return outputJson;
+              }
+              
+              // Fungsi untuk mendapatkan nama bulan dari indeks bulan
+              function getMonthName(monthIndex) {
+                const months = [
+                  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                ];
+                return months[monthIndex];
+              }
+
+            const beritaBaru = ubahFormatJson(berita);
+
+            return res.status(200).json(beritaBaru);
         }
         try {
             const berita = await prisma.berita.findMany({
