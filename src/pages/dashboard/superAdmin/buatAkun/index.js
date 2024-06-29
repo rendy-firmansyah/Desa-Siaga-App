@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import bgbuatAkun from "../../../../../public/bg-2.jpg";
 import nookies from "nookies";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AddAkun from "./addAkun";
@@ -28,6 +28,10 @@ const buatAkun = () => {
   useEffect(() => {
     getDataAkun();
   }, []);
+
+  const kembali = () => {
+    Router.push('/dashboard/superAdmin')
+  }
 
   return (
     <section className="container-fluid h-screen relative">
@@ -97,6 +101,14 @@ const buatAkun = () => {
             </tbody>
                 ))}
           </table>
+        </div>
+        <div className="flex justify-center mt-5 pb-10">
+          <button
+            onClick={() => kembali()}
+            className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+          >
+            Kembali
+          </button>
         </div>
       </div>
     </section>
