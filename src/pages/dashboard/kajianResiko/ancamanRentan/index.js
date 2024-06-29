@@ -2,10 +2,34 @@ import Link from "next/link";
 import Image from "next/image";
 import bgAncaman from "../../../../../public/bg-2.jpg";
 import Router, { useRouter } from "next/router";
+import nookies from "nookies";
 import axios from "axios";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+//islogin
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx);
+
+  if (!cookies.role) {
+    return {
+      redirect: {
+        destination: "/",
+      },
+    };
+  } else if (cookies.role === "super admin") {
+    return {
+      redirect: {
+        destination: "/dashboard/superAdmin",
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}
 
 const AncamanRentan = () => {
   const router = useRouter();
@@ -24,36 +48,38 @@ const AncamanRentan = () => {
       riwayat: Riwayat,
       desa_id: id,
     });
-    router.push(
-      `/dashboard/kajianResiko/kebijakanPeraturan?id=${encodeURIComponent(
-        res.data.pengkajian_id
-      )}`
-    );
-
-    // if (res.data.status === "success") {
-    //   toast(`✅ ${res.data.message}`, {
-    //     position: "top-right",
-    //     autoClose: 1,
-    //     closeOnClick: true,
-    //     pauseOnHover: false,
-    //     draggable: false,
-    //     progress: 1,
-    //     theme: "light",
-    //   });
-    // } else {
-    //   toast(`❌ ${res.data.message}`, {
-    //     position: "top-right",
-    //     autoClose: 0.1,
-    //     closeOnClick: true,
-    //     pauseOnHover: false,
-    //     draggable: false,
-    //     progress: 1,
-    //     theme: "light",
-    //   });
-    // }
+    if (res.data.status === "success") {
+      toast(`✅ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+      setTimeout(() => {
+        router.push(
+          `/dashboard/kajianResiko/kebijakanPeraturan?id=${encodeURIComponent(
+            res.data.pengkajian_id
+          )}`
+        );
+      }, 3000);
+    } else {
+      toast(`❌ ${res.data.message}`, {
+        position: "top-right",
+        autoClose: 0.1,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 1,
+        theme: "light",
+      });
+    }
   };
   return (
     <section className="container-fluid h-full relative">
+      <ToastContainer />
       <div className="absolute -z-10 inset-0">
         <Image src={bgAncaman} alt="bg-image" className="h-full" />
       </div>
