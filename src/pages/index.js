@@ -19,6 +19,8 @@ const Landing = () => {
     setBerita(response.data);
   };
 
+  console.log(berita)
+
   const router = useRouter();
   const getBeritaWithID = (data) => {
     router.push(`/detail_berita?id=${encodeURIComponent(data.id)}`);
@@ -91,7 +93,7 @@ const Landing = () => {
                 });
 
                 return (
-                  <div key={index} className="grid grid-cols-12 mb-[20px]">
+                  <div key={index} className="grid grid-cols-12 mb-[20px] cursor-pointer" onClick={() => getBeritaWithID(items)}>
                     <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 ">
                       <div className="w-full h-full">
                         <img
@@ -107,10 +109,10 @@ const Landing = () => {
                           {items.judul}
                         </div>
                         <div className="font-normal xl:text-[20px] lg:text-[16px] text-gray-600 md:text-[16px]">
-                          {formattedDate}
+                          {items.desa.alamat}, {formattedDate}
                         </div>
                         <div className="font-normal xl:text-[20px] lg:text-[18px] text-black my-2 md:text-[14px]">
-                          {items.deskripsi}
+                          {items.deskripsi.substring(0, 200)}.....
                         </div>
                         <div className="xl:mt-[40px] lg:mt-[40px] md:mt-[20px] mt-[20px] flex xl:justify-normal lg:justify-normal md:justify-normal justify-center">
                           {/* <Link href="/detail_berita"> */}

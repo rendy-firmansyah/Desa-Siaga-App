@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 const DataStatistik = () => {
   const [isOpen, setIsOpen] = useState(null);
   const [data,setData] = useState([]);
+  const[search,setsearch]=useState('')
   const router = useRouter();
 
   const toggleAccordion = (index) => {
@@ -22,6 +23,15 @@ const DataStatistik = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  console.log(data)
+
+  const filterdata = search
+  ? data.filter(items=>
+      items.nama.includes(search)
+      )
+  : data 
+
   const detailDesa = (data) => {
     if(data !== undefined) {
       if(data.statusDesa === 'Aman' || data.statusDesa === 'Tidak aman') {
@@ -41,17 +51,12 @@ const DataStatistik = () => {
             <div className="flex justify-center">
               <div className="flex items-center">
                 <div>
-                  <input type="kecamatan" placeholder='Masukan Nama Kecamatan ....' className="xl:w-[750px] lg:w-[650px] md:w-[500px] w-[280px] xl:h-[60px] lg:h-[50px] md:h-[40px] h-[40px] mt-3 px-[20px] text-gray-700 border-[2px] border-[#757575]"/>
-                </div>
-                <div className="ms-[30px] mt-3">
-                  <button type='submit' className="xl:w-[100px] lg:w-[100px] md:w-[100px] w-[50px] xl:h-[60px] lg:h-[55px] md:h-[45px] h-[50px] bg-secondary-default rounded-[10px] flex justify-center items-center">
-                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                  </button>
+                  <input value={search} onChange={(e)=>{setsearch(e.target.value)}} type="kecamatan" placeholder='Masukan Nama Kecamatan ....' className="xl:w-[750px] lg:w-[650px] md:w-[500px] w-[280px] xl:h-[60px] lg:h-[50px] md:h-[40px] h-[40px] mt-3 px-[20px] text-gray-700 border-[2px] border-[#757575]"/>
                 </div>
               </div>
             </div>
             <div className="w-full h-auto bg-white xl:px-[50px] lg:px-[35px] md:px-[25px] px-[15px] xl:py-[50px] lg:py-[35px] md:py-[25px] py-[15px] shadow-lg mt-[35px]">
-            {data.map((items, index) => (
+            {filterdata.map((items, index) => (
               <div id="accordion-collapse" data-accordion="collapse">
                 <h2 id="collapse-heading">
                   <button onClick={() => toggleAccordion(index)} type="button" className="w-full xl:h-[60px] lg:h-[60px] md:h-[50px] my-[10px] bg-green-default flex items-center justify-between xl:px-[28px] lg:px-[28px] md:px-[28px] px-[15px] " data-accordion-target="#collapse-body" aria-expanded={isOpen === index} aria-controls="collapse-body">
