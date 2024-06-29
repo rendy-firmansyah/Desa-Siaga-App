@@ -23,11 +23,19 @@ const DetailBerita = () => {
       const getDataWithId = async () => {
         const response = await axios.get(`/api/berita?id=${id}`);
         const data = response.data;
+        console.log(data);
         setData(data);
       };
       getDataWithId();
     }
   }, [id]);
+
+  const date = new Date(data.created_at);
+  const formattedDate = date.toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
 
   const getBeritaWithID = (data) => {
     router.push(`/detail_berita?id=${encodeURIComponent(data.id)}`);
@@ -40,6 +48,28 @@ const DetailBerita = () => {
   const topThreeBerita = berita
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
     .slice(0, 3);
+
+  const handleNextBerita = () => {
+    const currentIndex = berita.findIndex((item) => item.id == id);
+    const nextIndex = (currentIndex + 1) % berita.length; // Loop back to the first article if it's the last one
+    const nextBerita = berita[nextIndex];
+    getBeritaWithID(nextBerita);
+  };
+
+  const handleBackBerita = () => {
+    const currentIndex = berita.findIndex((item) => item.id == id);
+    const prevIndex = (currentIndex - 1 + berita.length) % berita.length; // Loop to the last article if it's the first one
+    const prevBerita = berita[prevIndex];
+    getBeritaWithID(prevBerita);
+  };
+
+  const currentIndex = berita.findIndex((item) => item.id == id);
+  const nextIndex = (currentIndex + 1) % berita.length;
+  const prevIndex = (currentIndex - 1 + berita.length) % berita.length;
+  const nextBerita = berita[nextIndex];
+  const prevBerita = berita[prevIndex];
+
+  // console.log(prevBerita)
 
   return (
     <main>
@@ -55,7 +85,7 @@ const DetailBerita = () => {
           </div>
           <div className="mt-[20px] mb-[60px] flex justify-center">
             <div className="text-black font-semibold xl:text-[16px] lg:text-[16px] md:text-[14px] text-[14px]">
-              Kec. Puger, Kab. Jember., Sabtu 11 Mei 2024
+              {data.alamat_desa}, {data.nama_desa}, {data.create_at}
             </div>
           </div>
           <div className="grid grid-cols-12">
@@ -69,44 +99,32 @@ const DetailBerita = () => {
                 </p>
               </div>
               <div className="flex justify-center">
-                <div className="xl:w-[800px] lg:w-[800px] md:w-[600px] w-full">
-                  <div className="flex justify-between">
-                    <div className="flex items-center">
-                      <div className="xl:w-[100px] lg:w-[100px] md:w-[100px] w-[30px] xl:h-[100px] lg:h-[100px] md:h-[100px] h-[30px] relative">
-                        <Image
-                          src="/berita-1.png"
-                          width={800}
-                          height={500}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="ms-[16px] w-[150px]">
-                        <div className="text-gray-700 font-bold xl:text-[16px] lg:text-[16px] md:text-[12px] text-[12px]">
-                          Kembali
-                        </div>
-                        <div className="text-black font-bold xl:text-[20px] lg:text-[20px] md:text-[16px] text-[14px]">
-                          Lorem ipsum is placeholder
+                <div className="">
+                  <div className="grid grid-cols-12 xl:gap-x-10 lg:gap-x-10 md:gap-x-10 gap-x-0">
+                    {prevBerita && (
+                      <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 cursor-pointer" onClick={handleBackBerita}>
+                        <div className="">
+                          <div className="text-gray-700 font-bold xl:text-[16px] lg:text-[16px] md:text-[12px] text-[12px]">
+                            Kembali
+                          </div>
+                          <div className="text-black font-bold xl:text-[20px] lg:text-[20px] md:text-[16px] text-[14px]">
+                            {prevBerita.judul.substring(0, 50)}...
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="me-[16px] w-[150px] text-end">
-                        <div className="text-gray-700 font-bold xl:text-[16px] lg:text-[16px] md:text-[12px] text-[12px]">
-                          Selanjutnya
-                        </div>
-                        <div className="text-black font-bold xl:text-[20px] lg:text-[20px] md:text-[16px] text-[14px]">
-                          Lorem ipsum is placeholder
+                    )}
+                    {nextBerita && (
+                      <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 cursor-pointer" onClick={handleNextBerita}>
+                        <div className="text-end">
+                          <div className="text-gray-700 font-bold xl:text-[16px] lg:text-[16px] md:text-[12px] text-[12px]">
+                            Selanjutnya
+                          </div>
+                          <div className="text-black font-bold xl:text-[20px] lg:text-[20px] md:text-[16px] text-[14px]">
+                            {nextBerita.judul.substring(0, 50)}...
+                          </div>
                         </div>
                       </div>
-                      <div className="xl:w-[100px] lg:w-[100px] md:w-[100px] w-[30px] xl:h-[100px] lg:h-[100px] md:h-[100px] h-[30px] relative">
-                        <Image
-                          src="/berita-1.png"
-                          width={800}
-                          height={500}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -116,7 +134,7 @@ const DetailBerita = () => {
                 <div className="font-bold xl:text-[24px] lg:text-[24px] md:text-[24px] text-[20px] text-black mb-[25px] xl:text-start md:text-center">
                   Berita Terbaru
                 </div>
-                <div className="xl:flex-col xl:justify-normal lg:flex lg:justify-center md:flex md:justify-center">
+                <div className="xl:flex-col lg:flex-col md:flex xl:justify-normal lg:justify-normal md:justify-center justify-normal">
                   {topThreeBerita.map((items, index) => (
                     <div key={index} onClick={() => getBeritaWithID(items)} className="xl:flex-col lg:flex-col md:flex-col flex xl:w-[230px] lg:w-[230px] md:w-[140px] w-full xl:mx-0 xl:items-start lg:items-start md:items-start items-center lg:mx-[10px] md:mx-[10px] xl:my-[20px] lg:my-[20px] md:my-0 my-[20px] cursor-pointer">
                       <div className="xl:w-[230px] lg:w-[230px] md:w-[140px] w-[140px]">
