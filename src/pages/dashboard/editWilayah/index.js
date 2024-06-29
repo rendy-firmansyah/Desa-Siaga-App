@@ -148,7 +148,7 @@ const dataWilayah = () => {
                       {items.alamat}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap flex items-center">
-                      <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
+                      {/* <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
                         <svg
                           width="20px"
                           height="20px"
@@ -180,7 +180,7 @@ const dataWilayah = () => {
                             ></path>{" "}
                           </g>
                         </svg>
-                      </button>
+                      </button> */}
                       <button
                         onClick={() => visibleEdit(items)}
                         class="ml-2 px-3 py-3 bg-amber-400 rounded-md hover:bg-amber-200 focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out"

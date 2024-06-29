@@ -49,6 +49,12 @@ const dataWilayah = () => {
     );
   };
 
+  const handleDataDetailDesa = (item) => {
+    router.push(
+      `/dashboard/editWilayah/dataDesa/detailDesa?id=${encodeURIComponent(item)}`
+    );
+  };
+
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5;
   const offset = currentPage * itemsPerPage;
@@ -124,7 +130,7 @@ const dataWilayah = () => {
                       {item.alamat}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap flex items-center">
-                      <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
+                      <button onClick={() => handleDataDetailDesa(item.id)} class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
                         <svg
                           width="20px"
                           height="20px"

@@ -78,7 +78,7 @@ const DetailBerita = () => {
                         {items.judul}
                       </h3>
                       <p className="text-black text-sm font-normal leading-tight text-justify">
-                        {items.deskripsi}
+                        {items.deskripsi.substring(0, 500)}
                       </p>
                     </div>
                   </div>
@@ -86,7 +86,7 @@ const DetailBerita = () => {
                 <div className="xl:col-span-3 lg:col-span-3 md:col-span-12 col-span-12 flex justify-center items-center">
                   <div className="">
                     <div className="flex gap-x-2">
-                      <div className="w-15 h-15 p-2.5 bg-indigo-900 rounded border border-gray-200 flex justify-center items-center">
+                      <div className="w-15 h-15 p-2.5 bg-indigo-900 rounded border border-gray-200 flex justify-center items-center cursor-pointer">
                         <div
                           className="w-7 h-7 relative"
                           onClick={() => updateBerita(items)}
@@ -99,23 +99,13 @@ const DetailBerita = () => {
                           />
                         </div>
                       </div>
-                      <div className="w-15 h-15 p-2.5 bg-red-600 rounded border border-gray-200 flex justify-center items-center">
+                      <div className="w-15 h-15 p-2.5 bg-red-600 rounded border border-gray-200 flex justify-center items-center cursor-pointer">
                         <div
                           className="w-7 h-7 relative"
                           onClick={() => handleSimpan(items.id)}
                         >
                           <Image
                             src="/trash-bin-2-svgrepo-com.png"
-                            width={800}
-                            height={500}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      </div>
-                      <div className="w-15 h-15 p-2.5 bg-amber-500 rounded border border-gray-200 flex justify-center items-center">
-                        <div className="w-7 h-7 relative">
-                          <Image
-                            src="/pin-svgrepo-com.png"
                             width={800}
                             height={500}
                             className="w-full h-full object-cover"
