@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import bgKesimpulan from "../../../../../public/bg-2.jpg";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import nookies from "nookies";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -31,6 +33,63 @@ const Kesimpulan = () => {
   const handleBack = () => {
     Router.push("/dashboard");
   };
+
+  const router = useRouter();
+  const { id } = router.query;
+
+  const [data, setdata] = useState([]);
+  const [sesuai, setsesuai] = useState();
+  const [tidakSesuai, settidakSesuai] = useState();
+  const [datakategori, setdataKategori] = useState("");
+
+  const getData = async () => {
+    const res = await axios.get(`/api/pengkajian?id=${id}`);
+    // console.log(res.data);
+    setdata(res.data);
+  };
+
+  const totalSesuai = () => {
+    const value =
+      data.peraturanSesuai +
+      data.kapasitasSesuai +
+      data.peringatanSesuai +
+      data.mitigasiSesuai +
+      data.kesiapsiagaanSesuai;
+
+    console.log(value);
+    setsesuai(value);
+  };
+
+  const totalTidakSesuai = () => {
+    const nilai =
+      data.peraturanTidak +
+      data.kapasitasTidak +
+      data.peringatanTidak +
+      data.mitigasiTidak +
+      data.kesiapsiagaanTidak;
+    console.log(nilai);
+    settidakSesuai(nilai);
+  };
+
+  const kondisionalDesa = () => {
+    if (data.persentase < 33) {
+      const kategori = "RENDAH";
+      setdataKategori(kategori);
+    } else if (data.persentase > 33 && data.persentase < 66) {
+      const kategori = "SEDANG";
+      setdataKategori(kategori);
+    } else if (data.persentase > 66 && data.persentase <= 100) {
+      const kategori = "TINGGI";
+      setdataKategori(kategori);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+    totalSesuai();
+    totalTidakSesuai();
+    kondisionalDesa();
+  }, [data, datakategori]);
 
   return (
     <section className="container-fluid h-full relative">
@@ -72,8 +131,14 @@ const Kesimpulan = () => {
                     Kebijakan/Peraturan
                   </td>
                   <td className="text-black px-6 py-4 whitespace-nowrap">8</td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
+                  {/* Sesuai */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.peraturanSesuai}
+                  </td>
+                  {/* Tidak */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.peraturanTidak}
+                  </td>
                 </tr>
                 <tr>
                   <td className="text-black px-6 py-4 whitespace-nowrap">2</td>
@@ -81,8 +146,14 @@ const Kesimpulan = () => {
                     Penguatan Kapasitas
                   </td>
                   <td className="text-black px-6 py-4 whitespace-nowrap">8</td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
+                  {/* Sesuai */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.kapasitasSesuai}
+                  </td>
+                  {/* Tidak */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.kapasitasTidak}
+                  </td>
                 </tr>
                 <tr>
                   <td className="text-black px-6 py-4 whitespace-nowrap">3</td>
@@ -90,8 +161,14 @@ const Kesimpulan = () => {
                     Peringatan Dini
                   </td>
                   <td className="text-black px-6 py-4 whitespace-nowrap">2</td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
+                  {/* Sesuai */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.peringatanSesuai}
+                  </td>
+                  {/* Tidak */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.peringatanTidak}
+                  </td>
                 </tr>
                 <tr>
                   <td className="text-black px-6 py-4 whitespace-nowrap">4</td>
@@ -99,8 +176,14 @@ const Kesimpulan = () => {
                     Mitigasi
                   </td>
                   <td className="text-black px-6 py-4 whitespace-nowrap">11</td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
+                  {/* Sesuai */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.mitigasiSesuai}
+                  </td>
+                  {/* Tidak */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.mitigasiTidak}
+                  </td>
                 </tr>
                 <tr>
                   <td className="text-black px-6 py-4 whitespace-nowrap">5</td>
@@ -108,8 +191,14 @@ const Kesimpulan = () => {
                     Kesiapsiagaan
                   </td>
                   <td className="text-black px-6 py-4 whitespace-nowrap">14</td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
+                  {/* Sesuai */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.kesiapsiagaanSesuai}
+                  </td>
+                  {/* Tidak */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.kesiapsiagaanTidak}
+                  </td>
                 </tr>
                 <tr>
                   <td
@@ -119,8 +208,14 @@ const Kesimpulan = () => {
                     Total Pencapaian
                   </td>
                   <td className="text-black px-6 py-4 whitespace-nowrap">43</td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
+                  {/* Total Sesuai */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {sesuai}
+                  </td>
+                  {/* Total tidak sesuai */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {tidakSesuai}
+                  </td>
                 </tr>
                 <tr>
                   <td
@@ -132,7 +227,11 @@ const Kesimpulan = () => {
                   <td className="text-black px-6 py-4 whitespace-nowrap">
                     100%
                   </td>
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
+                  {/* Persentase Sesuai */}
+                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                    {data.persentase}%
+                  </td>
+                  {/* Persentase Tidak Sesuai */}
                   <td className="text-black px-6 py-4 whitespace-nowrap"></td>
                 </tr>
               </tbody>
@@ -140,6 +239,7 @@ const Kesimpulan = () => {
           </div>
           <div className="my-[20px]">
             <div className="text-black font-bold text-[28px]">KETERANGAN :</div>
+            {/*  */}
             <div className="my-[10px]">
               <div className="text-black font-semibold text-[16px] mb-[10px]">
                 Pengkategorian Tingkat kapasitas Desa adalah sebagai berikut:
@@ -157,6 +257,12 @@ const Kesimpulan = () => {
                 67% - 100% dari seluruh indicator
               </div>
             </div>
+          </div>
+          <div className="border bg-white p-3 rounded-md shadow-md">
+            <h1 className="text-primary-default font-bold text-center">
+              Desa anda memasuki pengkategorian tingkat kapasitas desa
+              <span className="text-primary-dark"> "{datakategori}"</span>
+            </h1>
           </div>
         </div>
 
