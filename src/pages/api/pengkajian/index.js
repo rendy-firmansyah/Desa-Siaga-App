@@ -67,6 +67,29 @@ export default async function pengkajianHandler(req, res) {
     })
 
     const persentase = ((Peraturan?.total || 0) + (kapasitas?.total || 0) + (peringatanDini?.total || 0) + (mitigasi?.total || 0) + (kesiapSiagaan?.total || 0))
-    return res.status(200).json({persentase})
+    const sesuaiKebijakan = Peraturan?.total/2.33
+    const tidakKebijakan = 8 - sesuaiKebijakan
+    const sesuaiKapasitas = kapasitas?.total/2.33
+    const tidakKapasitas = 8 - sesuaiKapasitas
+    const sesuaiPeringatan = peringatanDini?.total/2.33
+    const tidakPeringatan = 2 - sesuaiPeringatan
+    const sesuaiMitigasi = mitigasi?.total/2.33
+    const tidakMitigasi = 11 - sesuaiMitigasi
+    const sesuaiKesiapsiagaan = kesiapSiagaan?.total/2.33
+    const tidakKesiapsiagaan = 14 - Math.ceil(sesuaiKesiapsiagaan)
+    const data = {
+        persentase : persentase,
+        peraturanSesuai : sesuaiKebijakan,
+        peraturanTidak : tidakKebijakan,
+        kapasitasSesuai : sesuaiKapasitas,
+        kapasitasTidak : tidakKapasitas,
+        peringatanSesuai : sesuaiPeringatan,
+        peringatanTidak : tidakPeringatan,
+        mitigasiSesuai : sesuaiMitigasi,
+        mitigasiTidak : tidakMitigasi,
+        kesiapsiagaanSesuai : Math.ceil(sesuaiKesiapsiagaan),
+        kesiapsiagaanTidak : Math.ceil(tidakKesiapsiagaan)
+    }
+    return res.status(200).json(data)
   }
 }

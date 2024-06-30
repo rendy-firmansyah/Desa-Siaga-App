@@ -37,13 +37,13 @@ export default async function aksesDanKeadaanlHandler(req, res) {
     try {
         const find = await prisma.aksesDanKeadaan.findFirst({
             where : {
-                pelaporan_id : pelaporan_id
+                pelaporan_id : parseInt(pelaporan_id)
             }
         })
         if(find){
             const update = await prisma.aksesDanKeadaan.update({
                 where : {
-                    pelaporan_id : pelaporan_id
+                    pelaporan_id : parseInt(pelaporan_id)
                 },
                 data : {
                     mudahDiakses,
