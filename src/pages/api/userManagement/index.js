@@ -48,7 +48,7 @@ export default async function UserHandler(req,res){
                     email,
                     password : hashPassword,
                     username,
-                    desa_id,
+                    desa_id : parseInt(desa_id),
                     role
                 }
             })
