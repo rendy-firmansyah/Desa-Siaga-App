@@ -31,7 +31,7 @@ export default async function UserHandler(req,res){
     }
     // create user method 
     if(req.method === 'PUT'){
-        const {email,password,username,role} = req.body;
+        const {email,password,username,role,desa_id} = req.body;
 
         if(!email || !password || !username || !role){
             return res.status(400).json({message: "Data tidak Lengkap!"})
@@ -47,6 +47,7 @@ export default async function UserHandler(req,res){
                     email,
                     password : hashPassword,
                     username,
+                    desa_id,
                     role
                 }
             })
@@ -59,6 +60,39 @@ export default async function UserHandler(req,res){
     if (req.method === "GET") {
         try {
             const data = await prisma.user.findMany({})
+            return res.status(200).json(data)
+        } catch (error) {
+            return res.status(500).json({message: "Server error!"})
+        }
+    }
+    if (req.method === "DELETE") {
+        try {
+            const id = req.query.id
+            const data = await prisma.user.delete({
+                where:{
+                    id : parseInt(id)
+                }
+            })
+            return res.status(200).json(data)
+        } catch (error) {
+            return res.status(500).json({message: "Server error!"})
+        }
+    }
+    if(req.method === "PATCH"){
+        const id = req.query.id
+        const {username,role,password} = req.body
+        try {
+            const hashPassword = await hash(password,10)
+            const data = await prisma.user.update({
+                where:{
+                    id : parseInt(id)
+                },
+                data:{
+                    username,
+                    password : hashPassword,
+                    role
+                }
+            })
             return res.status(200).json(data)
         } catch (error) {
             return res.status(500).json({message: "Server error!"})
