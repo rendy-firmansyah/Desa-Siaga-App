@@ -55,6 +55,7 @@ const Login = () => {
       });
       //save token login in browser
       nookies.set(null,'role',send.data.user)
+      nookies.set(null,'desa_id',send.data.desa_id)
       //redirect to dashboard
       router.push('/dashboard')
     }

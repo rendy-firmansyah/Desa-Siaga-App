@@ -19,6 +19,8 @@ model user {
   password  String
   username  String
   role      String?
+  desa_id   Int?
+  desa      desa? @relation(fields: [desa_id],references: [id])
 }
 model kecamatan{
   id        Int  @id @default(autoincrement())
@@ -48,6 +50,7 @@ model desa {
   berita              berita[]
   pelaporanAwal       pelaporanAwal[]
   pengkajian          pengkajian[]
+  user                user[]
 }
 model berita{
   id                  Int @id@default(autoincrement())

@@ -29,7 +29,7 @@ export default async function peringatanDIniHandler(req, res) {
 
         return res
           .status(200)
-          .json({ message: "Berhasil Mengupdate data Penguatan Kapasitas", status: "success" });
+          .json({ message: "Berhasil Mengupdate data Peringatan Dini", status: "success" });
       }
 
       const peringatanDini = await prisma.peringatanDini.create({
@@ -42,7 +42,7 @@ export default async function peringatanDIniHandler(req, res) {
       });
 
       return res.status(200).json({
-        message: "Berhasil Menambahkan data Penguatan Kapasitas",
+        message: "Berhasil Menambahkan data Peringatan Dini",
         status: "success",
       });
     } catch (error) {
