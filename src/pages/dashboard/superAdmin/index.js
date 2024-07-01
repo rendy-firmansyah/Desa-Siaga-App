@@ -24,11 +24,13 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {},
+    props: {
+      role: cookies.role,
+    },
   };
 }
 
-const Dashboard = () => {
+const Dashboard = ({role}) => {
 
   const logout = () => {
     nookies.destroy(null, "role");
@@ -62,7 +64,7 @@ const Dashboard = () => {
       {/* --- */}
       <div className="bg-gray-100 mx-10 md:mx-20 lg:mx-80 xl:mx-80 py-10 rounded-2xl shadow-xl">
         <h1 className="text-black text-3xl font-bold tracking-normal text-center">
-          Selamat Datang, Relawan Desa
+          Selamat Datang, {role}
         </h1>
         <div class="flex justify-center mt-5">
 

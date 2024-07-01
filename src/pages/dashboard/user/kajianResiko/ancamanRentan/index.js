@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgAncaman from "../../../../../public/bg-2.jpg";
+import bgAncaman from "../../../../../../public/bg-2.jpg";
 import Router, { useRouter } from "next/router";
 import nookies from "nookies";
 import axios from "axios";
@@ -27,11 +27,13 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {},
+    props: {
+      desaId: cookies.desa_id || null
+    },
   };
 }
 
-const AncamanRentan = () => {
+const AncamanRentan = ({desaId}) => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -46,7 +48,7 @@ const AncamanRentan = () => {
     const res = await axios.post("/api/pengkajian", {
       jenis_ancaman: Ancaman,
       riwayat: Riwayat,
-      desa_id: id,
+      desa_id: desaId,
     });
     if (res.data.status === "success") {
       toast(`✅ ${res.data.message}`, {
@@ -60,9 +62,9 @@ const AncamanRentan = () => {
       });
       setTimeout(() => {
         router.push(
-          `/dashboard/kajianResiko/kebijakanPeraturan?id=${encodeURIComponent(
+          `/dashboard/user/kajianResiko/kebijakanPeraturan?id=${encodeURIComponent(
             res.data.pengkajian_id
-          )}`
+          )}&desa_id=${encodeURIComponent(desaId)}`
         );
       }, 3000);
     } else {

@@ -26,11 +26,12 @@ const DataStatistik = () => {
 
   console.log(data)
 
-  const filterdata = search
-  ? data.filter(items=>
-      items.nama.includes(search)
-      )
-  : data 
+  const filterdata = data.filter((items) => {
+    const searchTerm = search.toLowerCase();
+    const kecamatanMatch = items.nama.toLowerCase().includes(searchTerm);
+    const desaMatch = items.desa.some((desaItem) => desaItem.nama.toLowerCase().includes(searchTerm));
+    return kecamatanMatch || desaMatch;
+  });
 
   const detailDesa = (data) => {
     if(data !== undefined) {

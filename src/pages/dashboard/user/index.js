@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgDashboard from "../../../public/bg-2.jpg";
-import menu1 from "../../../public/menu1.png";
-import menu2 from "../../../public/menu2.png";
-import menu3 from "../../../public/menu3.png";
-import menu4 from "../../../public/menu4.png";
+import bgDashboard from "../../../../public/bg-2.jpg";
+import menu1 from "../../../../public/menu1.png";
+import menu2 from "../../../../public/menu2.png";
+import menu3 from "../../../../public/menu3.png";
+import menu4 from "../../../../public/menu4.png";
 import nookies from "nookies";
 import Router from "next/router";
 
@@ -27,14 +27,26 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {},
+    props: {
+      role: cookies.role,
+      desaId: cookies.desa_id || null,
+    },
   };
 }
 
-const Dashboard = () => {
+const Dashboard = ({role, desaId}) => {
   const logout = () => {
     nookies.destroy(null, "role");
+    nookies.destroy(null, "desa_id");
     Router.push("/");
+  };
+
+  const handleKajianResikoClick = () => {
+    if (role === "relawan") {
+      Router.push("/dashboard/user/kajianResiko");
+    } else if (role === "desa" && desaId) {
+      Router.push(`/dashboard/user/kajianResiko/ancamanRentan?desa_id=${desaId}`);
+    }
   };
 
   return (
@@ -63,25 +75,23 @@ const Dashboard = () => {
       {/* --- */}
       <div className="bg-gray-100 mx-10 md:mx-20 lg:mx-48 xl:mx-48 py-10 rounded-2xl shadow-xl">
         <h1 className="text-black text-3xl font-bold tracking-normal text-center">
-          Selamat Datang, Relawan Desa
+          Selamat Datang, {role}
         </h1>
         <div class="flex flex-wrap justify-center mt-5">
-          <Link href="/dashboard/kajianResiko">
-            <div class="p-4 max-w-sm">
-              <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
-                <div class="flex items-center">
-                  <Image src={menu1} width={64} height={80} />
-                </div>
+          <div class="p-4 max-w-sm cursor-pointer" onClick={handleKajianResikoClick}>
+            <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
+              <div class="flex items-center">
+                <Image src={menu1} width={64} height={80} />
               </div>
-              <h4 class="text-black text-md font-medium text-center">
-                Form Pengkajian
-                <br />
-                Risiko Bencana
-              </h4>
             </div>
-          </Link>
+            <h4 class="text-black text-md font-medium text-center">
+              Form Pengkajian
+              <br />
+              Risiko Bencana
+            </h4>
+          </div>
 
-          <Link href="/dashboard/pelaporanBencana">
+          <Link href="/dashboard/user/pelaporanBencana">
             <div class="p-4 max-w-sm">
               <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
                 <div class="flex items-center">
@@ -96,7 +106,7 @@ const Dashboard = () => {
             </div>
           </Link>
 
-          <Link href="/dashboard/tulisBerita">
+          <Link href="/dashboard/user/tulisBerita">
             <div class="p-4 max-w-sm">
               <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
                 <div class="flex items-center">
@@ -111,7 +121,7 @@ const Dashboard = () => {
             </div>
           </Link>
 
-          <Link href="/dashboard/editWilayah">
+          {/* <Link href="/dashboard/editWilayah">
             <div class="p-4 max-w-sm">
               <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
                 <div class="flex items-center">
@@ -124,7 +134,7 @@ const Dashboard = () => {
                 Wilayah
               </h4>
             </div>
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="flex justify-center mt-5 pb-10">

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import bgDashboard from "../../../../public/bg-2.jpg";
+import bgDashboard from "../../../../../public/bg-2.jpg";
 import Router from "next/router";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -40,7 +40,7 @@ const KajianResiko = () => {
 
   const kuisioner = () => {
     router.push(
-      `/dashboard/kajianResiko/ancamanRentan?id=${encodeURIComponent(
+      `/dashboard/user/kajianResiko/ancamanRentan?id=${encodeURIComponent(
         selectedDesa
       )}`
     );
