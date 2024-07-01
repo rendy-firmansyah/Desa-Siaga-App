@@ -74,14 +74,13 @@ export default async function UserHandler(req,res){
                     id : parseInt(id)
                 }
             })
-            return res.status(200).json(data)
+            return res.status(200).json({message:"Delete Akun Sukses", status:"success"})
         } catch (error) {
             return res.status(500).json({message: "Server error!"})
         }
     }
     if(req.method === "PATCH"){
-        const id = req.query.id
-        const {username,role,password} = req.body
+        const {id,username,email,role,password} = req.body
         try {
             const hashPassword = await hash(password,10)
             const data = await prisma.user.update({
@@ -90,11 +89,12 @@ export default async function UserHandler(req,res){
                 },
                 data:{
                     username,
-                    password : hashPassword,
+                    email,
+                    // password : hashPassword,
                     role
                 }
             })
-            return res.status(200).json(data)
+            return res.status(200).json({message:"Update Akun Sukses", status:"success"})
         } catch (error) {
             return res.status(500).json({message: "Server error!"})
         }

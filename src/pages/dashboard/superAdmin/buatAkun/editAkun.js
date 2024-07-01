@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddAkun = ({ isShow, onClose, onSuccess }) => {
+const EditAkun = ({ isShow, onClose, onSuccess, akun }) => {
   if (!isShow) return null;
 
   const [email, setEmail] = useState("");
@@ -15,34 +15,22 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("");
 
-  const [selectedKec, setSelectedKec] = useState("");
-  const [selectedDesa, setSelectedDesa] = useState("");
-  const [dataKecamatan, setDataKec] = useState([]);
-  const [dataDesa, setDataDesa] = useState([]);
-
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("/api/Kecamatan");
-      setDataKec(response.data);
-    };
-    fetchData();
-  }, []);
+    if (akun) {
+      setEmail(akun.email);
+      setUsername(akun.username);
+      setRole(akun.role);
+    }
+  }, [akun]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(`/api/desa?id=${selectedKec}`);
-      setDataDesa(response.data);
-    };
-    fetchData();
-  }, [selectedKec]);
-
-  const addAkun = async () => {
-    const res = await axios.put("/api/userManagement", {
+  const editAkun = async () => {
+    console.log(akun.id)
+    const res = await axios.patch('/api/userManagement', {
+      id:akun.id,
       email,
       password,
       username,
       role,
-      desa_id: selectedDesa,
     });
 
     console.log(res.data);
@@ -80,10 +68,10 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
           <div className="flex">
             <div className="">
               <h2 className="font-semibold text-gray-800">
-                Tambah Akun
+                Edit Akun
               </h2>
               <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                Isi form untuk menambah data akun
+                Perbarui form untuk mengedit data akun
               </p>
             </div>
           </div>
@@ -98,6 +86,7 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                   className="border rounded p-2 mt-1 text-black"
                   type="text"
                   placeholder="ex: fulan"
+                  value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
                 />
@@ -105,6 +94,7 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                 <select
                   className="border rounded p-2 mt-1 text-black "
                   required
+                  value={role}
                   onChange={(e) => setRole(e.target.value)}
                 >
                   <option value="">Pilih Role</option>
@@ -112,22 +102,6 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                     <option value="desa">Desa</option>
                     <option value="relawan">Relawan</option>
                 </select>
-                {(role === "desa" || role === 'relawan') && (
-                  <>
-                    <label className="text-gray-600 mt-2">
-                    Pilih Kecamatan
-                    </label>
-                    <select
-                      className="border rounded p-2 mt-1 text-black "
-                      onChange={(e) => setSelectedKec(e.target.value)}
-                    >
-                      <option>Pilih......</option>
-                      {dataKecamatan.map((kec) => (
-                        <option value={kec.id}>{kec.nama}</option>
-                      ))}
-                    </select>
-                  </>
-                )}
               </div>
               <div className="flex flex-col">
                 <label className="text-gray-600 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
@@ -136,6 +110,7 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                 <input
                   className="border rounded p-2 mt-1 text-black"
                   type="text"
+                  value={email}
                   placeholder="ex: email@gmail.com"
                   required
                   onChange={(e) => setEmail(e.target.value)}
@@ -150,25 +125,6 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                {(role === "desa" || role === 'relawan') && (
-                  <>
-                    <label className="text-gray-600 mt-2">
-                    Pilih Desa
-                    </label>
-                    <select
-                      disabled={!selectedKec ? "disabled" : ""}
-                      className="border rounded p-2 mt-1 text-black "
-                      onChange={(e) => setSelectedDesa(e.target.value)}
-                    >
-                      <option value="Pilih......">Pilih......</option>
-                      {dataDesa
-                        ? dataDesa.map((desa) => (
-                            <option value={desa.id}>{desa.nama}</option>
-                          ))
-                        : null}
-                    </select>
-                  </>
-                )}
               </div>
             </div>
           </div>
@@ -182,7 +138,7 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
             </button>
 
             <button
-              onClick={(e) => addAkun()}
+              onClick={(e) => editAkun()}
               className="px-4 py-2 ml-2 bg-secondary-default hover:bg-secondary-light text-white text-sm font-medium rounded-md"
             >
               Save
@@ -194,4 +150,4 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
   );
 };
 
-export default AddAkun;
+export default EditAkun;
