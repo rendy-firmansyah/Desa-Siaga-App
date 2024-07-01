@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import bgSuperAdmin from "../../../../public/bg-2.jpg";
+import menu4 from "../../../../public/menu4.png";
 import nookies from "nookies";
 import Router from "next/router";
 
@@ -14,7 +15,7 @@ export async function getServerSideProps(ctx) {
         destination: "/",
       },
     };
-  } else if (cookies.role == "user") {
+  } else if (cookies.role == "desa" || cookies.role == "relawan") {
     return {
       redirect: {
         destination: "/dashboard",
@@ -64,6 +65,7 @@ const Dashboard = () => {
           Selamat Datang, Relawan Desa
         </h1>
         <div class="flex justify-center mt-5">
+
           <Link href="/dashboard/superAdmin/buatAkun">
             <div class="p-4 max-w-sm">
               <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
@@ -76,6 +78,22 @@ const Dashboard = () => {
               </h4>
             </div>
           </Link>
+          
+          <Link href="/dashboard/superAdmin/editWilayah">
+            <div class="p-4 max-w-sm">
+              <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
+                <div class="flex items-center">
+                  <Image src={menu4} width={76} height={80} />
+                </div>
+              </div>
+              <h4 class="text-black text-md font-medium text-center">
+                Edit Data
+                <br />
+                Wilayah
+              </h4>
+            </div>
+          </Link>
+
         </div>
       </div>
       <div className="flex justify-center mt-5 pb-10">
