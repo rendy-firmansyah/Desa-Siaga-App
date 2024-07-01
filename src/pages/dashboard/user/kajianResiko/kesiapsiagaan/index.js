@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import Konfirm from "./konfirmasi";
-import bgKesiapsiagaan from "../../../../../public/bg-2.jpg";
+import bgKesiapsiagaan from "../../../../../../public/bg-2.jpg";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 import nookies from "nookies";
@@ -98,7 +98,7 @@ const Kesiapsiagaan = () => {
       });
       setTimeout(() => {
         router.push(
-          `/dashboard/kajianResiko/kesimpulan?id=${encodeURIComponent(id)}`
+          `/dashboard/user/kajianResiko/kesimpulan?id=${encodeURIComponent(id)}`
         );
       }, 3000);
     } else {

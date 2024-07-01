@@ -32,7 +32,7 @@ const DetailBerita = () => {
   const router = useRouter();
   const updateBerita = (data) => {
     router.push(
-      `/dashboard/tulisBerita/updateBerita?id=${encodeURIComponent(data.id)}`
+      `/dashboard/user/tulisBerita/updateBerita?id=${encodeURIComponent(data.id)}`
     );
   };
 
@@ -48,7 +48,7 @@ const DetailBerita = () => {
           </h1>
         </div>
 
-        <Link href="/dashboard/tulisBerita/addBerita">
+        <Link href="/dashboard/user/tulisBerita/addBerita">
           <div className="mt-6 flex justify-center">
             <div className="bg-indigo-900 rounded-lg p-1 text-center w-screen">
               <h2 className="text-white text-2xl font-extrabold font-['Inter'] leading-10">

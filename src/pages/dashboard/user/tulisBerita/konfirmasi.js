@@ -65,7 +65,7 @@ const Konfirmasi = ({ onClose,id, onDeleteSuccess }) => {
                     onClick={() => handleDelete(id)}
                     className="bg-secondary-default text-white px-4 py-2 rounded"
                 >
-                    Simpan
+                    Hapus
                 </button>
             </div>
         </div>

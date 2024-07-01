@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
-import bgPeringatan from "../../../../../public/bg-2.jpg";
+import bgPeringatan from "../../../../../../public/bg-2.jpg";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 import nookies from "nookies";
@@ -60,7 +60,7 @@ const PeringatanDini = () => {
       });
       setTimeout(() => {
         router.push(
-          `/dashboard/kajianResiko/mitigasi?id=${encodeURIComponent(id)}`
+          `/dashboard/user/kajianResiko/mitigasi?id=${encodeURIComponent(id)}`
         );
       }, 3000);
     } else {

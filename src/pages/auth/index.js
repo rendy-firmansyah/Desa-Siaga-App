@@ -17,10 +17,10 @@ export async function getServerSideProps(ctx){
           }
         }
     }
-    else if(cookies.role === 'user'){
+    else if(cookies.role === 'desa' || cookies.role === 'relawan'){
         return{
           redirect:{
-            destination : '/dashboard'
+            destination : '/dashboard/user'
           }
         }
     }
@@ -57,7 +57,7 @@ const Login = () => {
       nookies.set(null,'role',send.data.user)
       nookies.set(null,'desa_id',send.data.desa_id)
       //redirect to dashboard
-      router.push('/dashboard')
+      router.push('/dashboard/user')
     }
     else{
       //notification

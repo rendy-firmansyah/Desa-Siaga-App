@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
-import bgPenguatan from "../../../../../public/bg-2.jpg";
+import bgPenguatan from "../../../../../../public/bg-2.jpg";
 import Router, { useRouter } from "next/router";
 import axios from "axios";
 import nookies from "nookies";
@@ -72,7 +72,7 @@ const PenguatanKapasitas = () => {
       });
       setTimeout(() => {
         router.push(
-          `/dashboard/kajianResiko/peringatanDini?id=${encodeURIComponent(id)}`
+          `/dashboard/user/kajianResiko/peringatanDini?id=${encodeURIComponent(id)}`
         );
       }, 3000);
     } else {

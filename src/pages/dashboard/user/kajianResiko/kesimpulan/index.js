@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgKesimpulan from "../../../../../public/bg-2.jpg";
+import bgKesimpulan from "../../../../../../public/bg-2.jpg";
 import Router, { useRouter } from "next/router";
 import nookies from "nookies";
 import axios from "axios";
@@ -31,7 +31,7 @@ export async function getServerSideProps(ctx) {
 
 const Kesimpulan = () => {
   const handleBack = () => {
-    Router.push("/dashboard");
+    Router.push("/dashboard/user");
   };
 
   const router = useRouter();

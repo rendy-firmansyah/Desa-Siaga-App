@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
-import bgKebijakan from "../../../../../public/bg-2.jpg";
+import bgMitigasi from "../../../../../../public/bg-2.jpg";
 import Router, { useRouter } from "next/router";
-import nookies from "nookies";
 import axios from "axios";
+import nookies from "nookies";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -31,7 +31,7 @@ export async function getServerSideProps(ctx) {
   };
 }
 
-const KebijakanPeraturan = () => {
+const Mitigasi = () => {
   const [a, setA] = useState();
   const [b, setB] = useState();
   const [c, setC] = useState();
@@ -40,16 +40,22 @@ const KebijakanPeraturan = () => {
   const [f, setF] = useState();
   const [g, setG] = useState();
   const [h, setH] = useState();
+  const [i, setI] = useState();
+  const [j, setJ] = useState();
+  const [k, setK] = useState();
 
   const handleBack = () => {
     Router.back();
   };
+  // const nextKuisioner = () => {
+  //     Router.push('/dashboard/kajianResiko/kesiapsiagaan');
+  //   };
 
   const router = useRouter();
   const { id } = router.query;
 
   const postData = async () => {
-    const res = await axios.post("/api/pengkajian/kebijakan-peraturan", {
+    const res = await axios.post("/api/pengkajian/mitigasi", {
       a: a,
       b: b,
       c: c,
@@ -58,6 +64,9 @@ const KebijakanPeraturan = () => {
       f: f,
       g: g,
       h: h,
+      i: i,
+      j: j,
+      k: k,
       pengkajian_id: id,
     });
     if (res.data.status === "success") {
@@ -72,9 +81,7 @@ const KebijakanPeraturan = () => {
       });
       setTimeout(() => {
         router.push(
-          `/dashboard/kajianResiko/penguatanKapasitas?id=${encodeURIComponent(
-            id
-          )}`
+          `/dashboard/user/kajianResiko/kesiapsiagaan?id=${encodeURIComponent(id)}`
         );
       }, 3000);
     } else {
@@ -94,16 +101,14 @@ const KebijakanPeraturan = () => {
     <section className="container-fluid h-full relative">
       <ToastContainer />
       <div className="absolute -z-10 inset-0">
-        <Image src={bgKebijakan} alt="bg-image" className="h-full" />
+        <Image src={bgMitigasi} alt="bg-image" className="h-full" />
       </div>
       <div className="flex flex-col justify-center items-center xl:mx-[151px] lg:mx-[121px] md:mx-[80px] mx-[20px]">
         <div className="text-black font-bold xl:text-[32px] lg:text-[32px] md:text-[28px] text-[24px] text-center mt-[60px]">
           Kuisioner Kajian Resiko Bencana/Krisis Kesehatan
         </div>
         <div className="w-full bg-white xl:px-[50px] lg:px-[35px] md:px-[25px] px-[15px] xl:py-[50px] lg:py-[35px] md:py-[25px] py-[15px] shadow-lg mt-[35px]">
-          <div className="text-black font-semibold text-[16px]">
-            Kebijakan/Peraturan
-          </div>
+          <div className="text-black font-semibold text-[16px]">Mitigasi</div>
           <div className="my-[20px] w-full h-[50px] rounded bg-input-default border border-primary-default" />
 
           {/* Pertanyaan Start */}
@@ -113,19 +118,19 @@ const KebijakanPeraturan = () => {
               <div>
                 <div className="mb-[16px]">
                   <div className="text-black font-semibold text-[16px] my-[10px]">
-                    a. Peraturan pemerintah desa terkait penanggulangan
-                    bencana/krisis kesehatan
+                    a. Fasilitas kepada Masyarakat dalam rangka pemberdayaan
+                    penanggulangan bencana/krisis kesehatan
                   </div>
                   <div className="flex items-center gap-x-2">
                     <input
                       type="radio"
                       id="ada"
                       value={true}
-                      name="peraturan_desa"
+                      name="fasilitas_pemberdaya"
                       onChange={(e) => setA(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
-                      Ada
+                      Melakukan
                     </label>
                   </div>
                   <div className="flex items-center gap-x-2">
@@ -133,26 +138,113 @@ const KebijakanPeraturan = () => {
                       type="radio"
                       id="tidak"
                       value={false}
-                      name="peraturan_desa"
+                      name="fasilitas_pemberdaya"
                       onChange={(e) => setA(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
-                      Tidak Ada
+                      Tidak Melakukan
                     </label>
                   </div>
                 </div>
                 <div className="mb-[16px]">
                   <div className="text-black font-semibold text-[16px] my-[10px]">
-                    b. Peraturan pemerintah desa terkait penanggulangan
-                    bencana/krisis kesehatan
+                    b. Peta/pemetaan kapasitas sumber daya yang dapat digunakan
+                    untuk penanggulangan bencana/krisis kesehatan
                   </div>
                   <div className="flex items-center gap-x-2">
                     <input
                       type="radio"
                       id="ada"
                       value={true}
-                      name="penanggulangan"
+                      name="peta_kapasitas"
                       onChange={(e) => setB(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Memiliki
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <input
+                      type="radio"
+                      id="tidak"
+                      value={false}
+                      name="peta_kapasitas"
+                      onChange={(e) => setB(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tidak Memiliki
+                    </label>
+                  </div>
+                </div>
+                <div className="mb-[16px]">
+                  <div className="text-black font-semibold text-[16px] my-[10px]">
+                    c. Peta/pemetaan kelompok rentan per dusun
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <input
+                      type="radio"
+                      id="ada"
+                      value={true}
+                      name="peta_rentan"
+                      onChange={(e) => setC(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Memiliki
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <input
+                      type="radio"
+                      id="tidak"
+                      value={false}
+                      name="peta_rentan"
+                      onChange={(e) => setC(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tidak Memiliki
+                    </label>
+                  </div>
+                </div>
+                <div className="mb-[16px]">
+                  <div className="text-black font-semibold text-[16px] my-[10px]">
+                    d. Peta/pemetaan jenis bencana per dusun
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <input
+                      type="radio"
+                      id="ada"
+                      value={true}
+                      name="peta_bencana"
+                      onChange={(e) => setD(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Memiliki
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <input
+                      type="radio"
+                      id="tidak"
+                      value={false}
+                      name="peta_bencana"
+                      onChange={(e) => setD(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tidak Memiliki
+                    </label>
+                  </div>
+                </div>
+                <div className="mb-[16px]">
+                  <div className="text-black font-semibold text-[16px] my-[10px]">
+                    e. Peta arah evakuasi
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <input
+                      type="radio"
+                      id="ada"
+                      value={true}
+                      name="peta_arah"
+                      onChange={(e) => setE(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Ada
@@ -163,8 +255,8 @@ const KebijakanPeraturan = () => {
                       type="radio"
                       id="tidak"
                       value={false}
-                      name="penanggulangan"
-                      onChange={(e) => setB(e.target.value)}
+                      name="peta_arah"
+                      onChange={(e) => setE(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tidak Ada
@@ -173,16 +265,15 @@ const KebijakanPeraturan = () => {
                 </div>
                 <div className="mb-[16px]">
                   <div className="text-black font-semibold text-[16px] my-[10px]">
-                    c. Tersedia/SOP mekanisme koordinasi terkait tim tanggap
-                    bencana
+                    f. Petunjuk jalur evakuasi
                   </div>
                   <div className="flex items-center gap-x-2">
                     <input
                       type="radio"
                       id="ada"
                       value={true}
-                      name="tersedia_sop"
-                      onChange={(e) => setC(e.target.value)}
+                      name="petunjuk_jalur"
+                      onChange={(e) => setF(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Ada
@@ -193,53 +284,11 @@ const KebijakanPeraturan = () => {
                       type="radio"
                       id="tidak"
                       value={false}
-                      name="tersedia_sop"
-                      onChange={(e) => setC(e.target.value)}
+                      name="petunjuk_jalur"
+                      onChange={(e) => setF(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tidak Ada
-                    </label>
-                  </div>
-                </div>
-                <div className="mb-[16px]">
-                  <div className="text-black font-semibold text-[16px] my-[10px]">
-                    d. Pelaksanaan pertemuan koordinasi klaster kesehatan dan
-                    tanggap bencana
-                  </div>
-                  <div className="flex items-center gap-x-2">
-                    <input
-                      type="radio"
-                      id="ada"
-                      value={true}
-                      name="pertemuan"
-                      onChange={(e) => setD(e.target.value)}
-                    />
-                    <label className="text-black font-semibold text-[16px]">
-                      Rutin, walau tidak terjadi bencana
-                    </label>
-                  </div>
-                  <div className="flex items-center gap-x-2">
-                    <input
-                      type="radio"
-                      id="ada"
-                      value={true}
-                      name="pertemuan"
-                      onChange={(e) => setD(e.target.value)}
-                    />
-                    <label className="text-black font-semibold text-[16px]">
-                      Sewaktu-waktu bila ada kejadian bencana/krisis Kesehatan
-                    </label>
-                  </div>
-                  <div className="flex items-center gap-x-2">
-                    <input
-                      type="radio"
-                      id="tidak"
-                      value={false}
-                      name="pertemuan"
-                      onChange={(e) => setD(e.target.value)}
-                    />
-                    <label className="text-black font-semibold text-[16px]">
-                      Tidak Pernah
                     </label>
                   </div>
                 </div>
@@ -249,16 +298,16 @@ const KebijakanPeraturan = () => {
               <div>
                 <div className="mb-[16px]">
                   <div className="text-black font-semibold text-[16px] my-[10px]">
-                    e. Unit di desa yang yang memiliki tugas mengkoordinasikan
-                    upaya penanggulangan bencana/krisis kesehatan
+                    g. Desa mengalokasikan anggaran dana untuk penanggulangan
+                    bencana/risiko kesehatan
                   </div>
                   <div className="flex items-center gap-x-2">
                     <input
                       type="radio"
                       id="ada"
                       value={true}
-                      name="unit_desa"
-                      onChange={(e) => setE(e.target.value)}
+                      name="alokasi_anggaran"
+                      onChange={(e) => setG(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Ada
@@ -269,8 +318,8 @@ const KebijakanPeraturan = () => {
                       type="radio"
                       id="tidak"
                       value={false}
-                      name="unit_desa"
-                      onChange={(e) => setE(e.target.value)}
+                      name="alokasi_anggaran"
+                      onChange={(e) => setG(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tidak Ada
@@ -279,15 +328,15 @@ const KebijakanPeraturan = () => {
                 </div>
                 <div className="mb-[16px]">
                   <div className="text-black font-semibold text-[16px] my-[10px]">
-                    f. SK klaster kesehatan desa
+                    h. Data kejadian bencana/krisis kesehatan 5 tahun terakhir
                   </div>
                   <div className="flex items-center gap-x-2">
                     <input
                       type="radio"
                       id="ada"
                       value={true}
-                      name="klaster_kesehatan"
-                      onChange={(e) => setF(e.target.value)}
+                      name="data_kejadian"
+                      onChange={(e) => setH(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Ada
@@ -298,8 +347,8 @@ const KebijakanPeraturan = () => {
                       type="radio"
                       id="tidak"
                       value={false}
-                      name="klaster_kesehatan"
-                      onChange={(e) => setF(e.target.value)}
+                      name="data_kejadian"
+                      onChange={(e) => setH(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
                       Tidak Ada
@@ -308,20 +357,19 @@ const KebijakanPeraturan = () => {
                 </div>
                 <div className="mb-[16px]">
                   <div className="text-black font-semibold text-[16px] my-[10px]">
-                    g. Desa telah mengidentifikasi institusi/lembaga non
-                    pemerintah yang dilibatkan dalam penanggulangan krisis
-                    kesehatan
+                    i. Data kontak person pemegang program penanggulangan
+                    bencana/krisis kesehatan
                   </div>
                   <div className="flex items-center gap-x-2">
                     <input
                       type="radio"
                       id="ada"
                       value={true}
-                      name="identifikasi_lembaga"
-                      onChange={(e) => setG(e.target.value)}
+                      name="data_kontak"
+                      onChange={(e) => setI(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
-                      Dilakukan
+                      Ada
                     </label>
                   </div>
                   <div className="flex items-center gap-x-2">
@@ -329,29 +377,30 @@ const KebijakanPeraturan = () => {
                       type="radio"
                       id="tidak"
                       value={false}
-                      name="identifikasi_lembaga"
-                      onChange={(e) => setG(e.target.value)}
+                      name="data_kontak"
+                      onChange={(e) => setI(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
-                      Tidak Dilakukan
+                      Tidak Ada
                     </label>
                   </div>
                 </div>
                 <div className="mb-[16px]">
                   <div className="text-black font-semibold text-[16px] my-[10px]">
-                    h. Desa pernah mengadakan MoU dengan LSM/instansi/Lembaga
-                    non pemerintah dalam penanggulangan krisis kesehatan
+                    j. Media informasi yang dapat diakses oleh seluruh
+                    masyarakat untuk meningkatkan kesadaran dalam kesipsiagaan
+                    bencana
                   </div>
                   <div className="flex items-center gap-x-2">
                     <input
                       type="radio"
                       id="ada"
                       value={true}
-                      name="mou_lsm"
-                      onChange={(e) => setH(e.target.value)}
+                      name="media_informasi"
+                      onChange={(e) => setJ(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
-                      Ya
+                      Ada
                     </label>
                   </div>
                   <div className="flex items-center gap-x-2">
@@ -359,11 +408,40 @@ const KebijakanPeraturan = () => {
                       type="radio"
                       id="tidak"
                       value={false}
-                      name="mou_lsm"
-                      onChange={(e) => setH(e.target.value)}
+                      name="media_informasi"
+                      onChange={(e) => setJ(e.target.value)}
                     />
                     <label className="text-black font-semibold text-[16px]">
-                      Tidak
+                      Tidak Ada
+                    </label>
+                  </div>
+                </div>
+                <div className="mb-[16px]">
+                  <div className="text-black font-semibold text-[16px] my-[10px]">
+                    k. Sistem pemantauan 24 jam
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <input
+                      type="radio"
+                      id="ada"
+                      value={true}
+                      name="sistem_pemantau"
+                      onChange={(e) => setK(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Ada
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <input
+                      type="radio"
+                      id="tidak"
+                      value={false}
+                      name="sistem_pemantau"
+                      onChange={(e) => setK(e.target.value)}
+                    />
+                    <label className="text-black font-semibold text-[16px]">
+                      Tidak Ada
                     </label>
                   </div>
                 </div>
@@ -401,4 +479,4 @@ const KebijakanPeraturan = () => {
   );
 };
 
-export default KebijakanPeraturan;
+export default Mitigasi;
