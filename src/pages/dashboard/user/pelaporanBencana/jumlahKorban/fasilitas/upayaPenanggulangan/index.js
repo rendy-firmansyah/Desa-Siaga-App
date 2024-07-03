@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgDashboard from "../../../../../../../public/bg-2.jpg";
+import bgDashboard from "../../../../../../../../public/bg-2.jpg";
 import Router from "next/router";
 import nookies from "nookies";
 import { ToastContainer, toast } from "react-toastify";
@@ -27,22 +27,26 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {},
+    props: { role: cookies.role, desaId: cookies.desa_id || null },
   };
 }
 
-const UpayaPenanggulangan = () => {
+const UpayaPenanggulangan = (role) => {
+  const cookies = nookies.get();
   const [upayaPenanggulangan, setUpayaPenanggulangan] = useState("");
   const [pelayananKesehatan, setPelayananKesehatan] = useState("");
-  const [pelayananKesehatanReproduksi, setPelayananKesehatanReproduksi] = useState("");
+  const [pelayananKesehatanReproduksi, setPelayananKesehatanReproduksi] =
+    useState("");
   const [pengendalianPenyakit, setPengendalianPenyakit] = useState("");
   const [DVI, setDVI] = useState("");
   const [pelayananGizi, setPelayananGizi] = useState("");
   const [logisticKesehatan, setLogisticKesehatan] = useState("");
   const [pelayananJiwa, setPelayananJiwa] = useState("");
 
-  const [HambatanPelayananKesehatan, setHambatanPelayananKesehatan] = useState("");
-  const [bantuanYangDiperlukanSegera, setBantuanYangDiperlukanSegera] = useState([]);
+  const [HambatanPelayananKesehatan, setHambatanPelayananKesehatan] =
+    useState("");
+  const [bantuanYangDiperlukanSegera, setBantuanYangDiperlukanSegera] =
+    useState([]);
   const [rencanaTindakLanjut, setRencanaTindakLanjut] = useState("");
   const [statusDesa, setStatusDesa] = useState("");
   const [bayi, setBayi] = useState("");
@@ -75,8 +79,7 @@ const UpayaPenanggulangan = () => {
       balita,
       cacat,
       buteki,
-      lansia
-
+      lansia,
     });
     console.log(res.data);
     if (res.data.status === "success") {
@@ -329,7 +332,7 @@ const UpayaPenanggulangan = () => {
                         Lansia
                       </label>
                       <input
-                        type="text"
+                        type="number"
                         className="bg-input-default border-primary-default rounded"
                         id=""
                         onChange={(e) => setLansia(e.target.value)}
@@ -347,7 +350,6 @@ const UpayaPenanggulangan = () => {
             </label>
             <input
               className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
-
               type="text"
               name=""
               onChange={(e) => setRencanaTindakLanjut(e.target.value)}

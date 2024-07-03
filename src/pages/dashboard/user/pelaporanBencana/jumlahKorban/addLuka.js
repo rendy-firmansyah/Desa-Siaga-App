@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgDashboard from "../../../../../public/bg-2.jpg";
+// import bgDashboard from "../../../../../public/bg-2.jpg";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -127,7 +127,9 @@ const AddLuka = ({ isShow, onClose, onSuccess }) => {
                   onChange={(e) => handleJumlahWanita(e)}
                   required
                 />
-                <label className="text-gray-600 mt-2">Jumlah Total Korban</label>
+                <label className="text-gray-600 mt-2">
+                  Jumlah Total Korban
+                </label>
                 <input
                   className="border rounded p-2 mt-1 text-black"
                   disabled

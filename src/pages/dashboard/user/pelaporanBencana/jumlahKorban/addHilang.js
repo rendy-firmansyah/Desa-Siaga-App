@@ -1,13 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgDashboard from "../../../../../public/bg-2.jpg";
+// import bgDashboard from "../../../../../public/bg-2.jpg";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddHilang = ({ isShow, onClose,onSuccess }) => {
+const AddHilang = ({ isShow, onClose, onSuccess }) => {
   if (!isShow) return null;
 
   const router = useRouter();
@@ -52,13 +52,12 @@ const AddHilang = ({ isShow, onClose,onSuccess }) => {
         theme: "light",
       });
     }
-
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-[700px] max-h-[400px] md:h-auto lg:h-auto xl:h-auto overflow-y-auto md:overflow-hidden lg:overflow-hidden xl:overflow-hidden border rounded-lg bg-white">
-      {/* <ToastContainer/> */}
+        {/* <ToastContainer/> */}
         <div className="flex flex-col p-5 rounded-lg shadow">
           <div className="flex">
             <div className="">
@@ -90,10 +89,10 @@ const AddHilang = ({ isShow, onClose,onSuccess }) => {
                   required
                 >
                   <option value="">Jenis Kelamin</option>
-                    <option value="Laki-Laki">Laki-Laki</option>
-                    <option value="Perempuan">Perempuan</option>
+                  <option value="Laki-Laki">Laki-Laki</option>
+                  <option value="Perempuan">Perempuan</option>
                 </select>
-                
+
                 <label className="text-gray-600 mt-2">Usia</label>
                 <input
                   className="border rounded p-2 mt-1 text-black"

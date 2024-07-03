@@ -34,7 +34,7 @@ export async function getServerSideProps(ctx) {
   };
 }
 
-const Dashboard = ({role, desaId}) => {
+const Dashboard = ({ role, desaId }) => {
   const logout = () => {
     nookies.destroy(null, "role");
     nookies.destroy(null, "desa_id");
@@ -45,7 +45,17 @@ const Dashboard = ({role, desaId}) => {
     if (role === "relawan") {
       Router.push("/dashboard/user/kajianResiko");
     } else if (role === "desa" && desaId) {
-      Router.push(`/dashboard/user/kajianResiko/ancamanRentan?desa_id=${desaId}`);
+      Router.push(
+        `/dashboard/user/kajianResiko/ancamanRentan?desa_id=${desaId}`
+      );
+    }
+  };
+
+  const handlePelaporanClick = () => {
+    if (role === "relawan") {
+      Router.push("/dashboard/user/pelaporanBencana");
+    } else if (role === "desa" && desaId) {
+      Router.push(`/dashboard/user/pelaporanBencana?desa_id=${desaId}`);
     }
   };
 
@@ -78,7 +88,10 @@ const Dashboard = ({role, desaId}) => {
           Selamat Datang, {role}
         </h1>
         <div class="flex flex-wrap justify-center mt-5">
-          <div class="p-4 max-w-sm cursor-pointer" onClick={handleKajianResikoClick}>
+          <div
+            class="p-4 max-w-sm cursor-pointer"
+            onClick={handleKajianResikoClick}
+          >
             <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
               <div class="flex items-center">
                 <Image src={menu1} width={64} height={80} />
@@ -91,20 +104,18 @@ const Dashboard = ({role, desaId}) => {
             </h4>
           </div>
 
-          <Link href="/dashboard/user/pelaporanBencana">
-            <div class="p-4 max-w-sm">
-              <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
-                <div class="flex items-center">
-                  <Image src={menu2} width={72} height={80} />
-                </div>
+          <div class="p-4 max-w-sm" onClick={handlePelaporanClick}>
+            <div class="flex rounded-lg bg-secondary-default hover:bg-secondary-dark transition-all duration-150 p-8 flex-col">
+              <div class="flex items-center">
+                <Image src={menu2} width={72} height={80} />
               </div>
-              <h4 class="text-black text-md font-medium text-center">
-                Form Pelaporan
-                <br />
-                Awal Bencana
-              </h4>
             </div>
-          </Link>
+            <h4 class="text-black text-md font-medium text-center">
+              Form Pelaporan
+              <br />
+              Awal Bencana
+            </h4>
+          </div>
 
           <Link href="/dashboard/user/tulisBerita">
             <div class="p-4 max-w-sm">

@@ -1,13 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgDashboard from "../../../../../public/bg-2.jpg";
+// import bgDashboard from "../../../../../public/bg-2.jpg";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddMeninggal = ({ isShow, onClose, onSuccess}) => {
+const AddMeninggal = ({ isShow, onClose, onSuccess }) => {
   if (!isShow) return null;
 
   const router = useRouter();
@@ -89,8 +89,8 @@ const AddMeninggal = ({ isShow, onClose, onSuccess}) => {
                   required
                 >
                   <option value="">Jenis Kelamin</option>
-                    <option value="Laki-Laki">Laki-Laki</option>
-                    <option value="Perempuan">Perempuan</option>
+                  <option value="Laki-Laki">Laki-Laki</option>
+                  <option value="Perempuan">Perempuan</option>
                 </select>
                 <label className="text-gray-600 mt-2">Usia</label>
                 <input

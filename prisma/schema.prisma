@@ -161,7 +161,7 @@ model upaya {
   statusDesa                    String
   pelaporan_id                  Int
   pelaporan                     pelaporanAwal @relation(fields: [pelaporan_id],references: [id])
-  kelompokRentan                kelompokRentan[]
+  kelompokRentan                kelompokRentan
 }
 model kelompokRentan {
   id                            Int @id @default(autoincrement())

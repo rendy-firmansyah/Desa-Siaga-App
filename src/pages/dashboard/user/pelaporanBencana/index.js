@@ -1,14 +1,15 @@
-"use client";
+// "use client";
 
 import Link from "next/link";
 import Image from "next/image";
-import bgDashboard from "../../../../public/bg-2.jpg";
+import bgDashboard from "../../../../../public/bg-2.jpg";
 import { useEffect, useState } from "react";
 import nookies from "nookies";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRouter } from "next/router";
+// import { cookies } from "next/headers";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -29,13 +30,14 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {},
+    props: { role: cookies.role, desaId: cookies.desa_id || null },
   };
 }
 
-const PelaporanBencana = () => {
+const PelaporanBencana = ({ role, desaId }) => {
+  const cookies = nookies.get();
   const [selectedKec, setSelectedKec] = useState("");
-  const [selectedDesa, setSelectedDesa] = useState("");
+  const [selectedDesa, setSelectedDesa] = useState(cookies.desa_id);
   const [dataKecamatan, setDataKec] = useState([]);
   const [dataDesa, setDataDesa] = useState([]);
 
@@ -44,13 +46,6 @@ const PelaporanBencana = () => {
   const [deskripsiBencana, setDeskripsiBencana] = useState("");
   const [lokasiKejadian, setLokasiKejadian] = useState("");
   const [jumlahPenduduk, setJumlahPenduduk] = useState(0);
-
-  // console.log(selectedDesa);
-  // console.log(jenisBencana);
-  // console.log(waktuBencana);
-  // console.log(deskripsiBencana);
-  // console.log(lokasiKejadian);
-  // console.log(jumlahPenduduk);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,6 +64,7 @@ const PelaporanBencana = () => {
   }, [selectedKec]);
 
   const router = useRouter();
+  const { id } = router.query;
 
   async function addPelaporan() {
     const res = await axios.post("/api/pelaporanAwal", {
@@ -80,11 +76,19 @@ const PelaporanBencana = () => {
       jumlahPendudukTerancam: jumlahPenduduk,
     });
     console.log(res.data);
-    router.push(
-      `/dashboard/pelaporanBencana/jumlahKorban?id=${encodeURIComponent(
-        res.data.id_pelaporan
-      )}`
-    );
+    {
+      role == "relawan"
+        ? router.push(
+            `/dashboard/user/pelaporanBencana/jumlahKorban?id=${encodeURIComponent(
+              res.data.id_pelaporan
+            )}`
+          )
+        : router.push(
+            `/dashboard/user/pelaporanBencana/jumlahKorban?id=${encodeURIComponent(
+              res.data.id_pelaporan
+            )}&desa_id=${encodeURIComponent(desaId)}`
+          );
+    }
   }
 
   return (
@@ -155,38 +159,42 @@ const PelaporanBencana = () => {
                   placeholder="ex: dusun xxxxx"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-x-3">
-                <div className="flex flex-col mt-2">
-                  <label className="font-semibold text-md text-black">
-                    Kecamatan
-                  </label>
-                  <select
-                    className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                    onChange={(e) => setSelectedKec(e.target.value)}
-                  >
-                    <option value="">Pilih......</option>
-                    {dataKecamatan.map((kec) => (
-                      <option value={kec.id}>{kec.nama}</option>
-                    ))}
-                  </select>
+              {role == "relawan" ? (
+                <div className="grid grid-cols-2 gap-x-3">
+                  <div className="flex flex-col mt-2">
+                    <label className="font-semibold text-md text-black">
+                      Kecamatan
+                    </label>
+                    <select
+                      className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+                      onChange={(e) => setSelectedKec(e.target.value)}
+                    >
+                      <option value="">Pilih......</option>
+                      {dataKecamatan.map((kec) => (
+                        <option value={kec.id}>{kec.nama}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex flex-col mt-2">
+                    <label className="font-semibold text-md text-black">
+                      Desa
+                    </label>
+                    <select
+                      className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
+                      onChange={(e) => setSelectedDesa(e.target.value)}
+                    >
+                      <option value="">Pilih......</option>
+                      {dataDesa
+                        ? dataDesa.map((desa) => (
+                            <option value={desa.id}>{desa.nama}</option>
+                          ))
+                        : null}
+                    </select>
+                  </div>
                 </div>
-                <div className="flex flex-col mt-2">
-                  <label className="font-semibold text-md text-black">
-                    Desa
-                  </label>
-                  <select
-                    className="border rounded p-2 mt-1 text-black border-primary-default bg-input-default"
-                    onChange={(e) => setSelectedDesa(e.target.value)}
-                  >
-                    <option value="">Pilih......</option>
-                    {dataDesa
-                      ? dataDesa.map((desa) => (
-                          <option value={desa.id}>{desa.nama}</option>
-                        ))
-                      : null}
-                  </select>
-                </div>
-              </div>
+              ) : (
+                <div></div>
+              )}
               <div className="flex flex-col mt-2">
                 <label className="font-semibold text-md text-black">
                   Jumlah Penduduk Terancam

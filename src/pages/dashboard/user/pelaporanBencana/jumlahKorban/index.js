@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgDashboard from "../../../../../public/bg-2.jpg";
+import bgDashboard from "../../../../../../public/bg-2.jpg";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import nookies from "nookies";
@@ -33,11 +33,11 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {},
+    props: { role: cookies.role, desaId: cookies.desa_id || null },
   };
 }
 
-const JumlahKorban = () => {
+const JumlahKorban = (role, desaId) => {
   const [dataMeninggal, setDataMeninggal] = useState([]);
   const [dataMenghilang, setDataMenghilang] = useState([]);
   const [dataKorbanLuka, setDataKorbanLuka] = useState([]);
@@ -120,8 +120,21 @@ const JumlahKorban = () => {
 
   const router = useRouter();
   const { id } = router.query;
+
+  const cookies = nookies.get();
+
   const nextPage = () => {
-    router.push(`/dashboard/pelaporanBencana/jumlahKorban/fasilitas?id=${id}`);
+    {
+      role == "relawan"
+        ? router.push(
+            `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas?id=${id}`
+          )
+        : router.push(
+            `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas?id=${id}&desa_id=${encodeURIComponent(
+              cookies.desa_id
+            )}`
+          );
+    }
   };
 
   const getDataMeninggal = async () => {

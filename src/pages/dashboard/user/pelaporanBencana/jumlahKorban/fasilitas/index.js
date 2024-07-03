@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgDashboard from "../../../../../../public/bg-2.jpg";
+import bgDashboard from "../../../../../../../public/bg-2.jpg";
 // import Router from "next/router";
 import nookies from "nookies";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+// import { cookies } from "next/headers";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -28,11 +29,12 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {},
+    props: { role: cookies.role, desaId: cookies.desa_id || null },
   };
 }
 
-const Fasilitas = () => {
+const Fasilitas = (role, desaId) => {
+  const cookies = nookies.get();
   const [mudahDiakses, setMudahDiakses] = useState("");
   const [sukar, setSukar] = useState("");
   const [Narahubung, setNarahubung] = useState("");
@@ -53,12 +55,14 @@ const Fasilitas = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/api/pelaporanAwal/korbanmeninggal?id=${id}`);
+        const res = await axios.get(
+          `/api/pelaporanAwal/korbanmeninggal?id=${id}`
+        );
         const data = res.data; // Data yang diterima dari API
         const total = data.length; // Menghitung panjang array data
         setTotalData(total);
       } catch (error) {
-        console.error('Error fetching data', error);
+        console.error("Error fetching data", error);
       }
     };
 
@@ -92,11 +96,17 @@ const Fasilitas = () => {
         progress: 1,
         theme: "light",
       });
-
-      router.push(
-        `/dashboard/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan?id=${id}`
-      );
-      
+      {
+        role == "relawan"
+          ? router.push(
+              `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan?id=${id}`
+            )
+          : router.push(
+              `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan?id=${id}&desa_id=${encodeURIComponent(
+                cookies.desa_id
+              )}`
+            );
+      }
     } else {
       toast(`❌ ${res.data.message}`, {
         position: "top-right",
@@ -104,7 +114,7 @@ const Fasilitas = () => {
         closeOnClick: true,
         pauseOnHover: false,
         draggable: false,
-        progress: 1,  
+        progress: 1,
         theme: "light",
       });
     }
@@ -112,7 +122,7 @@ const Fasilitas = () => {
 
   return (
     <section className="container-fluid w-full h-full relative">
-      <ToastContainer/>
+      <ToastContainer />
       <div className="absolute -z-10 inset-0">
         <Image src={bgDashboard} alt="background-image" className="h-full" />
       </div>
@@ -129,7 +139,7 @@ const Fasilitas = () => {
             <input
               className="w-full border rounded p-2 mt-3 text-black border-primary-default bg-input-default"
               type="number"
-              disabled 
+              disabled
               value={totalData}
             />
           </div>
