@@ -24,7 +24,6 @@ const DataStatistik = () => {
     fetchData();
   }, []);
 
-  console.log(data)
 
   const filterdata = data.filter((items) => {
     const searchTerm = search.toLowerCase();
@@ -35,8 +34,8 @@ const DataStatistik = () => {
 
   const detailDesa = (data) => {
     if(data !== undefined) {
-      if(data.statusDesa === 'Aman' || data.statusDesa === 'Tidak aman') {
-        router.push(`data_statistik/detail_dataStatistik?id=${encodeURIComponent(data.id)}&status=${encodeURIComponent(data.statusDesa)}`);
+      if(data.pelaporanAwal[0].upaya[0].statusDesa === 'Aman' || data.pelaporanAwal[0].upaya[0].statusDesa === 'Tidak aman') {
+        router.push(`data_statistik/detail_dataStatistik?id=${encodeURIComponent(data.id)}&status=${encodeURIComponent(data.pelaporanAwal[0].upaya[0].statusDesa)}`);
       }
       else{
         console.log('data tidak ada')
@@ -69,10 +68,10 @@ const DataStatistik = () => {
                 </h2>
                 <div id="collapse-body" className={`${isOpen === index ? 'block' : 'hidden'}`} aria-labelledby="collapse-heading">
                 {items.desa.map((item) => (
-                    <button className="w-full p-5 border border-gray-200" onClick={() => detailDesa(item.pelaporanAwal[0]?.upaya[0])}>
+                    <button className="w-full p-5 border border-gray-200" onClick={() => detailDesa(item)}>
                       <div className="flex justify-between items-center text-black">
                           {item.nama}
-                        <div className={`w-[120px] h-[40px] flex items-center justify-center font-semibold text-[16px] text-black ${item.pelaporanAwal[0]?.upaya[0]?.statusDesa === 'Tidak aman text-white' ? 'bg-red-default' : item.pelaporanAwal[0]?.upaya[0]?.statusDesa === 'Aman' ? 'bg-green-default text-white' : 'bg-gray-700 text-white'}`}>{item.pelaporanAwal[0]?.upaya[0]?.statusDesa === 'Aman' ? 'Aman' : item.pelaporanAwal[0]?.upaya[0]?.statusDesa === 'Tidak aman' ? 'Tidak Aman' : 'Belum Dinilai'}</div>
+                        <div className={`w-[120px] h-[40px] flex items-center justify-center font-semibold text-[16px] text-black ${item.pelaporanAwal[0]?.upaya[0]?.statusDesa === 'Tidak aman' ? 'bg-red-default text-white' : item.pelaporanAwal[0]?.upaya[0]?.statusDesa === 'Aman' ? 'bg-green-default text-white' : 'bg-gray-700 text-white'}`}>{item.pelaporanAwal[0]?.upaya[0]?.statusDesa === 'Aman' ? 'Aman' : item.pelaporanAwal[0]?.upaya[0]?.statusDesa === 'Tidak aman' ? 'Tidak Aman' : 'Belum Dinilai'}</div>
                       </div>
                     </button>
                 ))}

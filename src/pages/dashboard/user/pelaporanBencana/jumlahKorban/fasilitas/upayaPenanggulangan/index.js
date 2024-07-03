@@ -93,7 +93,7 @@ const UpayaPenanggulangan = (role) => {
         theme: "light",
       });
 
-      router.push(`/dashboard`);
+      router.push(`/dashboard/user`);
     } else {
       toast(`❌ ${res.data.message}`, {
         position: "top-right",
