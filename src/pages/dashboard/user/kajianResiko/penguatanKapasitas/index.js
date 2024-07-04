@@ -27,11 +27,13 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {},
+    props: {
+      desaId: cookies.desa_id || null,
+    },
   };
 }
 
-const PenguatanKapasitas = () => {
+const PenguatanKapasitas = ({desaId}) => {
   const [a, setA] = useState();
   const [b, setB] = useState();
   const [c, setC] = useState();
@@ -47,6 +49,8 @@ const PenguatanKapasitas = () => {
 
   const router = useRouter();
   const { id } = router.query;
+
+  console.log(desaId)
 
   const postData = async () => {
     const res = await axios.post("/api/pengkajian/penguatan-kapasitas", {
@@ -72,7 +76,7 @@ const PenguatanKapasitas = () => {
       });
       setTimeout(() => {
         router.push(
-          `/dashboard/user/kajianResiko/peringatanDini?id=${encodeURIComponent(id)}`
+          `/dashboard/user/kajianResiko/peringatanDini?id=${encodeURIComponent(id)}&desa_id=${encodeURIComponent(desaId)}`
         );
       }, 3000);
     } else {

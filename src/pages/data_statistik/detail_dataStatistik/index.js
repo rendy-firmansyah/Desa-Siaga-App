@@ -10,12 +10,15 @@ import axios from "axios";
 const DetailDataStatistik = () => {
 
     const [data,setData] = useState([]);
+    const [desa, setDesa] = useState("");
     const router = useRouter();
-    const { id, status } = router.query;
+    const { id, status, kecamatan } = router.query;
 
     console.log(status);
 
     console.log(id);
+    console.log(desa);
+    console.log(kecamatan);
 
     useEffect(() => {
         if (id) {
@@ -24,6 +27,7 @@ const DetailDataStatistik = () => {
               const response = await axios.get(`/api/statistik?id=${id}`);
               console.log(response.data);
               setData(response.data);
+              setDesa(response.data[0].nama);
             } catch (error) {
               console.error('Error fetching data:', error);
             }
@@ -41,7 +45,7 @@ const DetailDataStatistik = () => {
       <div className="container-fluid xl:px-[80px] lg:px-[40px] md:px-[40px] px-[10px]">
         <div className="mt-[150px] mb-[250px]">
             <div className="flex justify-between">
-                <div className="text-black font-semibold text-[20px]">Kecamatan Arjasa, Desa Arjasa</div>
+                <div className="text-black font-semibold text-[20px]">{kecamatan}, {desa}</div>
                 <div className={`w-[120px] h-[40px] flex text-center items-center justify-center font-semibold text-[16px] text-white ${status === 'Tidak aman' ? 'bg-red-default' : status === 'Aman' ? 'bg-green-default' : 'bg-gray-700 text-white'}`}>{status ? status : 'Belum Dinilai'} </div>
             </div>
             {data.map((items) => (
