@@ -27,11 +27,13 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {},
+    props: {
+      desaId: cookies.desa_id || null,
+    },
   };
 }
 
-const PeringatanDini = () => {
+const PeringatanDini = ({desaId}) => {
   const [a, setA] = useState();
   const [b, setB] = useState();
 
@@ -60,7 +62,7 @@ const PeringatanDini = () => {
       });
       setTimeout(() => {
         router.push(
-          `/dashboard/user/kajianResiko/mitigasi?id=${encodeURIComponent(id)}`
+          `/dashboard/user/kajianResiko/mitigasi?id=${encodeURIComponent(id)}&desa_id=${encodeURIComponent(desaId)}`
         );
       }, 3000);
     } else {
