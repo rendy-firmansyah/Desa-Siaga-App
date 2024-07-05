@@ -14,13 +14,14 @@ datasource db {
 }
 
 model user {
-  id        Int  @id @default(autoincrement())
-  email     String @unique
-  password  String
-  username  String
-  role      String?
-  desa_id   Int?
-  desa      desa? @relation(fields: [desa_id],references: [id])
+  id          Int  @id @default(autoincrement())
+  email       String @unique
+  password    String
+  username    String
+  role        String?
+  desa_id     Int?
+  desa        desa? @relation(fields: [desa_id],references: [id])
+  pengkajian  pengkajian[] @relation("pengkajianRelation")
 }
 model kecamatan{
   id        Int  @id @default(autoincrement())
@@ -180,6 +181,9 @@ model pengkajian {
   riwayat                       String
   desa_id                       Int
   desa                          desa @relation(fields: [desa_id],references: [id])
+  user_id                       Int?
+  user                          user? @relation(name: "pengkajianRelation",fields: [user_id],references: [id]) 
+  created_at                    DateTime @default(now())
   peraturan                     peraturan[]
   kapasitas                     kapasitas[]
   peringatanDini                peringatanDini[]
