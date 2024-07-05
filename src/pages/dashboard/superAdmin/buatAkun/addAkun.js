@@ -112,7 +112,7 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                     <option value="desa">Desa</option>
                     <option value="relawan">Relawan</option>
                 </select>
-                {(role === "desa" || role === 'relawan') && (
+                {(role === "desa") && (
                   <>
                     <label className="text-gray-600 mt-2">
                     Pilih Kecamatan
@@ -150,7 +150,7 @@ const AddAkun = ({ isShow, onClose, onSuccess }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                {(role === "desa" || role === 'relawan') && (
+                {(role === "desa") && (
                   <>
                     <label className="text-gray-600 mt-2">
                     Pilih Desa

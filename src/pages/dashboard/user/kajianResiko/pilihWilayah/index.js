@@ -40,7 +40,7 @@ const PilihWilayah = () => {
 
   const kuisioner = () => {
     router.push(
-      `/dashboard/user/kajianResiko/ancamanRentan?id=${encodeURIComponent(
+      `/dashboard/user/kajianResiko/ancamanRentan?desa_id=${encodeURIComponent(
         selectedDesa
       )}`
     );

@@ -35,8 +35,8 @@ export async function getServerSideProps(ctx) {
 
 const AncamanRentan = ({desaId}) => {
   const router = useRouter();
-  const { id } = router.query;
-
+  const { desa_id } = router.query;
+  console.log(desa_id)
   const [Ancaman, setAncaman] = useState("");
   const [Riwayat, setRiwayat] = useState("");
 
@@ -48,7 +48,7 @@ const AncamanRentan = ({desaId}) => {
     const res = await axios.post("/api/pengkajian", {
       jenis_ancaman: Ancaman,
       riwayat: Riwayat,
-      desa_id: desaId,
+      desa_id: desa_id,
     });
     if (res.data.status === "success") {
       toast(`✅ ${res.data.message}`, {
@@ -64,7 +64,7 @@ const AncamanRentan = ({desaId}) => {
         router.push(
           `/dashboard/user/kajianResiko/kebijakanPeraturan?id=${encodeURIComponent(
             res.data.pengkajian_id
-          )}&desa_id=${encodeURIComponent(desaId)}`
+          )}&desa_id=${encodeURIComponent(desa_id)}`
         );
       }, 3000);
     } else {

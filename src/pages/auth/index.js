@@ -57,6 +57,7 @@ const Login = () => {
       nookies.set(null,'role',send.data.user)
       nookies.set(null,'desa_id',send.data.desa_id)
       nookies.set(null,'user_id',send.data.user_id)
+      nookies.set(null,'nama',send.data.nama)
       //redirect to dashboard
       router.push('/dashboard/user')
     }

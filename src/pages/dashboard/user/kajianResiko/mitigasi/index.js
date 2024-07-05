@@ -83,7 +83,7 @@ const Mitigasi = ({desaId}) => {
       });
       setTimeout(() => {
         router.push(
-          `/dashboard/user/kajianResiko/kesiapsiagaan?id=${encodeURIComponent(id)}&desa_id=${encodeURIComponent(desaId)}`
+          `/dashboard/user/kajianResiko/kesiapsiagaan?id=${encodeURIComponent(id)}`
         );
       }, 3000);
     } else {

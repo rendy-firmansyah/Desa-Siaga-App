@@ -36,6 +36,7 @@ export default async function pengkajianHandler(req, res) {
 
         return {
             desa_id: pengkajian.desa_id,
+            pengkajian_id: pengkajian.id,
             nama_user: user.username,
             nama_kecamatan: kecamatan.nama,
             nama_desa: desa.nama,
