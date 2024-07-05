@@ -23,7 +23,7 @@ export default async function UserHandler(req,res){
             const status = 'success';
             const desa_id = users.desa_id
             const token = sign({ userId: id }, JWT_SECRET, { expiresIn: '1d' });
-            return res.status(200).json({token,user,message,status, desa_id});
+            return res.status(200).json({token,user,message,status, desa_id,user_id : id});
             
         } catch (error) {
             return res.status(500).json({message: "Server error!",status: 'failed'})
