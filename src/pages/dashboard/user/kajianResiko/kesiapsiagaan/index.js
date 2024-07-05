@@ -100,7 +100,7 @@ const Kesiapsiagaan = ({desaId}) => {
       });
       setTimeout(() => {
         router.push(
-          `/dashboard/user/kajianResiko/kesimpulan?id=${encodeURIComponent(id)}&desa_id=${encodeURIComponent(desaId)}`
+          `/dashboard/user/kajianResiko/kesimpulan?id=${encodeURIComponent(id)}`
         );
       }, 3000);
     } else {

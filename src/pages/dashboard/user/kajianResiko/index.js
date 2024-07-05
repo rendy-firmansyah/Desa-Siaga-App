@@ -26,18 +26,37 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {},
+    props: {
+      userId: cookies.user_id,
+    },
   };
 }
 
-const KajianResiko = () => {
+const KajianResiko = ({userId}) => {
   const router = useRouter();
+  const [dataKajian, setDataKajian] = useState([]);
+
+  const getDataKajian = async () => {
+    const response = await axios.get(`/api/pengkajian/get?id=${userId}`);
+    setDataKajian(response.data);
+  };
+  useEffect(() => {
+    getDataKajian();
+  }, []);
 
   const kuisioner = () => {
     router.push(
       `/dashboard/user/kajianResiko/pilihWilayah`
     );
   };
+
+  const detailKajian = (data) => {
+    router.push(
+      `/dashboard/user/kajianResiko/kesimpulan?id=${encodeURIComponent(data.pengkajian_id)}`
+    );
+  };
+
+  console.log(dataKajian)
 
   return (
     <section className="container-fluid h-screen relative">
@@ -84,24 +103,32 @@ const KajianResiko = () => {
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
+                  {dataKajian.map((items, index)=> {
+                    const date = new Date(items.tanggal_dibuat); // Mengubah timestamp menjadi objek Date
+                    const formattedDate = date.toLocaleDateString("id-ID", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    });
+                  return (
                     <tr>
                         <td className="text-black px-6 py-4 whitespace-nowrap">
-                            1
+                            {index+1}
                         </td>
                         <td className="text-black px-6 py-4 whitespace-nowrap">
-                            Fulan
+                            {items.nama_user}
                         </td>
                         <td className="text-black px-6 py-4 whitespace-nowrap">
-                            Kecamatan A
+                            {items.nama_kecamatan}
                         </td>
                         <td className="text-black px-6 py-4 whitespace-nowrap">
-                            Desa A1
+                          {items.nama_desa}
                         </td>
                         <td className="text-black px-6 py-4 whitespace-nowrap">
-                            25 Juni 2024
+                          {formattedDate}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap flex items-center">
-                            <button class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
+                            <button onClick={() => detailKajian(items)} class="px-3 py-3 bg-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
                                 <svg
                                 width="20px"
                                 height="20px"
@@ -139,6 +166,8 @@ const KajianResiko = () => {
                             </button>
                         </td>
                     </tr>
+                  );
+                  })}
                 </tbody>
             </table>
         </div>

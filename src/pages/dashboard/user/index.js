@@ -29,12 +29,13 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       role: cookies.role,
+      nama: cookies.nama,
       desaId: cookies.desa_id || null,
     },
   };
 }
 
-const Dashboard = ({ role, desaId }) => {
+const Dashboard = ({ role, desaId, nama }) => {
   const logout = () => {
     nookies.destroy(null, "role");
     nookies.destroy(null, "desa_id");
@@ -85,7 +86,7 @@ const Dashboard = ({ role, desaId }) => {
       {/* --- */}
       <div className="bg-gray-100 mx-10 md:mx-20 lg:mx-48 xl:mx-48 py-10 rounded-2xl shadow-xl">
         <h1 className="text-black text-3xl font-bold tracking-normal text-center">
-          Selamat Datang, {role}
+          Selamat Datang, {nama}
         </h1>
         <div class="flex flex-wrap justify-center mt-5">
           <div

@@ -76,7 +76,7 @@ const KebijakanPeraturan = ({desaId}) => {
         router.push(
           `/dashboard/user/kajianResiko/penguatanKapasitas?id=${encodeURIComponent(
             id
-          )}&desa_id=${encodeURIComponent(desaId)}`
+          )}`
         );
       }, 3000);
     } else {
