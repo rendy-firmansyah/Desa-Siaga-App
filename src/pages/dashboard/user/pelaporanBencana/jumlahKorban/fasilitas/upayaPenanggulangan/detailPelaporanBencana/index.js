@@ -5,6 +5,7 @@ import nookies from "nookies";
 import { useRouter } from "next/router";
 import { useEffect, useState } from 'react';
 import axios from "axios";
+import ExportButton from "../../../../../../../../components/Button/ExportButton";
 
 export async function getServerSideProps(ctx) {
     const cookies = nookies.get(ctx);
@@ -66,10 +67,10 @@ const DetailDataStatistik = (role) => {
         <div className="mt-[150px] mb-[250px]">
             <div className="flex justify-between">
                 <div className="text-black font-semibold text-[20px]"> {desa} </div>
-                <div className="text-black font-semibold text-[20px]"> {desa} </div>
+                <div className="text-black font-semibold text-[20px]"> <ExportButton namadesa={desa} /> </div>
             </div>
             {data.map((items) => (
-            <div className="w-full bg-white xl:px-[50px] lg:px-[35px] md:px-[25px] px-[15px] xl:py-[50px] lg:py-[35px] py-[15px] md:py-[25px] shadow-lg mt-[35px]">
+            <div className="w-full bg-white xl:px-[50px] lg:px-[35px] md:px-[25px] px-[15px] xl:py-[50px] lg:py-[35px] py-[15px] md:py-[25px] shadow-lg mt-[35px]" id="content-export-pdf">
                 {items.pelaporanAwal.map((item, index) => (
                 <div className="grid grid-cols-12">
                 <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 flex justify-center">
