@@ -27,12 +27,14 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
+      role: cookies.role,
       userId: cookies.user_id,
+      desaId: cookies.desa_id || null,
     },
   };
 }
 
-const KajianResiko = ({ userId }) => {
+const KajianResiko = ({ role, userId, desaId }) => {
   const router = useRouter();
   const [dataKajian, setDataKajian] = useState([]);
 
@@ -45,7 +47,13 @@ const KajianResiko = ({ userId }) => {
   }, []);
 
   const kuisioner = () => {
-    router.push(`/dashboard/user/kajianResiko/pilihWilayah`);
+    if (role === "relawan") {
+      router.push(`/dashboard/user/kajianResiko/pilihWilayah`);
+    } else if (role === "desa" && desaId) {
+      Router.push(
+        `/dashboard/user/kajianResiko/ancamanRentan?desa_id=${desaId}`
+      );
+    }
   };
 
   const detailKajian = (data) => {
