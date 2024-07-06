@@ -92,8 +92,17 @@ const UpayaPenanggulangan = (role) => {
         progress: 1,
         theme: "light",
       });
-
-      router.push(`/dashboard/user`);
+      {
+        role == "relawan"
+          ? router.push(
+              `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan/detailPelaporanBencana?id=${id}`
+            )
+          : router.push(
+              `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan/detailPelaporanBencana?id=${id}&desa_id=${encodeURIComponent(
+                cookies.desa_id
+              )}`
+            );
+      }
     } else {
       toast(`❌ ${res.data.message}`, {
         position: "top-right",
