@@ -82,7 +82,21 @@ export default async function UserHandler(req,res){
     if(req.method === "PATCH"){
         const {id,username,email,role,password} = req.body
         try {
-            const hashPassword = await hash(password,10)
+            if(password){
+                const hashPassword = await hash(password,10)
+                const data = await prisma.user.update({
+                    where:{
+                        id : parseInt(id)
+                    },
+                    data:{
+                        username,
+                        email,
+                        password : hashPassword,
+                        role
+                    }
+                })
+                return res.status(200).json({message:"Update Akun Sukses", status:"success"})
+            }
             const data = await prisma.user.update({
                 where:{
                     id : parseInt(id)
@@ -90,7 +104,6 @@ export default async function UserHandler(req,res){
                 data:{
                     username,
                     email,
-                    // password : hashPassword,
                     role
                 }
             })
