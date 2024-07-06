@@ -52,7 +52,7 @@ const KajianResiko = ({userId}) => {
 
   const detailKajian = (data) => {
     router.push(
-      `/dashboard/user/kajianResiko/kesimpulan?id=${encodeURIComponent(data.pengkajian_id)}`
+      `/dashboard/user/kajianResiko/detailKesimpulan?id=${encodeURIComponent(data.pengkajian_id)}&namaUser=${encodeURIComponent(data.nama_user)}&namaKec=${encodeURIComponent(data.nama_kecamatan)}&namaDes=${encodeURIComponent(data.nama_desa)}&tanggal=${encodeURIComponent(data.tanggal_dibuat)}`
     );
   };
 
