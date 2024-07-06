@@ -38,6 +38,7 @@ export async function getServerSideProps(ctx) {
 const Dashboard = ({ role, desaId, nama }) => {
   const logout = () => {
     nookies.destroy(null, "role");
+    nookies.destroy(null, "nama");
     nookies.destroy(null, "desa_id");
     Router.push("/");
   };
