@@ -6,12 +6,38 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Konfirm from "./konfirmasi";
+import nookies from "nookies";
 
-const DetailBerita = () => {
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx);
+
+  if (!cookies.role) {
+    return {
+      redirect: {
+        destination: "/",
+      },
+    };
+  } else if (cookies.role === "super admin") {
+    return {
+      redirect: {
+        destination: "/dashboard/superAdmin",
+      },
+    };
+  }
+
+  return {
+    props: { role: cookies.role, desaId: cookies.desa_id || null },
+  };
+}
+
+const DetailBerita = (role, desaId) => {
   const [berita, setBerita] = useState([]);
   const [visibleModal, setVisibleModal] = useState(false);
   const [idBerita, setIdBerita] = useState();
+  const cookies = nookies.get();
 
+  
+  console.log(role.desaId);
   const handleSimpan = (id) => {
     setVisibleModal(true);
     setIdBerita(id);
@@ -22,14 +48,30 @@ const DetailBerita = () => {
   };
 
   const fetchData = async () => {
-    const response = await axios.get("/api/berita?id=");
-    setBerita(response.data);
+    try {
+      const response = role.role === "relawan"
+        ? await axios.get("/api/berita/get?id=")  
+        : await axios.get(`/api/berita/get?id=${role.desaId}`);  
+
+      setBerita(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const router = useRouter();
+  const addBerita = () => {
+    if (role.role === "relawan") {
+      router.push(`/dashboard/user/tulisBerita/addBeritaRelawan`);
+    } else {
+      router.push(`/dashboard/user/tulisBerita/addBeritaDesa?id=${encodeURIComponent(role.desaId)}`);
+    }
+  };
+
   const updateBerita = (data) => {
     router.push(
       `/dashboard/user/tulisBerita/updateBerita?id=${encodeURIComponent(data.id)}`
@@ -48,15 +90,13 @@ const DetailBerita = () => {
           </h1>
         </div>
 
-        <Link href="/dashboard/user/tulisBerita/addBerita">
-          <div className="mt-6 flex justify-center">
+          <div className="mt-6 flex justify-center" onClick={ ()=> addBerita() }>
             <div className="bg-indigo-900 rounded-lg p-1 text-center w-screen">
               <h2 className="text-white text-2xl font-extrabold font-['Inter'] leading-10">
                 + Tambah Berita
               </h2>
             </div>
           </div>
-        </Link>
 
         <div className="mt-6 grid grid-cols-1 gap-6">
           {berita.map((items) => (

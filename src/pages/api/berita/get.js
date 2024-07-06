@@ -8,9 +8,9 @@ export const config = {
 
 export default async function BeritaHandler(req, res) {
     if(req.method === 'GET'){
-        const {id} = req.query.id;
+        const id = req.query.id;
         if (id){
-            const bertia = await prisma.berita.findMany({
+            const berita = await prisma.berita.findMany({
                 orderBy: {
                   created_at: 'desc',
                 },
