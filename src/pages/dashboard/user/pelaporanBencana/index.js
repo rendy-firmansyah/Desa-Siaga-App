@@ -48,6 +48,7 @@ const PelaporanBencana = ({ role, desaId }) => {
   const [jumlahPenduduk, setJumlahPenduduk] = useState(0);
 
   // console.log(selectedDesa);
+  // console.log(role);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,7 +79,7 @@ const PelaporanBencana = ({ role, desaId }) => {
       jumlahPendudukTerancam: jumlahPenduduk,
     });
     {
-      role.role === "relawan"
+      role === "relawan"
         ? router.push(
             `/dashboard/user/pelaporanBencana/jumlahKorban?id=${encodeURIComponent(
               res.data.id_pelaporan

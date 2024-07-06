@@ -71,7 +71,7 @@ const JumlahKorban = (role, desaId) => {
     setShowModalJumlahPengungsi(false);
   };
   // Modal End
-
+// console.log(role.role);
   // Pagination Korban Meninggal Start
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 3;
@@ -121,7 +121,7 @@ const JumlahKorban = (role, desaId) => {
   const router = useRouter();
   const { id, desa_id } = router.query;
 
-  console.log(desa_id);
+  // console.log(desa_id);
 
   const cookies = nookies.get();
 
@@ -131,7 +131,7 @@ const JumlahKorban = (role, desaId) => {
     {
       role.role === "relawan"
         ? router.push(
-          `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas?id=${id}$desa_id=${desa_id}`
+          `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas?id=${id}&desa_id=${desa_id}`
         )
         : router.push(
           `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas?id=${id}&desa_id=${desaId}`

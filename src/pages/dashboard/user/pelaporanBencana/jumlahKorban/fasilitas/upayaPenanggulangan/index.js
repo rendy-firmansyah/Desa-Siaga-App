@@ -57,8 +57,8 @@ const UpayaPenanggulangan = (role) => {
   const [lansia, setLansia] = useState("");
 
   const router = useRouter();
-  const { id } = router.query;
-
+  const { id, desa_id } = router.query;
+// console.log(desa_id);
   const addUpayaPenanggulangan = async () => {
     const res = await axios.post("/api/pelaporanAwal/upaya", {
       upayaPenanggulangan,
@@ -95,7 +95,9 @@ const UpayaPenanggulangan = (role) => {
       {
         role.role === "relawan"
           ? router.push(
-              `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan/detailPelaporanBencana?id=${id}`
+              `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan/detailPelaporanBencana?id=${id}&desa_id=${encodeURIComponent(
+                desa_id
+              )}`
             )
           : router.push(
               `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan/detailPelaporanBencana?id=${id}&desa_id=${encodeURIComponent(

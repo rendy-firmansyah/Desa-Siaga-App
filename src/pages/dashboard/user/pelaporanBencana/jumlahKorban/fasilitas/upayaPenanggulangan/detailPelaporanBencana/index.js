@@ -34,19 +34,16 @@ const DetailDataStatistik = (role) => {
     const [data,setData] = useState([]);
     const [desa, setDesa] = useState("");
     const router = useRouter();
-    const { id , desa_id} = router.query;
+    const { id, desa_id} = router.query;
 
-    console.log(id);
-    console.log(desa);
+    // console.log(id);
+    console.log(desa_id);
 
     useEffect(() => {
-        if (id) {
+        if (desa_id) {
             const fetchData = async () => {
                 try {
-                    const response = role.role === "relawan"
-                        ? await axios.get(`/api/statistik?id=${id}`)
-                        : await axios.get(`/api/statistik?id=${desa_id}`);
-
+                    const response = await axios.get(`/api/statistik?id=${desa_id}`);
                     console.log(response.data);
                     setData(response.data);
                     setDesa(response.data[0].nama);
@@ -56,7 +53,8 @@ const DetailDataStatistik = (role) => {
             };
             fetchData();
         }
-    }, [id, role]);
+    }, [desa_id]);
+    
     
     console.log(data);
     

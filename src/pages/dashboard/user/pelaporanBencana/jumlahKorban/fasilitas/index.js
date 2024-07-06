@@ -50,7 +50,9 @@ const Fasilitas = (role, desaId) => {
   const [totalData, setTotalData] = useState([]);
 
   const router = useRouter();
-  const { id } = router.query;
+  const { id, desa_id } = router.query;
+
+  console.log(desa_id);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,7 +101,9 @@ const Fasilitas = (role, desaId) => {
       {
         role.role === "relawan"
           ? router.push(
-              `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan?id=${id}`
+              `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan?id=${id}&desa_id=${encodeURIComponent(
+                desa_id
+              )}`
             )
           : router.push(
               `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan?id=${id}&desa_id=${encodeURIComponent(
