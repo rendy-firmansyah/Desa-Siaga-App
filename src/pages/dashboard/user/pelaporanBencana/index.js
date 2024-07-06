@@ -47,6 +47,8 @@ const PelaporanBencana = ({ role, desaId }) => {
   const [lokasiKejadian, setLokasiKejadian] = useState("");
   const [jumlahPenduduk, setJumlahPenduduk] = useState(0);
 
+  // console.log(selectedDesa);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("/api/Kecamatan");
@@ -75,13 +77,12 @@ const PelaporanBencana = ({ role, desaId }) => {
       desa_id: selectedDesa,
       jumlahPendudukTerancam: jumlahPenduduk,
     });
-    console.log(res.data);
     {
-      role == "relawan"
+      role.role === "relawan"
         ? router.push(
             `/dashboard/user/pelaporanBencana/jumlahKorban?id=${encodeURIComponent(
               res.data.id_pelaporan
-            )}`
+            )}&desa_id=${encodeURIComponent(selectedDesa)}`
           )
         : router.push(
             `/dashboard/user/pelaporanBencana/jumlahKorban?id=${encodeURIComponent(

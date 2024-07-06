@@ -93,7 +93,7 @@ const UpayaPenanggulangan = (role) => {
         theme: "light",
       });
       {
-        role == "relawan"
+        role.role === "relawan"
           ? router.push(
               `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan/detailPelaporanBencana?id=${id}`
             )
@@ -243,18 +243,6 @@ const UpayaPenanggulangan = (role) => {
             />
           </div>
           <div className="flex flex-col mt-3">
-            <div className="flex items-center gap-x-2 mt-2">
-              <input type="radio" id="" value="ada" name="" />
-              <label className="text-black font-semibold text-[16px]">
-                Ada
-              </label>
-            </div>
-            <div className="flex items-center gap-x-2 mt-2">
-              <input type="radio" id="" value="tidak" name="" />
-              <label className="text-black font-semibold text-[16px]">
-                Tidak, Apa hambatannya :
-              </label>
-            </div>
             <div className="mt-3">
               <label className="font-semibold text-md text-black">
                 Bantuan yang diperlukan segera

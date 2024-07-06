@@ -97,7 +97,7 @@ const Fasilitas = (role, desaId) => {
         theme: "light",
       });
       {
-        role == "relawan"
+        role.role === "relawan"
           ? router.push(
               `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan?id=${id}`
             )

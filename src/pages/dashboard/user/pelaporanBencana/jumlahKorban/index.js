@@ -119,20 +119,22 @@ const JumlahKorban = (role, desaId) => {
   // Pagination Korban Luka End
 
   const router = useRouter();
-  const { id } = router.query;
+  const { id, desa_id } = router.query;
+
+  console.log(desa_id);
 
   const cookies = nookies.get();
 
+  // console.log(role.role);
+
   const nextPage = () => {
     {
-      role == "relawan"
+      role.role === "relawan"
         ? router.push(
-            `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas?id=${id}`
-          )
+          `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas?id=${id}$desa_id=${desa_id}`
+        )
         : router.push(
-            `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas?id=${id}&desa_id=${encodeURIComponent(
-              cookies.desa_id
-            )}`
+          `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas?id=${id}&desa_id=${desaId}`
           );
     }
   };

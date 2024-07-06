@@ -43,7 +43,7 @@ const DetailDataStatistik = (role) => {
         if (id) {
             const fetchData = async () => {
                 try {
-                    const response = role === "relawan"
+                    const response = role.role === "relawan"
                         ? await axios.get(`/api/statistik?id=${id}`)
                         : await axios.get(`/api/statistik?id=${desa_id}`);
 
