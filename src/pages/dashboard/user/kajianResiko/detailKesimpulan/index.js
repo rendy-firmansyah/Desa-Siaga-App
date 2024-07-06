@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import bgKesimpulan from "../../../../../../public/bg-2.jpg";
 import Router, { useRouter } from "next/router";
 import nookies from "nookies";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import ExportButton from "../../../../../components/Button/ExportButton";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -31,15 +31,21 @@ export async function getServerSideProps(ctx) {
   };
 }
 
-const Kesimpulan = ({userId}) => {
+const Kesimpulan = ({ userId }) => {
   const handleBack = () => {
     Router.push("/dashboard/user");
   };
 
   const router = useRouter();
   const { id, namaUser, namaKec, namaDes, tanggal } = router.query;
+  const date = new Date(tanggal); // Mengubah timestamp menjadi objek Date
+  const formattedDate = date.toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
 
-  console.log(namaUser)
+  console.log(namaUser);
   const [data, setdata] = useState([]);
   const [sesuai, setsesuai] = useState();
   const [tidakSesuai, settidakSesuai] = useState();
@@ -96,28 +102,35 @@ const Kesimpulan = ({userId}) => {
 
   return (
     <section className="container-fluid h-full relative">
-      <div className="absolute -z-10 inset-0">
-        <Image src={bgKesimpulan} alt="bg-image" className="h-full" />
-      </div>
-      <div className="flex flex-col justify-center items-center xl:mx-[151px] lg:mx-[121px] md:mx-[80px] mx-[20px]">
-        <div className="text-black font-bold xl:text-[32px] lg:text-[32px] md:text-[28px] text-[24px] text-center mt-[60px]">
-          Kuisioner Kajian Resiko Bencana/Krisis Kesehatan
-        </div>
-        <div className="w-full bg-white xl:px-[50px] lg:px-[35px] md:px-[25px] px-[15px] xl:py-[50px] lg:py-[35px] md:py-[25px] py-[15px] shadow-lg mt-[35px]">
-          <div className="text-black font-semibold text-[16px]">Kesimpulan</div>
-          <div className="mt-[20px] w-full h-[50px] rounded bg-input-default border border-primary-default" />
+      <div className="flex flex-col justify-center xl:mx-[151px] lg:mx-[121px] md:mx-[80px] mx-[20px]">
+        <div className="p-4" id="content-export-pdf">
+          <div className="text-black font-bold xl:text-[32px] lg:text-[32px] md:text-[28px] text-[24px] text-center mt-[60px]">
+            Kuisioner Kajian Resiko Bencana/Krisis Kesehatan
+          </div>
+          <div className="text-black font-semibold text-[16px] mb-8 text-center">
+            Kesimpulan
+          </div>
           <div className="flex justify-between my-[15px]">
             <div>
-              <div className="text-black font-semibold text-[16px]">Nama <span className="ms-[40px] me-[10px]">:</span> {namaUser}</div>
-              <div className="text-black font-semibold text-[16px]">Kecamatan <span className="ms-[3px] me-[10px]">:</span> {namaKec}</div>
-              <div className="text-black font-semibold text-[16px]">Desa <span className="ms-[48px] me-[10px]">:</span> {namaDes}</div>
+              <div className="text-black font-semibold text-[16px]">
+                Nama <span className="ms-[40px] me-[10px]">:</span> {namaUser}
+              </div>
+              <div className="text-black font-semibold text-[16px]">
+                Kecamatan <span className="ms-[3px] me-[10px]">:</span>{" "}
+                {namaKec}
+              </div>
+              <div className="text-black font-semibold text-[16px]">
+                Desa <span className="ms-[48px] me-[10px]">:</span> {namaDes}
+              </div>
             </div>
             <div>
-              <div className="text-black font-semibold text-[16px]">Tanggal <span>:</span> {tanggal}</div>
+              <div className="text-black font-semibold text-[16px]">
+                Tanggal <span>:</span> {formattedDate}
+              </div>
             </div>
           </div>
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 border-2 shadow-lg shad">
+            <table className="min-w-full divide-y divide-gray-200 border-2">
               <thead className="">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -258,25 +271,32 @@ const Kesimpulan = ({userId}) => {
                 Pengkategorian Tingkat kapasitas Desa adalah sebagai berikut:
               </div>
               <div className="text-black font-semibold text-[16px] mb-[10px]">
-                Rendah <span className="ms-[50px] me-[10px]">:</span>pencapaian
-                1% - 33% dari seluruh indicator
+                Rendah <span className="ms-[50px] me-[10px]">:</span>
+                pencapaian 1% - 33% dari seluruh indicator
               </div>
               <div className="text-black font-semibold text-[16px] mb-[10px]">
-                Sedang <span className="ms-[50px] me-[10px]">:</span>pencapaian
-                34% - 66% dari seluruh indicator
+                Sedang <span className="ms-[50px] me-[10px]">:</span>
+                pencapaian 34% - 66% dari seluruh indicator
               </div>
               <div className="text-black font-semibold text-[16px] mb-[10px]">
-                Tinggi <span className="ms-[60px] me-[10px]">:</span>pencapaian
-                67% - 100% dari seluruh indicator
+                Tinggi <span className="ms-[60px] me-[10px]">:</span>
+                pencapaian 67% - 100% dari seluruh indicator
               </div>
             </div>
           </div>
-          <div className="border bg-white p-3 rounded-md shadow-md">
-            <h1 className="text-primary-default font-bold text-center">
+          <div className="flex justify-center items-center my-8">
+            <h1 className="text-primary-default font-bold">
               Desa anda memasuki pengkategorian tingkat kapasitas desa
-              <span className="text-primary-dark"> "{datakategori}"</span>
+              <span className="text-primary-dark text-center">
+                {" "}
+                "{datakategori}"
+              </span>
             </h1>
           </div>
+        </div>
+
+        <div className="w-full">
+          <ExportButton namadesa={namaDes} />
         </div>
 
         <div className="my-5 w-full">
