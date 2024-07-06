@@ -48,7 +48,7 @@ const Dashboard = ({ role, desaId, nama }) => {
       Router.push("/dashboard/user/kajianResiko");
     } else if (role === "desa" && desaId) {
       Router.push(
-        `/dashboard/user/kajianResiko/ancamanRentan?desa_id=${desaId}`
+        `/dashboard/user/kajianResiko?desa_id=${desaId}`
       );
     }
   };
