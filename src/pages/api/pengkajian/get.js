@@ -23,6 +23,12 @@ export default async function pengkajianHandler(req, res) {
         })
     }
     const Data = await Promise.all(pengkajian.map(async (pengkajian) => {
+        const user = await prisma.user.findFirst({
+            where:{
+                id : parseInt(pengkajian.user_id)
+            }
+        })
+        console.log(pengkajian)
         const desa = await prisma.desa.findFirst({
             where:{
                 id : parseInt(pengkajian.desa_id)

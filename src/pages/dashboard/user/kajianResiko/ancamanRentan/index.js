@@ -28,12 +28,12 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      desaId: cookies.desa_id || null
+      desaId: cookies.desa_id || null,userId : cookies.user_id
     },
   };
 }
 
-const AncamanRentan = ({desaId}) => {
+const AncamanRentan = ({desaId, userId}) => {
   const router = useRouter();
   const { desa_id } = router.query;
   console.log(desa_id)
@@ -49,6 +49,7 @@ const AncamanRentan = ({desaId}) => {
       jenis_ancaman: Ancaman,
       riwayat: Riwayat,
       desa_id: desa_id,
+      user_id: userId
     });
     if (res.data.status === "success") {
       toast(`✅ ${res.data.message}`, {
