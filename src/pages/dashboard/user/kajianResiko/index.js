@@ -6,6 +6,7 @@ import Router from "next/router";
 import axios from "axios";
 import { useRouter } from "next/router";
 import nookies from "nookies";
+import ReactPaginate from "react-paginate";
 
 //islogin
 export async function getServerSideProps(ctx) {
@@ -37,6 +38,8 @@ export async function getServerSideProps(ctx) {
 const KajianResiko = ({ role, userId, desaId }) => {
   const router = useRouter();
   const [dataKajian, setDataKajian] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5;
 
   const getDataKajian = async () => {
     const response = await axios.get(`/api/pengkajian/get?id=${userId}`);
@@ -45,6 +48,18 @@ const KajianResiko = ({ role, userId, desaId }) => {
   useEffect(() => {
     getDataKajian();
   }, []);
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = dataKajian.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(dataKajian.length / itemsPerPage);
+
+  const handleBack = () => {
+    router.back();
+  };
 
   const kuisioner = () => {
     if (role === "relawan") {
@@ -79,7 +94,16 @@ const KajianResiko = ({ role, userId, desaId }) => {
       </div>
       <div className="flex flex-col justify-center mx-8 md:mx-14 lg:mx-32 xl:mx-32 pt-10">
         <div className="flex items-start justify-between mb-4">
-          <h1 className="text-black text-xl font-bold">
+          <div>
+            <button
+              onClick={handleBack}
+              type=""
+              className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+            >
+              Kembali
+            </button>
+          </div>
+          <h1 className="text-black text-xl font-bold text-center">
             Data Kajian Awal Resiko
           </h1>
           <div>
@@ -117,7 +141,8 @@ const KajianResiko = ({ role, userId, desaId }) => {
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              {dataKajian.map((items, index) => {
+              {currentPageData.map((items, index) => {
+                const pageIndex = index + currentPage * itemsPerPage + 1;
                 const date = new Date(items.tanggal_dibuat); // Mengubah timestamp menjadi objek Date
                 const formattedDate = date.toLocaleDateString("id-ID", {
                   day: "2-digit",
@@ -127,7 +152,7 @@ const KajianResiko = ({ role, userId, desaId }) => {
                 return (
                   <tr>
                     <td className="text-black px-6 py-4 whitespace-nowrap">
-                      {index + 1}
+                      {pageIndex}
                     </td>
                     <td className="text-black px-6 py-4 whitespace-nowrap">
                       {items.nama_user}
@@ -185,6 +210,35 @@ const KajianResiko = ({ role, userId, desaId }) => {
               })}
             </tbody>
           </table>
+        </div>
+        <div className="mt-4 flex justify-center">
+          <ReactPaginate
+            previousLabel={"← Previous"}
+            nextLabel={"Next →"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination flex justify-center space-x-2"}
+            pageClassName={"page-item"}
+            pageLinkClassName={
+              "page-link px-4 py-2 border rounded-md text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            }
+            previousClassName={"page-item"}
+            previousLinkClassName={
+              "page-link px-4 py-2 mr-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            }
+            nextClassName={"page-item"}
+            nextLinkClassName={
+              "page-link px-4 py-2 ml-2 border rounded-md bg-secondary-default text-white hover:bg-secondary-light focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            }
+            activeLinkClassName={
+              "active-link border-secondary-default text-secondary-default"
+            }
+            disabledClassName={"disabled opacity-50 cursor-not-allowed -z-10"}
+          />
         </div>
       </div>
     </section>
