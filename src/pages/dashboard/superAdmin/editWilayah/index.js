@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Router from "next/router";
 import ReactPaginate from "react-paginate";
 
 export async function getServerSideProps(ctx) {
@@ -84,6 +85,10 @@ const dataWilayah = () => {
     );
   };
 
+  const handleBack = () => {
+    Router.back()
+  }
+
   return (
     <section className="container-fluid h-screen relative">
       <ToastContainer />
@@ -96,6 +101,15 @@ const dataWilayah = () => {
       </div>
       <div className="flex flex-col justify-center mx-8 md:mx-14 lg:mx-32 xl:mx-32 pt-10">
         <div className="flex w-full justify-between mb-4">
+          <div>
+            <button
+              type="button"
+              onClick={handleBack}
+              className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+            >
+              Kembali
+            </button>
+          </div>
           <h1 className="text-black text-xl font-bold">
             Data Wilayah Kecamatan
           </h1>

@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Router from "next/router";
 // import { cookies } from "next/headers";
 
 //islogin
@@ -69,6 +70,10 @@ const PelaporanBencana = ({ role, desaId }) => {
   const router = useRouter();
   const { id } = router.query;
 
+  const handleBack = () => {
+    Router.back();
+  };
+
   async function addPelaporan() {
     const res = await axios.post("/api/pelaporanAwal", {
       jenisBencana: jenisBencana,
@@ -94,7 +99,7 @@ const PelaporanBencana = ({ role, desaId }) => {
   }
 
   return (
-    <section className="container-fluid w-full h-screen relative">
+    <section className="container-fluid h-screen relative">
       <div className="absolute -z-10 inset-0">
         <Image
           src={bgDashboard}
@@ -102,11 +107,11 @@ const PelaporanBencana = ({ role, desaId }) => {
           className="lg:max-h-screen h-full"
         />
       </div>
-      <div className="flex flex-col justify-center pb-10">
+      <div className="flex flex-col justify-center items-center xl:mx-[151px] lg:mx-[121px] md:mx-[80px] mx-[20px]">
         <h1 className="text-black text-3xl font-bold text-center my-8">
           Kuisioner Pelaporan Kejadian Awal Bencana
         </h1>
-        <div className="bg-white p-8 h-auto w-auto border rounded-2xl shadow-lg mx-8 md:mx-14 lg:mx-32 xl:mx-32 mt-3">
+        <div className="w-full bg-white xl:px-[50px] lg:px-[35px] md:px-[25px] px-[15px] xl:py-[50px] lg:py-[35px] md:py-[25px] py-[15px] shadow-lg mt-[35px]">
           <div className="grid grid-cols-1 md:grid-cols-1 ">
             <div className="input-dataumum mx-3">
               <h1 className="text-black font-bold text-2xl">Isi Kuisioner :</h1>
@@ -212,13 +217,27 @@ const PelaporanBencana = ({ role, desaId }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center mt-5">
-          <button
-            onClick={(e) => addPelaporan()}
-            className="bg-secondary-default w-full mx-8 md:mx-14 lg:mx-32 xl:mx-32 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
-          >
-            Lanjut Kuisioner Berikutnya
-          </button>
+        <div className="my-5 w-full">
+          <div className="grid grid-cols-12">
+            <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 xl:me-[14px] lg:me-[14px] md:me-[14px] me-0">
+              <button
+                type=""
+                className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+                onClick={handleBack}
+              >
+                Kembali
+              </button>
+            </div>
+            <div className="xl:col-span-6 lg:col-span-6 md:col-span-6 col-span-12 xl:ms-[14px] lg:ms-[14px] md:ms-[14px] ms-0 xl:mt-0 lg:mt-0 md:mt-0 mt-4">
+              <button
+                type=""
+                onClick={(e) => addPelaporan()}
+                className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+              >
+                Lanjut Kuisioner Berikutnya
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

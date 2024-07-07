@@ -107,9 +107,6 @@ const Kesimpulan = ({ userId }) => {
           <div className="text-black font-bold xl:text-[32px] lg:text-[32px] md:text-[28px] text-[24px] text-center mt-[60px]">
             Kuisioner Kajian Resiko Bencana/Krisis Kesehatan
           </div>
-          <div className="text-black font-semibold text-[16px] mb-8 text-center">
-            Kesimpulan
-          </div>
           <div className="flex justify-between my-[15px]">
             <div>
               <div className="text-black font-semibold text-[16px]">
@@ -254,11 +251,11 @@ const Kesimpulan = ({ userId }) => {
                     100%
                   </td>
                   {/* Persentase Sesuai */}
-                  <td className="text-black px-6 py-4 whitespace-nowrap">
+                  <td className="text-black text-center px-6 py-4 whitespace-nowrap">
                     {data.persentase}%
                   </td>
                   {/* Persentase Tidak Sesuai */}
-                  <td className="text-black px-6 py-4 whitespace-nowrap"></td>
+                  {/* <td className="text-black px-6 py-4 whitespace-nowrap"></td> */}
                 </tr>
               </tbody>
             </table>
