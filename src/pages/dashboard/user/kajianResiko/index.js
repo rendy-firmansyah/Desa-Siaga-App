@@ -46,6 +46,8 @@ const KajianResiko = ({ role, userId, desaId }) => {
     getDataKajian();
   }, []);
 
+  // console.log(desaId);
+
   const kuisioner = () => {
     if (role === "relawan") {
       router.push(`/dashboard/user/kajianResiko/pilihWilayah`);

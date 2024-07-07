@@ -77,14 +77,12 @@ const AddPengungsi = ({ isShow, onClose, onSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="w-[700px] max-h-auto md:h-auto lg:h-auto xl:h-auto overflow-y-auto md:overflow-hidden lg:overflow-hidden xl:overflow-hidden border rounded-lg bg-white">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-auto overflow-y-auto">
+      <div className="w-full max-w-[90vw] md:max-w-[700px] max-h-[90vh] overflow-y-auto md:overflow-y-auto border rounded-lg bg-white">
         <div className="flex flex-col p-5 rounded-lg shadow">
           <div className="flex">
             <div className="">
-              <h2 className="font-semibold text-gray-800">
-                Tambah Jumlah Pengungsi
-              </h2>
+              <h2 className="font-semibold text-gray-800">Tambah Jumlah Pengungsi</h2>
               <p className="mt-2 text-sm text-gray-600 leading-relaxed">
                 Isi form untuk menambah data Pengungsi
               </p>
@@ -104,7 +102,7 @@ const AddPengungsi = ({ isShow, onClose, onSuccess }) => {
                     required
                   />
                 </div>
-                <div className="text-gray-600 text-center my-[10px]">
+                <div className="text-gray-600 text-center my-3">
                   Gangguan Jiwa/Psikosial
                 </div>
                 <div className="grid grid-cols-12 gap-x-3">
@@ -133,7 +131,7 @@ const AddPengungsi = ({ isShow, onClose, onSuccess }) => {
                     </div>
                   </div>
                 </div>
-                <div className="text-gray-600 text-center my-[10px]">
+                <div className="text-gray-600 text-center my-3">
                   Jumlah Pengungsi
                 </div>
                 <div className="grid grid-cols-12 gap-x-3">
@@ -162,7 +160,7 @@ const AddPengungsi = ({ isShow, onClose, onSuccess }) => {
                     </div>
                   </div>
                 </div>
-                <div className="text-gray-600 text-center my-[10px]">
+                <div className="text-gray-600 text-center my-3">
                   Jumlah Penduduk Rentan
                 </div>
                 <div className="grid grid-cols-12 gap-x-3">
@@ -177,8 +175,8 @@ const AddPengungsi = ({ isShow, onClose, onSuccess }) => {
                         required
                       />
                     </div>
-                    <div className="flex flex-col">
-                      <label className="text-gray-600 mt-[10px]">Bumil</label>
+                    <div className="flex flex-col mt-3">
+                      <label className="text-gray-600">Bumil</label>
                       <input
                         className="border rounded p-2 mt-1 text-black"
                         type="number"
@@ -187,7 +185,7 @@ const AddPengungsi = ({ isShow, onClose, onSuccess }) => {
                         required
                       />
                     </div>
-                    <div className="text-gray-600 text-center my-[10px]">
+                    <div className="text-gray-600 text-center my-3">
                       Cacat
                     </div>
                     <div className="grid grid-cols-12 gap-x-3">
@@ -228,8 +226,8 @@ const AddPengungsi = ({ isShow, onClose, onSuccess }) => {
                         required
                       />
                     </div>
-                    <div className="flex flex-col">
-                      <label className="text-gray-600 mt-[10px]">Buteki</label>
+                    <div className="flex flex-col mt-3">
+                      <label className="text-gray-600">Buteki</label>
                       <input
                         className="border rounded p-2 mt-1 text-black"
                         type="number"
@@ -238,7 +236,7 @@ const AddPengungsi = ({ isShow, onClose, onSuccess }) => {
                         required
                       />
                     </div>
-                    <div className="text-gray-600 text-center my-[10px]">
+                    <div className="text-gray-600 text-center my-3">
                       Lansia
                     </div>
                     <div className="grid grid-cols-12 gap-x-3">
@@ -291,6 +289,7 @@ const AddPengungsi = ({ isShow, onClose, onSuccess }) => {
         </div>
       </div>
     </div>
+
   );
 };
 
