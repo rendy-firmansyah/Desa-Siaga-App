@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import Router from "next/router";
 
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx);
@@ -73,6 +74,10 @@ const dataWilayah = () => {
     getDataDesa();
   }, []);
 
+  const handleBack = () => {
+    Router.back()
+  }
+
   return (
     <section className="container-fluid h-screen relative">
       <div className="absolute -z-10 inset-0">
@@ -84,6 +89,15 @@ const dataWilayah = () => {
       </div>
       <div className="flex flex-col justify-center mx-8 md:mx-14 lg:mx-32 xl:mx-32 pt-10">
         <div className="flex w-full justify-between mb-4">
+          <div>
+            <button
+              type="button"
+              onClick={handleBack}
+              className="bg-secondary-default px-4 py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+            >
+              Kembali
+            </button>
+          </div>
           <h1 className="text-black text-xl font-bold">
             Data Desa Wilayah Kecamatan
           </h1>

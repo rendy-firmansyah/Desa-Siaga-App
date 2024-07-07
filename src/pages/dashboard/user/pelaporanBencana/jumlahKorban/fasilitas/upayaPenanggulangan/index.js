@@ -97,12 +97,12 @@ const UpayaPenanggulangan = (role) => {
           ? router.push(
               `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan/detailPelaporanBencana?id=${id}&desa_id=${encodeURIComponent(
                 desa_id
-              )}`
+              )}&status=${encodeURIComponent(statusDesa)}`
             )
           : router.push(
               `/dashboard/user/pelaporanBencana/jumlahKorban/fasilitas/upayaPenanggulangan/detailPelaporanBencana?id=${id}&desa_id=${encodeURIComponent(
                 cookies.desa_id
-              )}`
+              )}&status=${encodeURIComponent(statusDesa)}`
             );
       }
     } else {
@@ -270,7 +270,7 @@ const UpayaPenanggulangan = (role) => {
                       </label>
                       <input
                         type="number"
-                        className="bg-input-default border-primary-default rounded"
+                        className="bg-input-default text-black border-primary-default rounded"
                         id=""
                         onChange={(e) => setBayi(e.target.value)}
                       />
@@ -282,7 +282,7 @@ const UpayaPenanggulangan = (role) => {
                       </label>
                       <input
                         type="number"
-                        className="bg-input-default border-primary-default rounded"
+                        className="bg-input-default text-black border-primary-default rounded"
                         id=""
                         onChange={(e) => setBalita(e.target.value)}
                       />
@@ -294,7 +294,7 @@ const UpayaPenanggulangan = (role) => {
                       </label>
                       <input
                         type="number"
-                        className="bg-input-default border-primary-default rounded"
+                        className="bg-input-default text-black border-primary-default rounded"
                         id=""
                         onChange={(e) => setButeki(e.target.value)}
                       />
@@ -308,7 +308,7 @@ const UpayaPenanggulangan = (role) => {
                       </label>
                       <input
                         type="number"
-                        className="bg-input-default border-primary-default rounded"
+                        className="bg-input-default text-black border-primary-default rounded"
                         id=""
                         onChange={(e) => setBumil(e.target.value)}
                       />
@@ -320,7 +320,7 @@ const UpayaPenanggulangan = (role) => {
                       </label>
                       <input
                         type="number"
-                        className="bg-input-default border-primary-default rounded"
+                        className="bg-input-default text-black border-primary-default rounded"
                         id=""
                         onChange={(e) => setCacat(e.target.value)}
                       />
@@ -332,7 +332,7 @@ const UpayaPenanggulangan = (role) => {
                       </label>
                       <input
                         type="number"
-                        className="bg-input-default border-primary-default rounded"
+                        className="bg-input-default text-black border-primary-default rounded"
                         id=""
                         onChange={(e) => setLansia(e.target.value)}
                       />
