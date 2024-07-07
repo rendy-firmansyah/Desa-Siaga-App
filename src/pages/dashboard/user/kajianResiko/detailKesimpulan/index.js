@@ -33,7 +33,7 @@ export async function getServerSideProps(ctx) {
 
 const Kesimpulan = ({ userId }) => {
   const handleBack = () => {
-    Router.push("/dashboard/user");
+    Router.back();
   };
 
   const router = useRouter();
@@ -295,18 +295,19 @@ const Kesimpulan = ({ userId }) => {
           </div>
         </div>
 
-        <div className="w-full">
-          <ExportButton namadesa={namaDes} />
-        </div>
-
-        <div className="my-5 w-full">
-          <button
-            type=""
-            className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
-            onClick={handleBack}
-          >
-            Kembali ke Dashboard
-          </button>
+        <div className="flex items-center">
+          <div className="my-5 w-full">
+            <button
+              type=""
+              className="bg-secondary-default w-full py-3 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+              onClick={handleBack}
+            >
+              Kembali
+            </button>
+          </div>
+          <div className="w-full">
+            <ExportButton namadesa={namaDes}/>
+          </div>
         </div>
       </div>
     </section>

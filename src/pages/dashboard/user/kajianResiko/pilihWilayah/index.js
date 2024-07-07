@@ -38,6 +38,10 @@ const PilihWilayah = () => {
   const [dataKecamatan, setDataKec] = useState([]);
   const [dataDesa, setDataDesa] = useState([]);
 
+  const handleBack = () => {
+    Router.back();
+  };
+
   const kuisioner = () => {
     router.push(
       `/dashboard/user/kajianResiko/ancamanRentan?desa_id=${encodeURIComponent(
@@ -105,14 +109,25 @@ const PilihWilayah = () => {
             </div>
           </div>
         </div>
-        <div className="my-5 w-[700px]">
-          <button
-            type=""
-            onClick={kuisioner}
-            className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
-          >
-            Lanjut Kuisioner
-          </button>
+        <div className="flex items-center gap-x-2">
+          <div className="my-5 w-[345px]">
+            <button
+              type=""
+              onClick={handleBack}
+              className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+            >
+              Kembali
+            </button>
+          </div>
+          <div className="my-5 w-[345px]">
+            <button
+              type=""
+              onClick={kuisioner}
+              className="bg-secondary-default w-full py-2 hover:bg-secondary-dark transition-all duration-150 rounded-md"
+            >
+              Lanjut Kuisioner
+            </button>
+          </div>
         </div>
       </div>
     </section>
