@@ -56,7 +56,7 @@ export default async function kesiapSiagaanHandler(req, res) {
 
           return res
               .status(200)
-              .json({ message: "Berhasil Mengupdate data Penguatan Kapasitas", status: "success" });
+              .json({ message: "Berhasil Mengupdate data KesiapSiagaan", status: "success" });
       }
 
       const kesiapSiagaan = await prisma.kesiapSiagaan.create({
@@ -83,7 +83,7 @@ export default async function kesiapSiagaanHandler(req, res) {
       return res
         .status(200)
         .json({
-          message: "Berhasil Menambahkan data Penguatan Kapasitas",
+          message: "Berhasil Menambahkan data KesiapSiagaan",
           status: "success",
         });
     } catch (error) {
