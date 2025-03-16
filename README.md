@@ -1,3 +1,5 @@
+This project was created to meet the client's needs in recording disaster mitigation in a village, and to prepare village preparedness for disasters. This project was built with a team consisting of 4 people, namely 1 backend, 3 frontends and also UI design. This project is built with the Next JS and Express Js frameworks, and code styling uses tailwind CSS. This project took 1 month and 3 weeks to complete
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
